@@ -1,19 +1,19 @@
 version: '3.8'
 
 services:
-  crm-template-php-fpm:
+  crm-php-fpm:
     dns:
       - 8.8.8.8
     build:
       context: php-fpm
     volumes:
       - ../../:/app
-      - ./php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
+      - ./php-fpm/conf.d/app.ini:/usr/local/etc/php/php.ini:ro
     working_dir: /app
     networks:
-      - crm-template
+      - crm-network
 
-  nginx:
+  crm-nginx:
     image: nginx:1.20-alpine
     ports:
       - 80:80
@@ -23,11 +23,11 @@ services:
       - ../..//public:/app
       - ./nginx/templates:/etc/nginx/templates:cached
     depends_on:
-      - crm-template-php-fpm
+      - crm-php-fpm
     networks:
-      - crm-template
+      - crm-network
     environment:
-      - VIRTUAL_HOST=${TEST_TASK_SERVICE_DOMAIN}
+      - VIRTUAL_HOST=${CRM_SERVICE_DOMAIN}
 
 networks:
-  crm-template:
+  crm-network:

@@ -1,7 +1,9 @@
-FROM php:8.1
+FROM php:8.1-fpm
 
 WORKDIR '/app'
 
+RUN apk add bash git gcc make g++ zlib-dev openssl
+RUN apk add --quiet autoconf make
 RUN docker-php-ext-enable opcache
 
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
