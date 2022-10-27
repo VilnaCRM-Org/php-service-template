@@ -1,0 +1,3 @@
+controllers:
+    resource: ../src/Shared/Infrastructure/Controller/
+    type: attribute
