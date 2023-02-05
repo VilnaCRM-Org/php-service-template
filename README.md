@@ -3,7 +3,7 @@
 ### How to deploy a project on a local machine
 
 * add the following line to the file /etc/hosts:
-> 127.0.0.1 crm.local
+> 127.0.0.1 service.local
 
 * execute bash script to run project's containers
 > ./make up -d
@@ -18,7 +18,7 @@
 
 * go to browser and open the link below
 
-> http://crm.local
+> http://service.local
 
 ### PHP Code sniffer
 > ./vendor/bin/phpcs
