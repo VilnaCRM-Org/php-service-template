@@ -1,10 +1,20 @@
-steps:
-  - uses: actions/checkout@master
-  - uses: codecov/codecov-action@v3
-    with:
-      token: ${{ secrets.CODECOV_TOKEN }}
-      files: ./coverage1.xml,./coverage2.xml
-      flags: unittests
-      name: codecov-umbrella
-      fail_ci_if_error: true
-      verbose: true
+name: test coverage
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  codecov:
+    runs-on: ubuntu-latest
+    name: run codecov
+    steps:
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage1.xml,./coverage2.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
