@@ -22,6 +22,21 @@
                 "conditions": []
             },
             {
+                "action": "composer validate",
+                "options": [],
+                "conditions": []
+            },
+            {
+                "action": "symfony check:requirements",
+                "options": [],
+                "conditions": []
+            },
+            {
+                "action": "symfony security:check",
+                "options": [],
+                "conditions": []
+            },
+            {
                 "action": "./vendor/bin/phpinsights --no-interaction",
                 "options": [],
                 "conditions": []

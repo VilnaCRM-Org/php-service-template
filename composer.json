@@ -1,4 +1,6 @@
 {
+    "name": "vilnacrm/php-serice-template",
+    "description": "Microservices template for modern PHP applications",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
