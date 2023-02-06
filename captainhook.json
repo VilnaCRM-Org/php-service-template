@@ -30,6 +30,11 @@
                 "action": "./vendor/bin/phpunit",
                 "options": [],
                 "conditions": []
+            },
+            {
+                "action": "./vendor/bin/behat",
+                "options": [],
+                "conditions": []
             }
         ]
     },

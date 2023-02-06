@@ -6,11 +6,11 @@
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
+        "ext-dom": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "ext-dom": "*",
-        "ext-xml": "*",
         "ext-simplexml": "*",
+        "ext-xml": "*",
         "api-platform/core": "^3.0",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -21,7 +21,7 @@
         "symfony/cache": "^6.1",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.2",
         "symfony/framework-bundle": "6.1.*",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "6.1.*",
@@ -81,7 +81,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "6.1.*"
         }
     },
@@ -90,6 +90,7 @@
         "captainhook/captainhook": "^5.11",
         "captainhook/plugin-composer": "^5.3",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "friends-of-behat/symfony-extension": "^2.4",
         "friendsofphp/php-cs-fixer": "^3.14",
         "marcocesarato/php-conventional-changelog": "^1.16",
         "nunomaduro/phpinsights": "^2.7",
