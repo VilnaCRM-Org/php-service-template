@@ -25,10 +25,10 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Install Symfony CLI
-        run: wget https://get.symfony.com/cli/installer -O - | bash && export PATH="$HOME/.symfony5/bin:$PATH"
+        run: wget https://get.symfony.com/cli/installer -O - | bash
       - name: Composer validate
         run: composer validate
       - name: Check symfony requirements
-        run: symfony check:requirements
+        run: /home/runner/.symfony5/bin/symfony check:requirements
       - name: Symfony security check
-        run: symfony security:check
+        run: /home/runner/.symfony5/bin/symfony security:check
