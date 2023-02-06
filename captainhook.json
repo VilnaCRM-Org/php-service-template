@@ -20,6 +20,11 @@
                 "action": "./vendor/bin/phpunit",
                 "options": [],
                 "conditions": []
+            },
+            {
+                "action": "./vendor/bin/phpinsights --no-interaction",
+                "options": [],
+                "conditions": []
             }
         ]
     },
