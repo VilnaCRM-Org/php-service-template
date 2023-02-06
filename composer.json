@@ -89,6 +89,7 @@
         "behat/behat": "^3.12",
         "captainhook/captainhook": "^5.11",
         "captainhook/plugin-composer": "^5.3",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friendsofphp/php-cs-fixer": "^3.14",
         "marcocesarato/php-conventional-changelog": "^1.16",
         "nunomaduro/phpinsights": "^2.7",
