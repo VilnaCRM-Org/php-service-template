@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9ba575580eca8dc88b81e7bb461e391",
+    "content-hash": "52e38a189ae626461545a571a997b6b1",
     "packages": [
         {
             "name": "api-platform/core",
@@ -8375,61 +8375,6 @@
                 "source": "https://github.com/opis/uri/tree/1.1.0"
             },
             "time": "2021-05-22T15:57:08+00:00"
-        },
-        {
-            "name": "orklah/psalm-strict-types",
-            "version": "v0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/orklah/psalm-strict-types.git",
-                "reference": "cdbc82ed99ad08af1435367f28bc02a20210a8f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/orklah/psalm-strict-types/zipball/cdbc82ed99ad08af1435367f28bc02a20210a8f5",
-                "reference": "cdbc82ed99ad08af1435367f28bc02a20210a8f5",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3|^8.0",
-                "vimeo/psalm": "^4.4.0"
-            },
-            "require-dev": {
-                "nikic/php-parser": "^4.0",
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-phpunit": "^0.15.0"
-            },
-            "type": "psalm-plugin",
-            "extra": {
-                "psalm": {
-                    "pluginClass": "Orklah\\StrictTypes\\Plugin"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Orklah\\StrictTypes\\": [
-                        "./src"
-                    ],
-                    "Orklah\\StrictTypes\\Tests\\": [
-                        "./tests"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "orklah"
-                }
-            ],
-            "description": "Adds strict_types declaration when the file is provably safe",
-            "support": {
-                "issues": "https://github.com/orklah/psalm-strict-types/issues",
-                "source": "https://github.com/orklah/psalm-strict-types/tree/v0.1.3"
-            },
-            "time": "2021-08-30T20:46:21+00:00"
         },
         {
             "name": "phar-io/manifest",
