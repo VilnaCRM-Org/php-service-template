@@ -96,15 +96,17 @@
         "friendsofphp/php-cs-fixer": "^3.14",
         "marcocesarato/php-conventional-changelog": "^1.16",
         "nunomaduro/phpinsights": "^2.7",
+        "orklah/psalm-strict-types": "^0.1.3",
         "pheromone/phpcs-security-audit": "^2.0",
         "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.18.4",
         "psalm/plugin-symfony": "^4.0",
         "ramsey/conventional-commits": "^1.3",
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
         "symfony/maker-bundle": "^1.47",
         "symfony/phpunit-bridge": "^6.1",
-        "vimeo/psalm": "^4.29",
+        "vimeo/psalm": "*",
         "weirdan/doctrine-psalm-plugin": "^2.5"
     }
 }

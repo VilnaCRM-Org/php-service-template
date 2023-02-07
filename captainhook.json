@@ -37,6 +37,16 @@
                 "conditions": []
             },
             {
+                "action": "./vendor/bin/psalm",
+                "options": [],
+                "conditions": []
+            },
+            {
+                "action": "./vendor/bin/psalm --taint-analysis",
+                "options": [],
+                "conditions": []
+            },
+            {
                 "action": "./vendor/bin/phpinsights --no-interaction",
                 "options": [],
                 "conditions": []
