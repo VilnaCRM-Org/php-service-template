@@ -17,7 +17,7 @@
                 "conditions": []
             },
             {
-                "action": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix src",
+                "action": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --config .php-cs-fixer.dist.php",
                 "options": [],
                 "conditions": []
             },
