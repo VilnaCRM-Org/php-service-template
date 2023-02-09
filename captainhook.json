@@ -17,47 +17,47 @@
                 "conditions": []
             },
             {
-                "action": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --config .php-cs-fixer.dist.php",
+                "action": "make phpcsfixer",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "composer validate",
+                "action": "make composer-validate",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "symfony check:requirements",
+                "action": "make check-requirements",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "symfony security:check",
+                "action": "make check-security",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/psalm",
+                "action": "make psalm",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/psalm --taint-analysis",
+                "action": "make psalm-security",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/phpinsights --no-interaction",
+                "action": "make phpinsights",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/phpunit",
+                "action": "make phpunit",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/behat",
+                "action": "make behat",
                 "options": [],
                 "conditions": []
             }
