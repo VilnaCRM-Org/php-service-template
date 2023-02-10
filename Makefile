@@ -32,3 +32,30 @@ phpunit: ## The PHP unit testing framework
 
 behat: ## A php framework for autotesting business expectations
 	./vendor/bin/behat
+
+doctrine-migrations-migrate: ## Executes a migration to a specified version or the latest available version
+	bin/console d:m:m
+
+doctrine-migrations-generate: ## Generates a blank migration class
+	bin/console d:m:g
+
+cache-clear: ## Clears and warms up the application cache for a given environment and debug mode
+	bin/console c:c
+
+first-release: ## Generate changelog from a project's commit messages for the first release
+	./vendor/bin/conventional-changelog --first-release
+
+changelog-generate: ## Generate changelog from a project's commit messages
+	./vendor/bin/conventional-changelog
+
+release: ## Generate changelogs and release notes from a project's commit messages for the first release
+	./vendor/bin/conventional-changelog --commit --no-change-without-commits
+
+release-patch: ## Generate changelogs and commit new patch tag from a project's commit messages
+	./vendor/bin/conventional-changelog --patch --commit --no-change-without-commits
+
+release-minor: ## Generate changelogs and commit new minor tag from a project's commit messages
+	./vendor/bin/conventional-changelog --minor --commit --no-change-without-commits
+
+release-major: ## Generate changelogs and commit new major tag from a project's commit messages
+	./vendor/bin/conventional-changelog --major --commit --no-change-without-commits
