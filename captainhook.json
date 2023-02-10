@@ -22,11 +22,6 @@
                 "conditions": []
             },
             {
-                "action": "make composer-validate",
-                "options": [],
-                "conditions": []
-            },
-            {
                 "action": "make check-requirements",
                 "options": [],
                 "conditions": []

@@ -43,7 +43,7 @@ cache-clear: ## Clears and warms up the application cache for a given environmen
 	bin/console c:c
 
 first-release: ## Generate changelog from a project's commit messages for the first release
-	./vendor/bin/conventional-changelog --first-release
+	./vendor/bin/conventional-changelog --first-release --commit --no-change-without-commits
 
 changelog-generate: ## Generate changelog from a project's commit messages
 	./vendor/bin/conventional-changelog
