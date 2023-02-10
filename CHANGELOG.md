@@ -4,6 +4,18 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [1.1.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.0.0...v1.1.0) (2023-02-10)
+
+### Features
+
+
+##### #1
+
+* Remove composer validate from the CI ([4ebfe9](https://github.com/VilnaCRM-Org/php-service-template/commit/4ebfe988960da339ba6c147ce3a82fdd0ce10faf))
+
+
+---
+
 ## [1.0.0](https://github.com/VilnaCRM-Org/php-service-template/compare/466f156a04dcca16cbc6bdd3f6cd68270bd0c54d...v1.0.0) (2023-02-10)
 
 ### Features
