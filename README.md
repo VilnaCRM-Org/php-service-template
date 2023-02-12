@@ -50,7 +50,7 @@ cache-warmup                 Warmup the Symfony cache
 changelog-generate           Generate changelog from a project's commit messages
 check-requirements           Checks requirements for running Symfony and gives useful recommendations to optimize PHP for Symfony.
 check-security               Checks security issues in project dependencies. Without arguments, it looks for a "composer.lock" file in the current directory. Pass it explicitly to check a specific "composer.lock" file.
-commands                     Display all commands in the project namespace
+commands                     List all Symfony commands
 composer-validate            The validate command validates a given composer.json and composer.lock
 coverage                     Create the code coverage report with PHPUnit
 doctrine-migrations-generate Generates a blank migration class
@@ -72,8 +72,7 @@ release                      Generate changelogs and release notes from a projec
 release-major                Generate changelogs and commit new major tag from a project's commit messages
 release-minor                Generate changelogs and commit new minor tag from a project's commit messages
 release-patch                Generate changelogs and commit new patch tag from a project's commit messages
-reload                       Load fixtures and repopulate the Elasticserch index
-sf                           List all Symfony commands
+reload                       Load fixtures
 sh                           Log to the docker container
 start                        Start docker and load fixtures
 stats                        Commits by the hour for the main author of this project
