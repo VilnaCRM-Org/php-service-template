@@ -25,18 +25,61 @@ This software is distributed under the [Creative Commons Zero v1.0 Universal](ht
 ### Minimal installation
 You can clone this repository locally or use Github functionality "Use this template"
 
-## Installation & using
-
 Install the latest [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/)
 
-Execute bash script to run project's containers
+Use `make` command to set up project and automatically install all needed dependencies
 > make start
 
 Go to browser and open the link below
-
 > https://localhost/api/docs
 
 That's it. You should now be ready to use PHP service template!
+
+## Using
+You can use `make` command to easily control and work with project locally.
+
+Execute `make` or `make help` to see the full list of project commands.
+
+The list of the `make` possibilities:
+
+```
+behat                        A php framework for autotesting business expectations
+build                        Builds the images (PHP, caddy)
+cache-clear                  Clears and warms up the application cache for a given environment and debug mode
+cache-warmup                 Warmup the Symfony cache
+changelog-generate           Generate changelog from a project's commit messages
+check-requirements           Checks requirements for running Symfony and gives useful recommendations to optimize PHP for Symfony.
+check-security               Checks security issues in project dependencies. Without arguments, it looks for a "composer.lock" file in the current directory. Pass it explicitly to check a specific "composer.lock" file.
+commands                     Display all commands in the project namespace
+composer-validate            The validate command validates a given composer.json and composer.lock
+coverage                     Create the code coverage report with PHPUnit
+doctrine-migrations-generate Generates a blank migration class
+doctrine-migrations-migrate  Executes a migration to a specified version or the latest available version
+down                         Stop the docker hub
+first-release                Generate changelog from a project's commit messages for the first release
+fix-perms                    Fix permissions of all var files
+install                      Install vendors according to the current composer.lock file
+load-fixtures                Build the DB, control the schema validity, load fixtures and check the migration status
+logs                         Show all logs
+new-logs                     Show live logs
+phpcsfixer                   A tool to automatically fix PHP Coding Standards issues
+phpinsights                  Instant PHP quality checks and static analysis tool
+phpunit                      The PHP unit testing framework
+psalm                        A static analysis tool for finding errors in PHP applications
+psalm-security               Psalm security analysis
+purge                        Purge cache and logs
+release                      Generate changelogs and release notes from a project's commit messages for the first release
+release-major                Generate changelogs and commit new major tag from a project's commit messages
+release-minor                Generate changelogs and commit new minor tag from a project's commit messages
+release-patch                Generate changelogs and commit new patch tag from a project's commit messages
+reload                       Load fixtures and repopulate the Elasticserch index
+sf                           List all Symfony commands
+sh                           Log to the docker container
+start                        Start docker and load fixtures
+stats                        Commits by the hour for the main author of this project
+stop                         Stop docker and the Symfony binary server
+up                           Start the docker hub (PHP, caddy)
+```
 
 ## Documentation
 Start reading at the [GitHub wiki](https://github.com/VilnaCRM-Org/php-service-template/wiki). If you're having trouble, head for [the troubleshooting guide](https://github.com/VilnaCRM-Org/php-service-template/wiki/Troubleshooting) as it's frequently updated.
