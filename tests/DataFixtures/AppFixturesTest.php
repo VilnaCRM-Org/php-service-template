@@ -6,7 +6,7 @@ use App\DataFixtures\AppFixtures;
 use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 
-final class AppFixturesTest  extends TestCase
+final class AppFixturesTest extends TestCase
 {
     public function load(ObjectManager $manager): void
     {
