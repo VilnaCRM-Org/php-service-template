@@ -9,7 +9,7 @@
 ## Possibilities
 - Modern PHP stack for services: [API Platform 3](https://api-platform.com/), PHP 8, [Symfony 6](https://symfony.com/)
 - [Hexagonal Architecture, DDD & CQRS in PHP](https://github.com/CodelyTV/php-ddd-example)
-- Built-in docker environment and convenient cli
+- Built-in docker environment and convenient `make` cli command
 - A lot of CI checks to ensure the highest code quality that can be ([Psalm](https://psalm.dev/), [PHPInsights](https://phpinsights.com/), Security checks, Code style fixer)
 - Configured testing tools: [PHPUnit](https://phpunit.de/), [Behat](https://docs.behat.org/)
 - Much more!
@@ -26,23 +26,15 @@ This software is distributed under the [Creative Commons Zero v1.0 Universal](ht
 You can clone this repository locally or use Github functionality "Use this template"
 
 ## Installation & using
-Add the following line to the file /etc/hosts:
-> 127.0.0.1 service.local
+
+Install the latest [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/)
 
 Execute bash script to run project's containers
-> ./make up -d
-
-Go inside the php fpm container
-
-> docker exec -it docker_crm-php-fpm_1 bash
-
-Install all project dependencies
-
-> composer install
+> make start
 
 Go to browser and open the link below
 
-> http://service.local
+> https://localhost/api/docs
 
 That's it. You should now be ready to use PHP service template!
 
