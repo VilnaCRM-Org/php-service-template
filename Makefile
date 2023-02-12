@@ -87,9 +87,6 @@ release-major: ## Generate changelogs and commit new major tag from a project's 
 install: composer.lock ## Install vendors according to the current composer.lock file
 	@$(COMPOSER) install --no-progress --prefer-dist --optimize-autoloader
 
-sf: ## List all Symfony commands
-	@$(SYMFONY)
-
 cache-warmup: ## Warmup the Symfony cache
 	@$(SYMFONY) cache:warmup
 
@@ -119,12 +116,12 @@ new-logs: ## Show live logs
 
 start: up load-fixtures ## Start docker and load fixtures
 
-reload: load-fixtures ## Load fixtures and repopulate the Elasticserch index
+reload: load-fixtures ## Load doctrine fixtures
 
 stop: down ## Stop docker and the Symfony binary server
 
-commands: ## Display all commands in the project namespace
-	@$(SYMFONY) list $(PROJECT)
+commands: ## List all Symfony commands
+	@$(SYMFONY) list
 
 load-fixtures: ## Build the DB, control the schema validity, load fixtures and check the migration status
 	@$(SYMFONY) doctrine:cache:clear-metadata
