@@ -10,6 +10,13 @@ jobs:
     name: run codecov
     steps:
       - uses: actions/checkout@master
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+      - name: Install dependencies
+        run: composer self-update && composer install --dev && composer dump-autoload
+      - name: Run tests and collect coverage
+        run: vendor/bin/phpunit --bootstrap vendor/autoload.php --coverage-clover coverage.xml .
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
