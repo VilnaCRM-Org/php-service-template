@@ -4,7 +4,7 @@
 
 ![Latest Stable Version](https://poser.pugx.org/VilnaCRM-Org/php-service-template/v/stable.svg)
 [![Test status](https://github.com/VilnaCRM-Org/php-service-template/workflows/Tests/badge.svg)](https://github.com/VilnaCRM-Org/php-service-template/actions)
-[![codecov.io](https://codecov.io/gh/VilnaCRM-Org/php-service-template/branch/main/graph/badge.svg?token=iORZpwmYmM)](https://codecov.io/gh/VilnaCRM-Org/php-service-template)
+[![codecov](https://codecov.io/gh/VilnaCRM-Org/php-service-template/branch/main/graph/badge.svg?token=J3SGCHIFD5)](https://codecov.io/gh/VilnaCRM-Org/php-service-template)
 
 ## Possibilities
 - Modern PHP stack for services: [API Platform 3](https://api-platform.com/), PHP 8, [Symfony 6](https://symfony.com/)
