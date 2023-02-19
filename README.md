@@ -76,9 +76,8 @@ release                      Generate changelogs and release notes from a projec
 release-major                Generate changelogs and commit new major tag from a project's commit messages
 release-minor                Generate changelogs and commit new minor tag from a project's commit messages
 release-patch                Generate changelogs and commit new patch tag from a project's commit messages
-reload                       Load fixtures
 sh                           Log to the docker container
-start                        Start docker and load fixtures
+start                        Start docker
 stats                        Commits by the hour for the main author of this project
 stop                         Stop docker and the Symfony binary server
 up                           Start the docker hub (PHP, caddy)
