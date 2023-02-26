@@ -2,6 +2,13 @@
     "commit-msg": {
         "enabled": true,
         "actions": [
+            {
+                "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Regex",
+                "options": {
+                    "regex": "/^(feat|fix|refactor)\\(\\#\\d+\\):.*$/i",
+                    "error": "The commit message should be in the format: feat|fix|refactor(#1):"
+                }
+            }
         ]
     },
     "pre-push": {
@@ -59,7 +66,7 @@
         ]
     },
     "prepare-commit-msg": {
-        "enabled": false,
+        "enabled": true,
         "actions": [
             {
                 "action": "\\Ramsey\\CaptainHook\\PrepareConventionalCommit"
