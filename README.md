@@ -63,6 +63,7 @@ down                         Stop the docker hub
 first-release                Generate changelog from a project's commit messages for the first release
 fix-perms                    Fix permissions of all var files
 install                      Install vendors according to the current composer.lock file
+update                       update vendors according to the current composer.json file
 load-fixtures                Build the DB, control the schema validity, load fixtures and check the migration status
 logs                         Show all logs
 new-logs                     Show live logs
