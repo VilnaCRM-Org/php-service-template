@@ -87,6 +87,9 @@ release-major: ## Generate changelogs and commit new major tag from a project's 
 install: composer.lock ## Install vendors according to the current composer.lock file
 	@$(COMPOSER) install --no-progress --prefer-dist --optimize-autoloader
 
+update: ## Update vendors according to the current composer.json file
+	@$(COMPOSER) update --no-progress --prefer-dist --optimize-autoloader
+
 cache-warmup: ## Warmup the Symfony cache
 	@$(SYMFONY) cache:warmup
 
