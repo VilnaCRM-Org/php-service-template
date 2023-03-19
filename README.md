@@ -47,6 +47,7 @@ Execute `make` or `make help` to see the full list of project commands.
 The list of the `make` possibilities:
 
 ```
+artillery                    A load testing framework
 behat                        A php framework for autotesting business expectations
 build                        Builds the images (PHP, caddy)
 cache-clear                  Clears and warms up the application cache for a given environment and debug mode

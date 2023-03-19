@@ -1,0 +1,11 @@
+config:
+  target: "https://localhost/"
+  phases:
+    - duration: 10
+      arrivalRate: 10
+
+scenarios:
+  - name: "Basic scenario"
+    flow:
+      - get:
+          url: "/"

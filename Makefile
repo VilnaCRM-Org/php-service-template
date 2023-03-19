@@ -26,6 +26,9 @@ PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
 .RECIPEPREFIX +=
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
+# Variables
+ARTILLERY_FILES := $(notdir $(shell find ${PWD}/tests/Load -type f -name '*.yml'))
+
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
@@ -56,6 +59,9 @@ phpunit: ## The PHP unit testing framework
 
 behat: ## A php framework for autotesting business expectations
 	$(DOCKER_COMPOSE) exec -e APP_ENV=test php ./vendor/bin/behat
+
+artillery: ## run Load testing
+	$(DOCKER) run --rm -v "${PWD}/tests/Load:/tests/Load" artilleryio/artillery:latest run $(addprefix /tests/Load/,$(ARTILLERY_FILES))
 
 doctrine-migrations-migrate: ## Executes a migration to a specified version or the latest available version
 	$(SYMFONY) d:m:m

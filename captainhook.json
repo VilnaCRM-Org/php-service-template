@@ -62,6 +62,11 @@
                 "action": "make behat",
                 "options": [],
                 "conditions": []
+            },
+            {
+                "action": "make artillery",
+                "options": [],
+                "conditions": []
             }
         ]
     },
