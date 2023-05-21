@@ -146,3 +146,6 @@ coverage-html: ## Create the code coverage report with PHPUnit
 
 coverage-xml: ## Create the code coverage report with PHPUnit
 	$(EXEC_PHP) php -d memory_limit=-1 vendor/bin/phpunit --coverage-clover coverage.xml
+
+generate-openapi-spec:
+	$(EXEC_PHP) php bin/console api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
