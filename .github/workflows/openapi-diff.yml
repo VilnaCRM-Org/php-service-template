@@ -8,9 +8,7 @@ jobs:
   openapi-diff:
     runs-on: ubuntu-latest
     steps:
-      - run: echo '${{ toJSON(github) }}'
-      - run: echo '${{ toJSON(env) }}'
-      - run: echo '${{ toJSON(vars) }}'
+      - run: echo '${{ toJSON(github.event.number) }}'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
@@ -38,7 +36,7 @@ jobs:
         with:
           add: '.github/openapi-spec/spec.yaml'
           fetch: false
-          message: 'feat(#1) generate openapi spec'
+          message: 'feat(#${{ toJSON(github.event.number) }}) generate openapi spec'
       - name: Check out master branch
         uses: actions/checkout@v2
         with:
