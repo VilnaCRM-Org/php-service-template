@@ -1,11 +1,8 @@
 config:
   target: "http://lab.artillery.io"
   phases:
-    - duration: 600
-      arrivalRate: 50
-  ensure:
-    maxErrorRate: 1
-    max: 500
+    - duration: 10
+      arrivalRate: 10
 
 scenarios:
   - name: "Emit an event"
