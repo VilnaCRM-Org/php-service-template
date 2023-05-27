@@ -26,15 +26,17 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate openapi spec
         run: php bin/console --env=test api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '.github/openapi-spec/spec.yaml'
       - name: Check out head branch
         uses: actions/checkout@v2
         with:
           path: head
-      - name: Check out master branch
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.github/openapi-spec/spec.yaml'
+          fetch: false
+          message: 'Your commit message'
+      - name: feat(#${{context.issue.number}}) generate openapi spec
         uses: actions/checkout@v2
         with:
           ref: master
