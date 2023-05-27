@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo '${{ toJSON(github) }}'
-      - run: echo '${{ toJSON(context) }}'
+      - run: echo '${{ toJSON(env) }}'
+      - run: echo '${{ toJSON(vars) }}'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
