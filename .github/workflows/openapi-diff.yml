@@ -28,7 +28,7 @@ jobs:
       - name: Generate openapi spec
         run: php bin/console --env=test api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
       - name: Check out head branch
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           path: head
           ref: ${{ github.event.pull_request.head.ref }}
