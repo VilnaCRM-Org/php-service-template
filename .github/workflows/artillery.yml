@@ -21,6 +21,4 @@ jobs:
 
       - name: Run Artillery
         run: |
-          for file in $(find tests/Load/ -type f -name '*.yml'); do
-            artillery run "$file"
-          done
+          find tests/Load/ -type f -name '*.yml' -exec artillery run {} \;
