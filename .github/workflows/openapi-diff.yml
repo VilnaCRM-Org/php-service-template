@@ -37,7 +37,7 @@ jobs:
         with:
           add: '.github/openapi-spec/spec.yaml'
           fetch: false
-          message: 'feat(#${{context.issue.number}}) generate openapi spec'
+          message: 'feat(#1) generate openapi spec'
       - name: Check out master branch
         uses: actions/checkout@v2
         with:
