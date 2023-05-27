@@ -1,24 +1,22 @@
-name: Artillery CI
+name: Artillery Load Test
 
 on:
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  build:
+  artillery:
     runs-on: ubuntu-latest
+
+    container: artilleryio/artillery:latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 12
+      - name: Make reports directory
+        run: mkdir reports
 
-      - name: Install Artillery
-        run: npm install -g artillery
+      - name: Execute load tests
+        run: npx artillery run --output reports/report.json tests/Load/*.yml
 
-      - name: Run Artillery
-        run: |
-          find tests/Load/ -type f -name '*.yml' -exec artillery run {} \;
