@@ -1,11 +1,19 @@
 config:
-  target: "https://localhost/"
+  target: "http://lab.artillery.io"
   phases:
-    - duration: 10
-      arrivalRate: 10
+    - duration: 600
+      arrivalRate: 50
+  ensure:
+    maxErrorRate: 1
+    max: 500
 
 scenarios:
-  - name: "Basic scenario"
+  - name: "Emit an event"
+    engine: "socketio"
     flow:
-      - get:
-          url: "/"
+      - emit:
+          channel: "echo"
+          data: "Hello from Artillery"
+          response:
+            channel: "echoResponse"
+            data: "Hello from Artillery"

@@ -18,7 +18,7 @@ jobs:
         run: mkdir reports
 
       - name: Set permissions for reports directory
-        run: chmod -R 755 reports
+        run: chmod -R 777 reports
 
       - name: Execute load tests
         run: npx artillery run --output reports/report.json tests/Load/*.yml
