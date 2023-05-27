@@ -1,0 +1,26 @@
+name: Artillery CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - name: Install Artillery
+        run: npm install -g artillery
+
+      - name: Run Artillery
+        run: |
+          for file in $(find tests/Load/ -type f -name '*.yml'); do
+            artillery run "$file"
+          done
