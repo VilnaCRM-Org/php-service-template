@@ -1,0 +1,16 @@
+config:
+  target: "http://lab.artillery.io"
+  phases:
+    - duration: 10
+      arrivalRate: 10
+
+scenarios:
+  - name: "Emit an event"
+    engine: "socketio"
+    flow:
+      - emit:
+          channel: "echo"
+          data: "Hello from Artillery"
+          response:
+            channel: "echoResponse"
+            data: "Hello from Artillery"

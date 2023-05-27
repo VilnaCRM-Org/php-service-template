@@ -1,0 +1,25 @@
+name: Artillery Load Test
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  artillery:
+    runs-on: ubuntu-latest
+
+    container: artilleryio/artillery:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Make reports directory
+        run: mkdir reports
+
+      - name: Set permissions for reports directory
+        run: chmod -R 777 reports
+
+      - name: Execute load tests
+        run: npx artillery run --output reports/report.json tests/Load/*.yml
+

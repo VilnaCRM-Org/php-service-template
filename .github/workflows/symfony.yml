@@ -1,0 +1,34 @@
+name: checks
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  symfony-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - uses: actions/checkout@v3
+      - name: Copy .env.test.local
+        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Install Symfony CLI
+        run: wget https://get.symfony.com/cli/installer -O - | bash
+      - name: Composer validate
+        run: composer validate
+      - name: Check symfony requirements
+        run: /home/runner/.symfony5/bin/symfony check:requirements
+      - name: Symfony security check
+        run: /home/runner/.symfony5/bin/symfony security:check

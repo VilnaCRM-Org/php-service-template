@@ -1,0 +1,26 @@
+name: test coverage
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  codecov:
+    runs-on: ubuntu-latest
+    name: run codecov
+    steps:
+      - uses: actions/checkout@master
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+      - name: Install dependencies
+        run: composer self-update && composer install --dev --no-scripts --no-progress && composer dump-autoload
+      - name: Run tests and collect coverage
+        run: vendor/bin/phpunit --coverage-clover coverage.xml
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
