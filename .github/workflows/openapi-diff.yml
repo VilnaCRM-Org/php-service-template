@@ -40,7 +40,7 @@ jobs:
       - name: Check out master branch
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: main
           path: base
       - name: Run OpenAPI Diff (from HEAD revision)
         uses: mvegter/openapi-diff-action@v0.23.5
