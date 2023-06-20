@@ -31,4 +31,7 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate Changelog
         run: ./vendor/bin/conventional-changelog --commit
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'ci(#${{ toJSON(github.event.number) }}): release new version'
 
