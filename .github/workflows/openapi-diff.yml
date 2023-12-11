@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ vars.PHP_VERSION }}
+          php-version: '8.2'
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -43,7 +43,13 @@ jobs:
           ref: main
           path: base
       - name: Run OpenAPI Diff (from HEAD revision)
-        uses: mvegter/openapi-diff-action@v0.23.5
+        uses: LimeFlight/openapi-diff-action@master
         with:
-          head-spec: head/.github/openapi-spec/spec.yaml
-          base-spec: base/.github/openapi-spec/spec.yaml
+          head_spec: head/.github/openapi-spec/spec.yaml
+          base_spec: base/.github/openapi-spec/spec.yaml
+          output_path: ./output
+          github_token: ${{ github.token }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diff-reports
+          path: ./output
