@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: ''
   description: ''
@@ -7,9 +7,63 @@ servers:
   -
     url: /
     description: ''
-paths: []
+paths:
+  /api/example_api_resources:
+    get:
+      operationId: api_example_api_resources_get
+      tags:
+        - ExampleApiResource
+      responses:
+        200:
+          description: 'ExampleApiResource resource'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ExampleApiResource.jsonld'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleApiResource'
+        404:
+          description: 'Resource not found'
+      summary: 'Retrieves a ExampleApiResource resource.'
+      description: 'Retrieves a ExampleApiResource resource.'
+      parameters: []
+      deprecated: false
+    parameters: []
 components:
-  schemas: {  }
+  schemas:
+    ExampleApiResource:
+      type: object
+      description: ''
+      deprecated: false
+    ExampleApiResource.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
   responses: {  }
   parameters: {  }
   examples: {  }

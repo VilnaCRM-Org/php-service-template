@@ -19,18 +19,18 @@
         "doctrine/orm": "^2.13",
         "phpmailer/phpmailer": "^6.6",
         "sebastian/phpcpd": "^6.0",
-        "symfony/asset": "^6.2",
-        "symfony/cache": "^6.2",
-        "symfony/console": "6.2.*",
-        "symfony/dotenv": "6.2.*",
+        "symfony/asset": "^6.3",
+        "symfony/cache": "^6.3",
+        "symfony/console": "6.3.*",
+        "symfony/dotenv": "6.3.*",
         "symfony/flex": "^2.2",
-        "symfony/framework-bundle": "6.2.*",
-        "symfony/proxy-manager-bridge": "6.2.*",
-        "symfony/runtime": "6.2.*",
-        "symfony/translation": "6.2.*",
-        "symfony/twig-bundle": "^6.2",
-        "symfony/validator": "^6.2",
-        "symfony/yaml": "6.2.*",
+        "symfony/framework-bundle": "6.3.*",
+        "symfony/proxy-manager-bridge": "6.3.*",
+        "symfony/runtime": "6.3.*",
+        "symfony/translation": "6.3.*",
+        "symfony/twig-bundle": "^6.3",
+        "symfony/validator": "^6.3",
+        "symfony/yaml": "6.3.*",
         "webonyx/graphql-php": "^14.11"
     },
     "config": {
@@ -85,7 +85,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "6.2.*",
+            "require": "6.3.*",
             "docker": true
         }
     },
@@ -110,5 +110,5 @@
         "vimeo/psalm": "*",
         "weirdan/doctrine-psalm-plugin": "^2.5"
     },
-    "version": "0.0.1"
+    "version": "1.1.0"
 }
