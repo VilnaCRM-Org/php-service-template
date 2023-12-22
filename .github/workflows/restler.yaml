@@ -34,15 +34,12 @@ jobs:
           docker build -t restler .
 
       - name: Create RESTler Bin Directory
-        run: mkdir restler_bin
-
-      - name: Print Project Structure
-        run: ls -R
+        run: mkdir bin
 
       - name: Run RESTler Build Script
         run: |
           cd restler-fuzzer
-          python ./build-restler.py --dest_dir $(pwd)/restler_bin
+          python ./build-restler.py --dest_dir $(pwd)/bin
 
       - name: Print Project Structure
         run: ls -R
