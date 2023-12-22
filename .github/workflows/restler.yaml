@@ -1,9 +1,8 @@
-name: Symfony API Test
+name: Fuzz testing
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   test_api:
