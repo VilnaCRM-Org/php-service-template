@@ -36,10 +36,16 @@ jobs:
       - name: Create RESTler Bin Directory
         run: mkdir restler_bin
 
+      - name: Print Project Structure
+        run: ls -R
+
       - name: Run RESTler Build Script
         run: |
           cd restler-fuzzer
           python ./build-restler.py --dest_dir $(pwd)/restler_bin
+
+      - name: Print Project Structure
+        run: ls -R
 
       - name: Compile RESTler
         run: $(pwd)/restler-fuzzer/restler_bin/restler.exe compile --api_spec ./.github/openapi-spec/spec.yaml
