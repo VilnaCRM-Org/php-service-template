@@ -1,0 +1,56 @@
+name: Symfony API Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET and Python
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Clone RESTler Repository
+        run: git clone https://github.com/microsoft/restler-fuzzer.git
+
+      - name: Build RESTler
+        run: |
+          cd restler-fuzzer
+          docker build -t restler .
+
+      - name: Create RESTler Bin Directory
+        run: mkdir restler_bin
+
+      - name: Run RESTler Build Script
+        run: |
+          cd restler-fuzzer
+          python ./build-restler.py --dest_dir $(pwd)/restler_bin
+
+      - name: Stop Symfony application
+        run: |
+          # Adjust this command based on your Symfony setup
+          docker-compose down
+      - name: Compile RESTler
+        run: ./restler_bin/Restler.exe compile --api_spec ./.github/openapi-spec/spec.yaml
+
+      - name: Test with RESTler
+        run: ./restler_bin/Restler.exe test --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
+
+      - name: Fuzz-lean with RESTler
+        run: ./restler_bin/Restler.exe fuzz-lean --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
+
+      - name: Fuzz with RESTler
+        run: ./restler_bin/Restler.exe fuzz --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl --time_budget 1
