@@ -13,6 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Start Symfony application
+        run: docker-compose up -d
+
       - name: Set up .NET and Python
         uses: actions/setup-dotnet@v1
         with:
@@ -39,10 +42,6 @@ jobs:
           cd restler-fuzzer
           python ./build-restler.py --dest_dir $(pwd)/restler_bin
 
-      - name: Stop Symfony application
-        run: |
-          # Adjust this command based on your Symfony setup
-          docker-compose down
       - name: Compile RESTler
         run: ./restler_bin/Restler.exe compile --api_spec ./.github/openapi-spec/spec.yaml
 
@@ -54,3 +53,6 @@ jobs:
 
       - name: Fuzz with RESTler
         run: ./restler_bin/Restler.exe fuzz --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl --time_budget 1
+
+      - name: Stop Symfony application
+        run: docker-compose down
