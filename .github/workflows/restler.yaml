@@ -16,14 +16,14 @@ jobs:
         run: docker-compose up -d
 
       - name: Set up .NET and Python
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0
+          dotnet-version: '6.0.x'
 
       - name: Install Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+           python-version: '3.8.x'
 
       - name: Clone RESTler Repository
         run: git clone https://github.com/microsoft/restler-fuzzer.git
