@@ -42,7 +42,7 @@ jobs:
         run: ls -R
 
       - name: Compile RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
 
       - name: Test with RESTler
         run: ./restler_bin/Restler.exe test --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
