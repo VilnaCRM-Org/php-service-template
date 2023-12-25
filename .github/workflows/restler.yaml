@@ -29,14 +29,14 @@ jobs:
           mkdir restler_bin
           docker cp restler-container:/RESTler ./restler_bin
 
+      - name: Compile RESTler
+        run: ./restler_bin/RESTler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+
       - name: Print Project Structure
         run: ls -R
 
-      - name: Compile RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
-
       - name: Test with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+        run: ./restler_bin/RESTler/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
 
       - name: Fuzz-lean with RESTler
         run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
