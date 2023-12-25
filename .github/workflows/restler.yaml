@@ -36,22 +36,22 @@ jobs:
       - name: Run RESTler Build Script
         run: |
           cd restler-fuzzer
-          python ./build-restler.py --dest_dir $(pwd)/bin_restler
+          python ./build-restler.py --dest_dir $(pwd)/restler_bin
+
+      - name: Compile RESTler
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+
+      - name: Test with RESTler
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler test --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
+
+      - name: Fuzz-lean with RESTler
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz-lean --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
+
+      - name: Fuzz with RESTler
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl --time_budget 1
 
       - name: Print Project Structure
         run: ls -R
-
-      - name: Compile RESTler
-        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
-
-      - name: Test with RESTler
-        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler test --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
-
-      - name: Fuzz-lean with RESTler
-        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler fuzz-lean --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
-
-      - name: Fuzz with RESTler
-        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler fuzz --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl --time_budget 1
 
       - name: Stop Symfony application
         run: docker-compose down
