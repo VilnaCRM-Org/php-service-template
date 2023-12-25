@@ -42,13 +42,13 @@ jobs:
         run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
 
       - name: Test with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json
 
       - name: Fuzz-lean with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json
 
       - name: Fuzz with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
+        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --time_budget 1
 
       - name: Print coverage failtures
         run: cat ./Test/coverage_failures_to_investigate.txt
