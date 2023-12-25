@@ -22,6 +22,12 @@ jobs:
         run: |
           cd restler-fuzzer
           docker build -t restler .
+          docker run --name restler-container restler
+
+      - name: Copy Data from Docker Container
+        run: |
+          mkdir restler_bin
+          docker cp your-container-name:/RESTler ./restler_bin
 
       - name: Print Project Structure
         run: ls -R
