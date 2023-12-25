@@ -50,6 +50,9 @@ jobs:
       - name: Fuzz with RESTler
         run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
 
+      - name: Print coverage failtures
+        run: cat ./Test/coverage_failures_to_investigate.txt
+
       - name: Print Project Structure
         run: ls -R
 
