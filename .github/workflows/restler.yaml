@@ -27,7 +27,7 @@ jobs:
       - name: Copy Data from Docker Container
         run: |
           mkdir restler_bin
-          docker cp your-container-name:/RESTler ./restler_bin
+          docker cp restler-container:/RESTler ./restler_bin
 
       - name: Print Project Structure
         run: ls -R
