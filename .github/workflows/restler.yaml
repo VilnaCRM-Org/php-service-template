@@ -45,13 +45,13 @@ jobs:
         run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
 
       - name: Test with RESTler
-        run: ./restler_bin/Restler.exe test --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
+        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler test --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
 
       - name: Fuzz-lean with RESTler
-        run: ./restler_bin/Restler.exe fuzz-lean --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
+        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler fuzz-lean --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl
 
       - name: Fuzz with RESTler
-        run: ./restler_bin/Restler.exe fuzz --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl --time_budget 1
+        run: $(pwd)/restler-fuzzer/bin_restler/restler/Restler fuzz --grammar_file ./restler_bin/Compile/grammar.py --dictionary_file ./restler_bin/Compile/dict.json --settings ./restler_bin/Compile/engine_settings.json --no_ssl --time_budget 1
 
       - name: Stop Symfony application
         run: docker-compose down
