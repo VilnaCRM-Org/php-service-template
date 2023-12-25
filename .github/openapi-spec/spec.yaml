@@ -9,13 +9,13 @@ servers:
     description: ''
 paths:
   /api/example_api_resources:
-    get:
-      operationId: api_example_api_resources_get
+    post:
+      operationId: api_example_api_resources_post
       tags:
         - ExampleApiResource
       responses:
-        200:
-          description: 'ExampleApiResource resource'
+        201:
+          description: 'ExampleApiResource resource created'
           content:
             application/ld+json:
               schema:
@@ -23,11 +23,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExampleApiResource'
-        404:
-          description: 'Resource not found'
-      summary: 'Retrieves a ExampleApiResource resource.'
-      description: 'Retrieves a ExampleApiResource resource.'
+          links: {  }
+        400:
+          description: 'Invalid input'
+        422:
+          description: 'Unprocessable entity'
+      summary: 'Creates a ExampleApiResource resource.'
+      description: 'Creates a ExampleApiResource resource.'
       parameters: []
+      requestBody:
+        description: 'The new ExampleApiResource resource'
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ExampleApiResource.jsonld'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExampleApiResource'
+        required: true
       deprecated: false
     parameters: []
 components:

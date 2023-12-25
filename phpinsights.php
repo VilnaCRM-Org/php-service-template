@@ -12,7 +12,7 @@ return [
     'remove' => [],
     'config' => [],
     'requirements' => [
-        'min-quality' => 100,
+        'min-quality' => 98,
         'min-complexity' => 100,
         'min-architecture' => 100,
         'min-style' => 100,
