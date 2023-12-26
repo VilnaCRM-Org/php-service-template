@@ -17,3 +17,5 @@ RUN pip3 install requests applicationinsights
 
 COPY spec.yaml .
 COPY --from=builder /build /RESTler
+
+USER nonroot
