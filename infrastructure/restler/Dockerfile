@@ -23,6 +23,6 @@ COPY spec.yaml .
 COPY --from=builder /build /RESTler
 
 # Set permissions for the directory
-RUN mkdir -p /RestlerLogs && chown -R appuser /RestlerLogs && chmod -R u+rwx /RestlerLogs
+RUN mkdir -p /RestlerLogs && chown -R appuser /RestlerLogs && chmod -R 777 /RestlerLogs
 
 USER appuser
