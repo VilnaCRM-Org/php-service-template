@@ -1,5 +1,5 @@
 resources:
   App\CompanySubdomain\SomeModule\Domain\ExampleApiResource:
     operations:
-      ApiPlatform\Metadata\Post:
+      ApiPlatform\Metadata\Get:
         openapi: true
