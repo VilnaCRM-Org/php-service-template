@@ -2,10 +2,10 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as builder
 
 RUN apk add --no-cache python3 py3-pip
 
-COPY restler-fuzzer/src src
-COPY restler-fuzzer/restler restler
-COPY .github/openapi-spec/spec.yaml spec.yaml
-COPY ./restler-fuzzer/build-restler.py build-restler.py
+COPY restler-fuzzer/src ./src
+COPY restler-fuzzer/restler ./restler
+COPY .github/openapi-spec/spec.yaml .
+COPY restler-fuzzer/build-restler.py .
 
 RUN python3 build-restler.py --dest_dir /build
 
