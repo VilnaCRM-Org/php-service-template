@@ -27,7 +27,7 @@ jobs:
         run: docker run --name restler-container restler
 
       - name: Copy Data from Docker Container
-        run: docker cp restler-container:/RESTler ./restler_bin
+        run: docker cp restler-container:/RESTler $(pwd)/restler_bin
 
       - name: Print Project Structure
         run: ls -R
