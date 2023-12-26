@@ -24,6 +24,9 @@ jobs:
           docker build -t restler .
           docker run --name restler-container restler
 
+      - name: List Files in Container
+        run: docker exec restler-container ls /
+
       - name: Copy Data from Docker Container
         run: docker cp restler-container:/RESTler ./restler_bin
 
@@ -31,19 +34,19 @@ jobs:
         run: ls -R
 
       - name: Compile RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+        run: ./restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
 
       - name: Print Project Structure
         run: ls -R
 
       - name: Test with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+        run: ./restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
 
       - name: Fuzz-lean with RESTler
-        run: $(pwd)/restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+        run: ./restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
 
       - name: Fuzz with RESTler
-        run: $(pwd)/restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
+        run: ./restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
 
       - name: Print coverage failtures
         run: cat ./Test/coverage_failures_to_investigate.txt
