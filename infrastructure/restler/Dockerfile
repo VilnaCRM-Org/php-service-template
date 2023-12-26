@@ -22,4 +22,8 @@ RUN pip3 install requests applicationinsights
 COPY spec.yaml .
 COPY --from=builder /build /RESTler
 
+# Set the working directory and create necessary directories with proper permissions
+WORKDIR /RESTler
+RUN mkdir /RestlerLogs && chown -R appuser /RestlerLogs
+
 USER appuser
