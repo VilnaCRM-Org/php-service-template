@@ -20,4 +20,6 @@ RUN pip3 install requests applicationinsights
 COPY spec.yaml .
 COPY --from=builder /build /RESTler
 
+RUN mkdir /RestlerLogs && chmod 700 /RestlerLogs
+
 USER nonroot
