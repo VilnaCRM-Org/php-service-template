@@ -29,7 +29,7 @@ jobs:
           docker build -t restler .
 
       - name: Run Container
-        run: docker run --name restler-container restler /RESTler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+        run: docker run --name restler-container restler /RESTler/restler/Restler compile --api_spec spec.yaml
 
       - name: Copy Data from Docker Container
         run: docker cp restler-container:/ $(pwd)/restler_bin
