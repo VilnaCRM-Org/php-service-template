@@ -12,20 +12,36 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-#      - name: Start Symfony application
-#        run: docker-compose up -d
+      - name: Start Symfony application
+        run: docker-compose up -d
 
       - name: Clone RESTler Repository
         run: git clone https://github.com/microsoft/restler-fuzzer.git
 
+      - name: Copy files
+        run: |
+          cp ./infrastructure/restler/Dockerfile ./restler-fuzzer/Dockerfile
+          cp ./.github/openapi-spec/spec.yaml ./restler-fuzzer/
+
       - name: Run RESTler Build Script
-        run: docker build -t restler ./infrastructure/restler
+        run: |
+          cd restler-fuzzer
+          docker build -t restler .
 
       - name: Run Container
-        run: docker run --name restler-container restler /RESTler/restler/Restler compile --api_spec spec.yaml
+        run: docker run --name restler-container restler /RESTler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+
+      - name: Copy Data from Docker Container
+        run: docker cp restler-container:/ $(pwd)/restler_bin
+
+      - name: Print Project Structure
+        run: ls -R
 
       - name: Compile RESTler
         run: $(pwd)/restler_bin/RESTler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+
+      - name: Print Project Structure
+        run: ls -R
 
       - name: Test with RESTler
         run: $(pwd)/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
