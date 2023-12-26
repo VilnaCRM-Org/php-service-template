@@ -22,7 +22,9 @@ jobs:
         run: |
           cd restler-fuzzer
           docker build -t restler .
-          docker run --name restler-container restler
+
+      - name: Run Container
+        run: docker run --name restler-container restler
 
       - name: List Files in Container
         run: docker exec restler-container ls /
