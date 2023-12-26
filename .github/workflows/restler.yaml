@@ -15,38 +15,41 @@ jobs:
       - name: Start Symfony application
         run: docker-compose up -d
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.8.x'
-
       - name: Clone RESTler Repository
         run: git clone https://github.com/microsoft/restler-fuzzer.git
 
       - name: Run RESTler Build Script
         run: |
           cd restler-fuzzer
-          python ./build-restler.py --dest_dir $(pwd)/restler_bin
+          docker build -t restler .
+
+      - name: Run Container
+        run: docker run --name restler-container restler
+
+      - name: Copy Data from Docker Container
+        run: docker cp restler-container:/ $(pwd)/restler_bin
+
+      - name: Print Project Structure
+        run: ls -R
 
       - name: Compile RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+        run: $(pwd)/restler_bin/RESTler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+
+      - name: Print Project Structure
+        run: ls -R
 
       - name: Test with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json
+        run: $(pwd)/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
 
       - name: Fuzz-lean with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json
+        run: /restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
 
       - name: Fuzz with RESTler
-        run: $(pwd)/restler-fuzzer/restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --time_budget 1
+        run: /restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
 
       - name: Print coverage failtures
         run: cat ./Test/coverage_failures_to_investigate.txt
 
       - name: Stop Symfony application
         run: docker-compose down
+
