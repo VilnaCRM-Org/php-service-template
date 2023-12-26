@@ -26,14 +26,20 @@ jobs:
       - name: Run Container
         run: docker run --name restler-container restler
 
+      - name: Print current directory
+        run: echo $(pwd)
+
       - name: Copy Data from Docker Container
-        run: docker cp restler-container:/RESTler $(pwd)/restler_bin
+        run: docker cp restler-container:/RESTler ./restler_bin
 
       - name: Print Project Structure
         run: ls -R
 
+      - name: Print current directory
+        run: echo $(pwd)
+
       - name: Compile RESTler
-        run: $(pwd)/restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
+        run: ./restler_bin/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
 
       - name: Print Project Structure
         run: ls -R
