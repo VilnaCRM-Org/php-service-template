@@ -19,7 +19,7 @@ jobs:
         run: git clone https://github.com/microsoft/restler-fuzzer.git
 
       - name: Run RESTler Build Script
-        run: docker build -t restler ./infrastructure/restler/Dockerfile
+        run: docker build -t restler ./infrastructure/restler
 
       - name: Run Container
         run: docker run --name restler-container restler /RESTler/restler/Restler compile --api_spec spec.yaml
