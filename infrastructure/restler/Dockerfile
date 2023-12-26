@@ -10,16 +10,12 @@ RUN python3 build-restler.py --dest_dir /build
 
 RUN python3 -m compileall -b /build/engine
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as target
-
-RUN adduser -D nonroot
-
+# Install necessary dependencies for the target stage
 RUN apk add --no-cache python3 py3-pip
 RUN pip3 install requests applicationinsights
 
-COPY spec.yaml .
+# Copy the required artifacts from the builder stage
 COPY --from=builder /build /RESTler
 
-RUN mkdir /RestlerLogs && chown nonroot /RestlerLogs && chmod 770 /RestlerLogs
-
-USER nonroot
+# Continue with the remaining instructions for the target stage
+COPY spec.yaml .
