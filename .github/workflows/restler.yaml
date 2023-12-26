@@ -29,32 +29,9 @@ jobs:
           docker build -t restler .
 
       - name: Run Container
-        run: docker run --name restler-container restler /RESTler/restler/Restler compile --api_spec spec.yaml
-
-      - name: Copy Data from Docker Container
-        run: docker cp restler-container:/ $(pwd)/restler_bin
-
-      - name: Print Project Structure
-        run: ls -R
-
-      - name: Compile RESTler
-        run: $(pwd)/restler_bin/RESTler/restler/Restler compile --api_spec ./.github/openapi-spec/spec.yaml
-
-      - name: Print Project Structure
-        run: ls -R
-
-      - name: Test with RESTler
-        run: $(pwd)/restler_bin/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
-
-      - name: Fuzz-lean with RESTler
-        run: /restler_bin/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
-
-      - name: Fuzz with RESTler
-        run: /restler_bin/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
-
-      - name: Print coverage failtures
-        run: cat ./Test/coverage_failures_to_investigate.txt
-
-      - name: Stop Symfony application
-        run: docker-compose down
-
+        run:  docker run --name restler-container restler \
+          sh -c "/RESTler/restler/Restler compile --api_spec spec.yaml
+          && /RESTler/restler/Restler test --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+          && /RESTler/restler/Restler fuzz-lean --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl
+          && /RESTler/restler/Restler fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile/dict.json --settings ./Compile/engine_settings.json --no_ssl --time_budget 1
+          && cat ./Test/coverage_failures_to_investigate.txt"

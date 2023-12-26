@@ -18,6 +18,6 @@ final class OpenApiFactory implements OpenApiFactoryInterface
     {
         $openApi = $this->decorated->__invoke($context);
 
-        return $openApi->withServers([new Model\Server('https://0.0.0.0')]);
+        return $openApi->withServers([new Model\Server('https://localhost')]);
     }
 }
