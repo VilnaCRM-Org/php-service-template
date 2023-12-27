@@ -42,14 +42,8 @@ jobs:
         with:
           ref: main
           path: base
-      - name: Run OpenAPI Diff (from HEAD revision)
-        uses: LimeFlight/openapi-diff-action@master
+      - name: Running OpenAPI Spec diff action
+        uses: oasdiff/oasdiff-action/breaking@main
         with:
-          head_spec: head/.github/openapi-spec/spec.yaml
-          base_spec: base/.github/openapi-spec/spec.yaml
-          output_path: ./output
-          github_token: ${{ github.token }}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: diff-reports
-          path: ./output
+          base: base/.github/openapi-spec/spec.yaml
+          revision: head/.github/openapi-spec/spec.yaml
