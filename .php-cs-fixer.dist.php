@@ -8,6 +8,7 @@ $finder = (new PhpCsFixer\Finder())
 return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
+        'phpdoc_align' => false,
     ])
     ->setFinder($finder)
 ;
