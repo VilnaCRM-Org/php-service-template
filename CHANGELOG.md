@@ -4,6 +4,11 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.0.1](https://github.com/VilnaCRM-Org/php-service-template/compare/0.0.0...v0.0.1) (2023-06-20)
+
+
+---
+
 ## [1.1.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.0.0...v1.1.0) (2023-02-10)
 
 ### Features

@@ -1,0 +1,5 @@
+resources:
+  App\CompanySubdomain\SomeModule\Domain\ExampleApiResource:
+    operations:
+      ApiPlatform\Metadata\Get:
+        openapi: true

@@ -125,7 +125,8 @@ new-logs: ## Show live logs
 
 start: up ## Start docker
 
-stop: down ## Stop docker and the Symfony binary server
+stop: ## Stop docker and the Symfony binary server
+	$(DOCKER_COMPOSE) stop
 
 commands: ## List all Symfony commands
 	@$(SYMFONY) list

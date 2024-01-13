@@ -32,7 +32,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           add: '.github/openapi-spec/spec.yaml'
-          message: 'feat(#${{ toJSON(github.event.number) }}) generate openapi spec'
+          message: 'feat(#${{ toJSON(github.event.number) }}): generate openapi spec'
       - name: Check out head branch
         uses: actions/checkout@v2
         with:
@@ -40,10 +40,16 @@ jobs:
       - name: Check out master branch
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: main
           path: base
       - name: Run OpenAPI Diff (from HEAD revision)
-        uses: mvegter/openapi-diff-action@v0.23.5
+        uses: LimeFlight/openapi-diff-action@master
         with:
-          head-spec: head/.github/openapi-spec/spec.yaml
-          base-spec: base/.github/openapi-spec/spec.yaml
+          head_spec: head/.github/openapi-spec/spec.yaml
+          base_spec: base/.github/openapi-spec/spec.yaml
+          output_path: ./output
+          github_token: ${{ github.token }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diff-reports
+          path: ./output
