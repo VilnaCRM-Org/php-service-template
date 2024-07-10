@@ -14,7 +14,7 @@ paths:
       tags:
         - ExampleApiResource
       responses:
-        200:
+        '200':
           description: 'ExampleApiResource resource'
           content:
             application/ld+json:
@@ -23,13 +23,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExampleApiResource'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Retrieves a ExampleApiResource resource.'
       description: 'Retrieves a ExampleApiResource resource.'
       parameters: []
       deprecated: false
-    parameters: []
 components:
   schemas:
     ExampleApiResource:
@@ -72,3 +71,4 @@ components:
   securitySchemes: {  }
 security: []
 tags: []
+webhooks: {  }
