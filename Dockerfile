@@ -1,7 +1,7 @@
 # Builder images
 FROM composer/composer:2-bin AS composer
 
-FROM mlocati/php-extension-installer:latest AS php_extension_installer
+FROM mlocati/php-extension-installer:2.2 AS php_extension_installer
 
 # Build Caddy with the Mercure and Vulcain modules
 FROM caddy:2.8-builder-alpine AS app_caddy_builder
@@ -13,7 +13,7 @@ RUN xcaddy build \
 	--with github.com/dunglas/vulcain/caddy
 
 # Prod image
-FROM php:8.2-fpm-alpine AS app_php
+FROM php:8.3-fpm-alpine AS app_php
 
 # Allow to use development versions of Symfony
 ARG STABILITY="stable"

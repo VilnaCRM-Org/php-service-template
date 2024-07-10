@@ -43,12 +43,9 @@ jobs:
           ref: main
           path: base
       - name: Run OpenAPI Diff (from HEAD revision)
-        uses: LimeFlight/openapi-diff-action@master
+        uses: docker://openapitools/openapi-diff:latest
         with:
-          head_spec: head/.github/openapi-spec/spec.yaml
-          base_spec: base/.github/openapi-spec/spec.yaml
-          output_path: ./output
-          github_token: ${{ github.token }}
+          args: "/github/workspace/head/.github/openapi-spec/spec.yaml /github/workspace/base/.github/openapi-spec/spec.yaml"
       - uses: actions/upload-artifact@v2
         with:
           name: diff-reports
