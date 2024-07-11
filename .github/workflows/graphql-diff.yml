@@ -30,7 +30,7 @@ jobs:
         run: make generate-graphql-spec
 
       - name: Copy openapi spec to host
-        run: docker cp php-service-template-1:/srv/app/.github/graphql-spec/spec .github/graphql-spec/spec
+        run: docker cp php-service-template-php-1:/srv/app/.github/graphql-spec/spec .github/graphql-spec/spec
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
