@@ -1,0 +1,40 @@
+name: GraphQL spec backward comparability
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  graphql-diff:
+    name: Openapi-diff
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Start application
+        run: make start
+
+      - name: Generate GraphQL spec
+        run: make generate-graphql-spec
+
+      - name: Copy openapi spec to host
+        run: docker cp php-service-template-1:/srv/app/.github/graphql-spec/spec .github/graphql-spec/spec
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.github/graphql-spec/spec'
+          message: 'feat(#${{ toJSON(github.event.number) }}): generate graphql spec'
+
+      - name: GraphQL Inspector
+        uses: kamilkisiela/graphql-inspector@release-1701263349990
+        with:
+          schema: 'master:.github/graphql-spec/spec'

@@ -20,6 +20,8 @@ SYMFONY_BIN   = $(EXEC_PHP) symfony
 PHPUNIT       = ./vendor/bin/phpunit
 PSALM         = $(EXEC_PHP) ./vendor/bin/psalm
 PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
+DEPTRAC 	  = ./vendor/bin/deptrac
+INFECTION 	  = ./vendor/bin/infection
 
 # Misc
 .DEFAULT_GOAL = help
@@ -56,6 +58,12 @@ phpinsights: ## Instant PHP quality checks and static analysis tool
 
 phpunit: ## The PHP unit testing framework
 	$(EXEC_PHP) ./vendor/bin/phpunit
+
+deptrac: ## Check directory structure
+	$(DEPTRAC) analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered
+
+deptrac-debug: ## Find files unassigned for Deptrac
+	$(DEPTRAC) debug:unassigned --config-file=deptrac.yaml
 
 behat: ## A php framework for autotesting business expectations
 	$(DOCKER_COMPOSE) exec -e APP_ENV=test php ./vendor/bin/behat
@@ -150,3 +158,5 @@ coverage-xml: ## Create the code coverage report with PHPUnit
 
 generate-openapi-spec:
 	$(EXEC_PHP) php bin/console api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
+generate-graphql-spec:
+		$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec
