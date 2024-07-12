@@ -20,9 +20,6 @@ jobs:
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
-      - name: Install Symfony Runtime
-        run: composer require symfony/runtime
-
       - name: Start application
         run: make start
 
