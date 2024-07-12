@@ -20,22 +20,8 @@ jobs:
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
-      - name: Cache Composer Dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
       - name: Install Dependencies with Retry
-        run: |
-          retry=3
-          while [ $retry -gt 0 ]; do
-            composer install --prefer-dist --no-progress --no-scripts && break
-            retry=$(($retry - 1))
-            sleep 5
-          done
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Start Application
         run: make start
