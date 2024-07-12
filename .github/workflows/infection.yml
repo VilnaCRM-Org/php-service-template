@@ -14,10 +14,10 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: ${{ vars.PHP_VERSION }}
 
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: make install
 
       - name: Run infection
         run: make ci-infection

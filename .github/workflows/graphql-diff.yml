@@ -18,7 +18,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: ${{ vars.PHP_VERSION }}
 
       - name: Install Symfony Runtime
         run: composer require symfony/runtime
