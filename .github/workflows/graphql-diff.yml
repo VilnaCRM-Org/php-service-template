@@ -23,6 +23,9 @@ jobs:
       - name: Start application
         run: make start
 
+      - name: Install dependency
+        run: make install
+
       - name: Generate GraphQL spec
         run: make generate-graphql-spec
 
