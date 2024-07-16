@@ -1,3 +1,6 @@
+# Load environment variables from .env.test
+include .env.test
+
 # Parameters
 PROJECT       = php-service-template
 GIT_AUTHOR    = Kravalg
@@ -11,10 +14,12 @@ DOCKER_COMPOSE   = docker compose
 EXEC_PHP      = $(DOCKER_COMPOSE) exec php
 COMPOSER      = $(EXEC_PHP) composer
 GIT           = git
+EXEC_PHP_TEST_ENV = $(DOCKER_COMPOSE) exec -e APP_ENV=test php
 
 # Alias
 SYMFONY       = $(EXEC_PHP) bin/console
 SYMFONY_BIN   = $(EXEC_PHP) symfony
+SYMFONY_TEST_ENV = $(EXEC_PHP_TEST_ENV) bin/console
 
 # Executables: vendors
 PHPUNIT       = ./vendor/bin/phpunit
@@ -28,8 +33,12 @@ INFECTION 	  = ./vendor/bin/infection
 .RECIPEPREFIX +=
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
-# Variables
-ARTILLERY_FILES := $(notdir $(shell find ${PWD}/tests/Load -type f -name '*.yml'))
+# For using local php instead of php inside docker container
+ifeq ($(CI),1)
+    EXEC_PHP = php
+else
+    EXEC_PHP = $(DOCKER_COMPOSE) exec php
+endif
 
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
@@ -56,8 +65,12 @@ psalm-security: ## Psalm security analysis
 phpinsights: ## Instant PHP quality checks and static analysis tool
 	$(EXEC_PHP) ./vendor/bin/phpinsights --no-interaction
 
-phpunit: ## The PHP unit testing framework
-	$(EXEC_PHP) ./vendor/bin/phpunit
+ci-phpinsights:
+	vendor/bin/phpinsights -n --ansi --format=github-action
+	vendor/bin/phpinsights analyse tests -n --ansi --format=github-action
+
+unit-tests: ## Run unit tests
+	$(EXEC_PHP_TEST_ENV) ./vendor/bin/phpunit --testsuite=Unit
 
 deptrac: ## Check directory structure
 	$(DEPTRAC) analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered
@@ -68,8 +81,46 @@ deptrac-debug: ## Find files unassigned for Deptrac
 behat: ## A php framework for autotesting business expectations
 	$(DOCKER_COMPOSE) exec -e APP_ENV=test php ./vendor/bin/behat
 
-artillery: ## run Load testing
-	$(DOCKER) run --rm -v "${PWD}/tests/Load:/tests/Load" artilleryio/artillery:latest run $(addprefix /tests/Load/,$(ARTILLERY_FILES))
+integration-tests: ## Run integration tests
+	$(EXEC_PHP_TEST_ENV) ./vendor/bin/phpunit --testsuite=Integration
+
+ci-tests:
+	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage -e APP_ENV=test php sh -c 'php -d memory_limit=-1 ./vendor/bin/phpunit --coverage-clover /coverage/coverage.xml'
+
+e2e-tests: ## Run end-to-end tests
+	$(EXEC_PHP_TEST_ENV) ./vendor/bin/behat
+
+setup-test-db: ## Create database for testing purposes
+	$(SYMFONY_TEST_ENV) c:c
+	$(SYMFONY_TEST_ENV) doctrine:database:drop --force --if-exists
+	$(SYMFONY_TEST_ENV) doctrine:database:create
+	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
+
+all-tests: unit-tests integration-tests e2e-tests ## Run unit, integration and e2e tests
+
+smoke-load-tests: build-k6-docker ## Run load tests with minimal load
+	tests/Load/run-smoke-load-tests.sh
+
+average-load-tests: build-k6-docker ## Run load tests with average load
+	tests/Load/run-average-load-tests.sh
+
+stress-load-tests: build-k6-docker ## Run load tests with high load
+	tests/Load/run-stress-load-tests.sh
+
+spike-load-tests: build-k6-docker ## Run load tests with a spike of extreme load
+	tests/Load/run-spike-load-tests.sh
+
+load-tests: build-k6-docker ## Run load tests
+	tests/Load/run-load-tests.sh
+
+build-k6-docker:
+	$(DOCKER) build -t k6 -f ./tests/Load/Dockerfile .
+
+infection: ## Run mutation testing
+	$(DOCKER_COMPOSE) exec php sh -c 'php -d memory_limit=-1 ./vendor/bin/infection --test-framework-options="--testsuite=Unit" --show-mutations -j8'
+
+execute-load-tests-script: build-k6-docker ## Execute single load test scenario.
+	tests/Load/execute-load-test.sh $(scenario) $(or $(runSmoke),true) $(or $(runAverage),true) $(or $(runStress),true) $(or $(runSpike),true)
 
 doctrine-migrations-migrate: ## Executes a migration to a specified version or the latest available version
 	$(SYMFONY) d:m:m
@@ -131,7 +182,7 @@ logs: ## Show all logs
 new-logs: ## Show live logs
 	@$(DOCKER_COMPOSE) logs --tail=0 --follow
 
-start: up ## Start docker
+start: up doctrine-migrations-migrate ## Start docker
 
 stop: ## Stop docker and the Symfony binary server
 	$(DOCKER_COMPOSE) stop
@@ -158,5 +209,6 @@ coverage-xml: ## Create the code coverage report with PHPUnit
 
 generate-openapi-spec:
 	$(EXEC_PHP) php bin/console api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
+
 generate-graphql-spec:
 		$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec

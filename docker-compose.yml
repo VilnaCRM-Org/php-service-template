@@ -51,6 +51,16 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
 
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
+      - POSTGRES_USER=${POSTGRES_USER:-app}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
@@ -59,5 +69,6 @@ volumes:
   php_socket:
   caddy_data:
   caddy_config:
+  db_data:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###

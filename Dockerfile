@@ -40,10 +40,14 @@ RUN apk add --no-cache \
 
 RUN set -eux; \
     install-php-extensions \
-    	intl \
-    	zip \
-    	apcu \
-		opcache \
+        intl \
+        zip \
+        apcu \
+        opcache \
+        pdo_pgsql \
+        redis \
+        openssl \
+        xsl \
     ;
 
 ###> recipes ###

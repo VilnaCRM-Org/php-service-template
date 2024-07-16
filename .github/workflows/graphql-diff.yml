@@ -1,4 +1,4 @@
-name: GraphQL spec backward compatibility
+name: GraphQL spec backward comparability
 
 on:
   pull_request:
@@ -10,29 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ vars.PHP_VERSION }}
-
-      - name: Install Dependencies with Retry
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-      - name: Start Application
+      - name: Start application
         run: make start
 
-      - name: Generate GraphQL Spec
+      - name: Setup test db
+        run: make setup-test-db
+
+      - name: Generate GraphQL spec
         run: make generate-graphql-spec
 
-      - name: Copy GraphQL Spec to Host
+      - name: Copy openapi spec to host
         run: docker cp php-service-template-php-1:/srv/app/.github/graphql-spec/spec .github/graphql-spec/spec
 
-      - name: Commit Changes
+      - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
           add: '.github/graphql-spec/spec'

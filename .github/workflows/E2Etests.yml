@@ -1,0 +1,23 @@
+name: E2E testing
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  behat:
+    name: Behat
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Start application
+        run: make start
+
+      - name: Setup test db
+        run: make setup-test-db
+
+      - name: Run Behat tests
+        run: make e2e-tests
