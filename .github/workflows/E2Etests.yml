@@ -17,7 +17,7 @@ jobs:
         run: make start
 
       - name: Composer install
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-suggest --no-scripts
 
       - name: Setup test db
         run: make setup-test-db
