@@ -116,8 +116,12 @@ load-tests: build-k6-docker ## Run load tests
 build-k6-docker:
 	$(DOCKER) build -t k6 -f ./tests/Load/Dockerfile .
 
-infection: ## Run mutation testing
-	$(DOCKER_COMPOSE) exec php sh -c 'php -d memory_limit=-1 ./vendor/bin/infection --test-framework-options="--testsuite=Unit" --show-mutations -j8'
+infection:
+	if [ "$$CI" = "1" ]; then \
+		php -d memory_limit=-1 ./vendor/bin/infection --test-framework-options="--testsuite=Unit" --show-mutations -j8; \
+	else \
+		$(DOCKER_COMPOSE) exec php sh -c 'php -d memory_limit=-1 ./vendor/bin/infection --test-framework-options="--testsuite=Unit" --show-mutations -j8'; \
+	fi
 
 execute-load-tests-script: build-k6-docker ## Execute single load test scenario.
 	tests/Load/execute-load-test.sh $(scenario) $(or $(runSmoke),true) $(or $(runAverage),true) $(or $(runStress),true) $(or $(runSpike),true)
