@@ -20,6 +20,9 @@ jobs:
       - name: Start Application
         run: make start
 
+      - name: Composer update
+        run: make update
+
       - name: Install Dependencies
         run: make install
 
