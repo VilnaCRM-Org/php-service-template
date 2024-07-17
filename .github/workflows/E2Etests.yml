@@ -13,18 +13,24 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Set Permissions
+        run: sudo chmod -R 777 .
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      - name: Start application
+      - name: Clear Composer Cache
+        run: composer clear-cache
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress --no-scripts
+
+      - name: Start Application
         run: make start
 
-      - name: Composer install
-        run: composer install --prefer-dist --no-progress --no-suggest --no-scripts
-
-      - name: Setup test db
+      - name: Setup Test Database
         run: make setup-test-db
 
-      - name: Run Behat tests
+      - name: Run Behat Tests
         run: make e2e-tests
