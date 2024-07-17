@@ -13,21 +13,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set Permissions
-        run: sudo chmod -R 777 .
-
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
-      - name: Clear Composer Cache
-        run: composer clear-cache
-
-      - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-scripts
-
       - name: Start Application
         run: make start
+
+      - name: Install Dependencies
+        run: make install
 
       - name: Setup Test Database
         run: make setup-test-db
