@@ -33,13 +33,6 @@ INFECTION 	  = ./vendor/bin/infection
 .RECIPEPREFIX +=
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
-# For using local php instead of php inside docker container
-ifeq ($(CI),1)
-    EXEC_PHP = php
-else
-    EXEC_PHP = $(DOCKER_COMPOSE) exec php
-endif
-
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
@@ -116,7 +109,7 @@ load-tests: build-k6-docker ## Run load tests
 build-k6-docker:
 	$(DOCKER) build -t k6 -f ./tests/Load/Dockerfile .
 
-infection:
+infection: ## Run mutations test.
 	if [ "$$CI" = "1" ]; then \
 		php -d memory_limit=-1 ./vendor/bin/infection --test-framework-options="--testsuite=Unit" --show-mutations -j8; \
 	else \
