@@ -17,14 +17,11 @@ jobs:
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
-      - name: Start Application
-        run: make start
-
-      - name: Set Permissions
-        run: sudo chown -R runner:runner .
-
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Start Application
+        run: make start
 
       - name: Setup Test Database
         run: make setup-test-db
