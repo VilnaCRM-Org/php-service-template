@@ -20,11 +20,8 @@ jobs:
       - name: Start Application
         run: make start
 
-      - name: Composer update
-        run: make update
-
       - name: Install Dependencies
-        run: make install
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Setup Test Database
         run: make setup-test-db
