@@ -28,8 +28,6 @@ jobs:
         run: wget https://get.symfony.com/cli/installer -O - | bash
       - name: Composer validate
         run: composer validate
-      - name: Composer dump-autoload
-        run: composer dump-autoload
       - name: Check symfony requirements
         run: /home/runner/.symfony5/bin/symfony check:requirements
       - name: Symfony security check
