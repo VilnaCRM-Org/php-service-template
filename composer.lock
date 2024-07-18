@@ -7434,7 +7434,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Common\\DataFixtures\\": "src"
+                    "Doctrine\\Common\\DataFixtures\\": "tests"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -7512,7 +7512,7 @@
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Bundle\\FixturesBundle\\": "src"
+                    "Doctrine\\Bundle\\FixturesBundle\\": "tests"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
