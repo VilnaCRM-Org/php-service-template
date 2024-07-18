@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c7466a9f62d595bef3babcfd7b5ee7e",
+    "content-hash": "ecf880166d6234e1799118f5f804ae0e",
     "packages": [
         {
             "name": "api-platform/core",
@@ -7434,7 +7434,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Common\\DataFixtures\\": "src/"
+                    "Doctrine\\Common\\DataFixtures\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

@@ -92,6 +92,7 @@
         "behat/behat": "^3.12",
         "captainhook/captainhook": "^5.22",
         "captainhook/plugin-composer": "^5.3",
+        "doctrine/data-fixtures": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friends-of-behat/symfony-extension": "^2.4",
         "friendsofphp/php-cs-fixer": "^3.14",
