@@ -7434,7 +7434,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Common\\DataFixtures\\": "src"
+                    "Doctrine\\Common\\DataFixtures\\": "tests"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
