@@ -19,7 +19,7 @@ jobs:
         run: make setup-test-db
 
       - name: Execute Unit and Integration tests
-        run: make ci-tests
+        run: vendor/bin/phpunit --coverage-clover coverage.xml
 
       - name: Copy coverage report to host
         run: docker cp php-service-template-php-1:/coverage/coverage.xml /tmp
