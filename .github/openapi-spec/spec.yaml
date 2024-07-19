@@ -19,7 +19,7 @@ paths:
           content:
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleApiResource.jsonld'
+                $ref: '#/components/schemas/ExampleApiResource.jsonld.output'
             application/json:
               schema:
                 $ref: '#/components/schemas/ExampleApiResource'
@@ -35,13 +35,12 @@ components:
       type: object
       description: ''
       deprecated: false
-    ExampleApiResource.jsonld:
+    ExampleApiResource.jsonld.output:
       type: object
       description: ''
       deprecated: false
       properties:
         '@context':
-          readOnly: true
           oneOf:
             -
               type: string
@@ -58,11 +57,13 @@ components:
                 - hydra
               additionalProperties: true
         '@id':
-          readOnly: true
           type: string
         '@type':
-          readOnly: true
           type: string
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
   responses: {  }
   parameters: {  }
   examples: {  }
