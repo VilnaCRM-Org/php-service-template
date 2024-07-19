@@ -16,6 +16,9 @@ jobs:
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
+      - name: Install dependencies
+        run: composer self-update && composer install --dev --no-scripts --no-progress && composer dump-autoload
+
       - name: Start application
         run: make start
 
