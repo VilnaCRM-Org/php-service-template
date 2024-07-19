@@ -131,6 +131,9 @@ stop: ## Stop docker and the Symfony binary server
 commands: ## List all Symfony commands
 	@$(SYMFONY) list
 
+ci-tests:
+	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage -e APP_ENV=test php sh -c 'php -d memory_limit=-1 ./vendor/bin/phpunit --coverage-clover /coverage/coverage.xml'
+
 load-fixtures: ## Build the DB, control the schema validity, load fixtures and check the migration status
 	@$(SYMFONY) doctrine:cache:clear-metadata
 	@$(SYMFONY) doctrine:database:create --if-not-exists
