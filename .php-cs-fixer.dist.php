@@ -11,7 +11,8 @@ return (new PhpCsFixer\Config())
         'yoda_style' => [
             'equal' => false,
             'identical' => false,
-            'less_and_greater' => false
+            'less_and_greater' =>
+                false
         ],
         'nullable_type_declaration' => ['syntax' => 'question_mark'],
         'class_definition' => [

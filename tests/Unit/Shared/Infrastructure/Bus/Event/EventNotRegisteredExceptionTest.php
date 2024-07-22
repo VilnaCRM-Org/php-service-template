@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Shared\Infrastructure\Bus\Event;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
-use App\Shared\Infrastructure\Bus\Event\EventNotRegisteredException;
+use App\Shared\Infrastructure\Bus\Event\EventNotRegistered;
 use App\Tests\Unit\UnitTestCase;
 
 final class EventNotRegisteredExceptionTest extends UnitTestCase
@@ -15,7 +15,7 @@ final class EventNotRegisteredExceptionTest extends UnitTestCase
         $event = $this->createMock(DomainEvent::class);
         $eventClass = $event::class;
 
-        $exception = new EventNotRegisteredException($event);
+        $exception = new EventNotRegistered($event);
 
         $expectedMessage =
             "The event <{$eventClass}> hasn't an event handler associated";

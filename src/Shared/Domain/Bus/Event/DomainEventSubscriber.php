@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\Bus\Event;
 
-interface DomainEventSubscriberInterface
+interface DomainEventSubscriber
 {
     /**
      * @return array<DomainEvent>

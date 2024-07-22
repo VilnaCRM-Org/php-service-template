@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Shared\Infrastructure\Bus\Event;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
-use App\Shared\Infrastructure\Bus\Event\EventNotRegisteredException;
+use App\Shared\Infrastructure\Bus\Event\EventNotRegistered;
 use App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus;
 use App\Shared\Infrastructure\Bus\MessageBusFactory;
 use App\Tests\Unit\UnitTestCase;
@@ -45,7 +45,7 @@ final class InMemorySymfonyEventBusTest extends UnitTestCase
             $this->eventSubscribers
         );
 
-        $this->expectException(EventNotRegisteredException::class);
+        $this->expectException(EventNotRegistered::class);
 
         $eventBus->publish($event);
     }

@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus\Command;
 
-use App\Shared\Domain\Bus\Command\CommandBusInterface;
-use App\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use App\Shared\Domain\Bus\Command\CommandInterface;
+use App\Shared\Domain\Bus\Command\Command;
+use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Infrastructure\Bus\MessageBusFactory;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBus;
 
-class InMemorySymfonyCommandBus implements CommandBusInterface
+final class InMemorySymfonyCommandBus implements CommandBus
 {
     private MessageBus $bus;
 
     /**
-     * @param iterable<CommandHandlerInterface> $commandHandlers
+     * @param iterable<CommandHandler> $commandHandlers
      */
     public function __construct(
         MessageBusFactory $busFactory,
@@ -29,12 +29,12 @@ class InMemorySymfonyCommandBus implements CommandBusInterface
     /**
      * @throws \Throwable
      */
-    public function dispatch(CommandInterface $command): void
+    public function dispatch(Command $command): void
     {
         try {
             $this->bus->dispatch($command);
         } catch (NoHandlerForMessageException) {
-            throw new CommandNotRegisteredException($command);
+            throw new CommandNotRegistered($command);
         } catch (HandlerFailedException $error) {
             throw $error->getPrevious() ?? $error;
         }

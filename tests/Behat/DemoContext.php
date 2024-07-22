@@ -30,11 +30,11 @@ final class DemoContext implements Context
      */
     public function theResponseShouldBeReceived(): void
     {
-        if (null === $this->response) {
+        if ($this->response === null) {
             throw new \RuntimeException('No response received');
         }
 
-        if (Response::HTTP_OK !== $this->response->getStatusCode()) {
+        if ($this->response->getStatusCode() !== Response::HTTP_OK) {
             throw new \RuntimeException('Response status code is not 200');
         }
     }

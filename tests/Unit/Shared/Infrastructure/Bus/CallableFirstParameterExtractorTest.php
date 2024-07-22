@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Shared\Infrastructure\Bus;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
-use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
+use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use App\Shared\Infrastructure\Bus\CallableFirstParameterExtractor;
 use App\Tests\Unit\UnitTestCase;
 
@@ -20,7 +20,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
     public function testExtractForCallables(): void
     {
-        $subscriber = new class() implements DomainEventSubscriberInterface {
+        $subscriber = new class() implements DomainEventSubscriber {
             /**
              * @return array<string>
              */
@@ -65,7 +65,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
     public function testExtract(): void
     {
         $subscriberClass =
-            new class() implements DomainEventSubscriberInterface {
+            new class() implements DomainEventSubscriber {
                 /**
                  * @return array<string>
                  */
@@ -87,7 +87,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
     public function testExtractWithError(): void
     {
         $subscriberClass =
-            new class() implements DomainEventSubscriberInterface {
+            new class() implements DomainEventSubscriber {
                 /**
                  * @return array<string>
                  */
@@ -108,8 +108,8 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
     private function getSubscriberWithEmptyInvoke(
         string $class
-    ): callable|DomainEventSubscriberInterface {
-        return new class($class) implements DomainEventSubscriberInterface {
+    ): callable|DomainEventSubscriber {
+        return new class($class) implements DomainEventSubscriber {
             public function __construct(private string $subscribedTo)
             {
             }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Shared\Application\Transformer;
 
 use App\Shared\Application\Transformer\UuidTransformer;
-use App\Shared\Domain\ValueObject\Uuid;
+use App\Shared\Domain\ValueObject\UuidImpl;
 use App\Tests\Unit\UnitTestCase;
 use Symfony\Component\Uid\AbstractUid;
 
@@ -22,7 +22,7 @@ final class UuidTransformerTest extends UnitTestCase
 
         $result = $uuidTransformer->transformFromSymfonyUuid($symfonyUuid);
 
-        $expectedUuid = new Uuid($uuid);
+        $expectedUuid = new UuidImpl($uuid);
         $this->assertEquals($expectedUuid, $result);
     }
 
@@ -34,7 +34,7 @@ final class UuidTransformerTest extends UnitTestCase
 
         $result = $uuidTransformer->transformFromString($uuid);
 
-        $expectedUuid = new Uuid($uuid);
+        $expectedUuid = new UuidImpl($uuid);
         $this->assertEquals($expectedUuid, $result);
     }
 }
