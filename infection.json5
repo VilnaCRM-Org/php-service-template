@@ -3,14 +3,11 @@
   "source": {
     "directories": [
       "src"
-    ],
-    "excludes": [
-      "DataFixtures",
     ]
   },
   "logs": {
     "text": "infection.log",
-    "summary": "summary.log",
+    "summary": "summary.log"
   },
   "mutators": {
     "@default": true
