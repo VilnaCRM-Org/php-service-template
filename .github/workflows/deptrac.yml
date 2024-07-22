@@ -1,0 +1,23 @@
+name: Architecture static analysis tool
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deptrac:
+    name: Deptrac
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ vars.PHP_VERSION }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run Deptrac
+        run: make deptrac

@@ -1,0 +1,30 @@
+name: Load testing
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  load-tests:
+    name: K6
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ vars.PHP_VERSION }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Start application
+        run: make start
+
+      - name: Setup test db
+        run: make setup-test-db
+
+      - name: Run load tests
+        run: make smoke-load-tests

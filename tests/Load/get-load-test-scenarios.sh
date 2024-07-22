@@ -1,0 +1,1 @@
+find ./tests/Load/scripts -name "*.js" -exec basename {} .js \;
