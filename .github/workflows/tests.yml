@@ -1,30 +1,41 @@
-name: testing
+name: Unit and Integration testing
 
 on:
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  symfony-tests:
+  tests:
+    name: PHPUnit
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
-      - uses: actions/checkout@v3
-      - name: Copy .env.test.local
-        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v3
+
+      - name: Install dependencies
+        run: composer self-update && composer install --dev --no-scripts --no-progress && composer dump-autoload
+
+      - name: Start application
+        run: make start
+
+      - name: Setup test db
+        run: make setup-test-db
+
+      - name: Execute Unit and Integration tests
+        run: make ci-tests
+
+      - name: Copy coverage report to host
+        run: docker cp php-service-template-php-1:/coverage/coverage.xml /tmp
+
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v3
         with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: vendor/bin/phpunit
-      - name: Execute tests via Behat
-        run: vendor/bin/behat
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: /tmp/coverage.xml
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
