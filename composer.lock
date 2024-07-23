@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e9aed574f7c9172bc893e30caa050e8",
+    "content-hash": "74b619631b135b5d3c3fa937cfb5f9a7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -193,7 +193,59 @@
                 "source": "https://github.com/api-platform/core/tree/v3.3.11"
             },
             "time": "2024-07-20T08:19:33+00:00"
-
+        },
+        {
+            "name": "cfpinto/graphql",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cfpinto/graphql.git",
+                "reference": "94691ee8238c80c243dcf3636efb4546df5b86f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cfpinto/graphql/zipball/94691ee8238c80c243dcf3636efb4546df5b86f4",
+                "reference": "94691ee8238c80c243dcf3636efb4546df5b86f4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "8.*"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.13",
+                "phpunit/phpunit": "^9.5",
+                "spatie/phpunit-watcher": "^1.23",
+                "squizlabs/php_codesniffer": "^3.7",
+                "symfony/var-dumper": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Claudio Pinto",
+                    "email": "me@cfpinto.com"
+                }
+            ],
+            "description": "A GraphQL query builder class",
+            "homepage": "https://github.com/cfpinto/graphql",
+            "keywords": [
+                "graphql",
+                "query builder"
+            ],
+            "support": {
+                "issues": "https://github.com/cfpinto/graphql/issues",
+                "source": "https://github.com/cfpinto/graphql/tree/v2.0.0"
+            },
+            "time": "2023-01-20T17:13:41+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1520,51 +1572,6 @@
                 "source": "https://github.com/doctrine/sql-formatter/tree/1.4.0"
             },
             "time": "2024-05-08T08:12:09+00:00"
-        },
-        {
-            "name": "dpauli/graphql-request-builder",
-            "version": "1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dpauli/php-graphql-request-builder.git",
-                "reference": "21a7ba9588e7063c36ce615632b38a3e48c0baff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dpauli/php-graphql-request-builder/zipball/21a7ba9588e7063c36ce615632b38a3e48c0baff",
-                "reference": "21a7ba9588e7063c36ce615632b38a3e48c0baff",
-                "shasum": ""
-            },
-            "require": {
-                "blackbonjour/stdlib": "3.*",
-                "ext-json": "*",
-                "php": ">=7.4.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "3.*",
-                "phpmd/phpmd": "2.*",
-                "phpstan/phpstan": "0.*",
-                "phpunit/phpunit": "9.*",
-                "squizlabs/php_codesniffer": "3.*",
-                "vimeo/psalm": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "GraphQL\\RequestBuilder\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Request Builder for GraphQL payload",
-            "homepage": "https://github.com/dpauli/php-graphql-request-builder",
-            "support": {
-                "issues": "https://github.com/dpauli/php-graphql-request-builder/issues",
-                "source": "https://github.com/dpauli/php-graphql-request-builder/tree/1.8.0"
-            },
-            "time": "2021-05-13T20:07:50+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
