@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed6d34f9bfbe1152864078328454b76a",
+    "content-hash": "7d4e2057f9a245bbe889952d2670efd3",
     "packages": [
         {
             "name": "api-platform/core",
@@ -193,6 +193,119 @@
                 "source": "https://github.com/api-platform/core/tree/v3.3.11"
             },
             "time": "2024-07-20T08:19:33+00:00"
+        },
+        {
+            "name": "blackbonjour/stdlib",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BlackBonjour/stdlib.git",
+                "reference": "2c2538996b19a0cb32f5d9a6a626880e1542b93a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BlackBonjour/stdlib/zipball/2c2538996b19a0cb32f5d9a6a626880e1542b93a",
+                "reference": "2c2538996b19a0cb32f5d9a6a626880e1542b93a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BlackBonjour\\Stdlib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erick Dyck",
+                    "email": "info@erickdyck.de",
+                    "homepage": "http://www.erickdyck.de"
+                }
+            ],
+            "description": "Standard library for PHP",
+            "homepage": "https://github.com/BlackBonjour/stdlib",
+            "keywords": [
+                "assertion",
+                "hashmap",
+                "manipulation",
+                "map",
+                "php",
+                "stdlib",
+                "string",
+                "utf-8",
+                "util",
+                "utility"
+            ],
+            "support": {
+                "issues": "https://github.com/BlackBonjour/stdlib/issues",
+                "source": "https://github.com/BlackBonjour/stdlib",
+                "wiki": "https://github.com/BlackBonjour/stdlib/wiki"
+            },
+            "time": "2022-06-01T12:07:10+00:00"
+        },
+        {
+            "name": "cfpinto/graphql",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cfpinto/graphql.git",
+                "reference": "94691ee8238c80c243dcf3636efb4546df5b86f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cfpinto/graphql/zipball/94691ee8238c80c243dcf3636efb4546df5b86f4",
+                "reference": "94691ee8238c80c243dcf3636efb4546df5b86f4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "8.*"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.13",
+                "phpunit/phpunit": "^9.5",
+                "spatie/phpunit-watcher": "^1.23",
+                "squizlabs/php_codesniffer": "^3.7",
+                "symfony/var-dumper": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Claudio Pinto",
+                    "email": "me@cfpinto.com"
+                }
+            ],
+            "description": "A GraphQL query builder class",
+            "homepage": "https://github.com/cfpinto/graphql",
+            "keywords": [
+                "graphql",
+                "query builder"
+            ],
+            "support": {
+                "issues": "https://github.com/cfpinto/graphql/issues",
+                "source": "https://github.com/cfpinto/graphql/tree/v2.0.0"
+            },
+            "time": "2023-01-20T17:13:41+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -8078,314 +8191,6 @@
         {
             "name": "infection/abstract-testframework-adapter",
             "version": "0.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infection/abstract-testframework-adapter.git",
-                "reference": "18925e20d15d1a5995bb85c9dc09e8751e1e069b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infection/abstract-testframework-adapter/zipball/18925e20d15d1a5995bb85c9dc09e8751e1e069b",
-                "reference": "18925e20d15d1a5995bb85c9dc09e8751e1e069b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ^8.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.8",
-                "friendsofphp/php-cs-fixer": "^2.17",
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Infection\\AbstractTestFramework\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Maks Rafalko",
-                    "email": "maks.rafalko@gmail.com"
-                }
-            ],
-            "description": "Abstract Test Framework Adapter for Infection",
-            "support": {
-                "issues": "https://github.com/infection/abstract-testframework-adapter/issues",
-                "source": "https://github.com/infection/abstract-testframework-adapter/tree/0.5.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/infection",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/infection",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2021-08-17T18:49:12+00:00"
-        },
-        {
-            "name": "infection/extension-installer",
-            "version": "0.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infection/extension-installer.git",
-                "reference": "9b351d2910b9a23ab4815542e93d541e0ca0cdcf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infection/extension-installer/zipball/9b351d2910b9a23ab4815542e93d541e0ca0cdcf",
-                "reference": "9b351d2910b9a23ab4815542e93d541e0ca0cdcf",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1 || ^2.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9 || ^2.0",
-                "friendsofphp/php-cs-fixer": "^2.18, <2.19",
-                "infection/infection": "^0.15.2",
-                "php-coveralls/php-coveralls": "^2.4",
-                "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12.10",
-                "phpstan/phpstan-phpunit": "^0.12.6",
-                "phpstan/phpstan-strict-rules": "^0.12.2",
-                "phpstan/phpstan-webmozart-assert": "^0.12.2",
-                "phpunit/phpunit": "^9.5",
-                "vimeo/psalm": "^4.8"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Infection\\ExtensionInstaller\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Infection\\ExtensionInstaller\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Maks Rafalko",
-                    "email": "maks.rafalko@gmail.com"
-                }
-            ],
-            "description": "Infection Extension Installer",
-            "support": {
-                "issues": "https://github.com/infection/extension-installer/issues",
-                "source": "https://github.com/infection/extension-installer/tree/0.1.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/infection",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/infection",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2021-10-20T22:08:34+00:00"
-        },
-        {
-            "name": "infection/include-interceptor",
-            "version": "0.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infection/include-interceptor.git",
-                "reference": "0cc76d95a79d9832d74e74492b0a30139904bdf7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infection/include-interceptor/zipball/0cc76d95a79d9832d74e74492b0a30139904bdf7",
-                "reference": "0cc76d95a79d9832d74e74492b0a30139904bdf7",
-                "shasum": ""
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "infection/infection": "^0.15.0",
-                "phan/phan": "^2.4 || ^3",
-                "php-coveralls/php-coveralls": "^2.2",
-                "phpstan/phpstan": "^0.12.8",
-                "phpunit/phpunit": "^8.5",
-                "vimeo/psalm": "^3.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Infection\\StreamWrapper\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Maks Rafalko",
-                    "email": "maks.rafalko@gmail.com"
-                }
-            ],
-            "description": "Stream Wrapper: Include Interceptor. Allows to replace included (autoloaded) file with another one.",
-            "support": {
-                "issues": "https://github.com/infection/include-interceptor/issues",
-                "source": "https://github.com/infection/include-interceptor/tree/0.2.5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/infection",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/infection",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2021-08-09T10:03:57+00:00"
-        },
-        {
-            "name": "infection/infection",
-            "version": "0.27.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infection/infection.git",
-                "reference": "6d55979c457eef2a5d0d80446c67ca533f201961"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/6d55979c457eef2a5d0d80446c67ca533f201961",
-                "reference": "6d55979c457eef2a5d0d80446c67ca533f201961",
-                "shasum": ""
-            },
-            "require": {
-                "colinodell/json5": "^2.2",
-                "composer-runtime-api": "^2.0",
-                "composer/xdebug-handler": "^2.0 || ^3.0",
-                "ext-dom": "*",
-                "ext-json": "*",
-                "ext-libxml": "*",
-                "ext-mbstring": "*",
-                "fidry/cpu-core-counter": "^0.4.0 || ^0.5.0 || ^1.0",
-                "infection/abstract-testframework-adapter": "^0.5.0",
-                "infection/extension-installer": "^0.1.0",
-                "infection/include-interceptor": "^0.2.5",
-                "justinrainbow/json-schema": "^5.2.10",
-                "nikic/php-parser": "^4.15.1",
-                "ondram/ci-detector": "^4.1.0",
-                "php": "^8.1",
-                "sanmai/later": "^0.1.1",
-                "sanmai/pipeline": "^5.1 || ^6",
-                "sebastian/diff": "^3.0.2 || ^4.0 || ^5.0 || ^6.0",
-                "symfony/console": "^5.4 || ^6.0 || ^7.0",
-                "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
-                "symfony/finder": "^5.4 || ^6.0 || ^7.0",
-                "symfony/process": "^5.4 || ^6.0 || ^7.0",
-                "thecodingmachine/safe": "^2.1.2",
-                "webmozart/assert": "^1.11"
-            },
-            "conflict": {
-                "antecedent/patchwork": "<2.1.25",
-                "dg/bypass-finals": "<1.4.1",
-                "phpunit/php-code-coverage": ">9,<9.1.4 || >9.2.17,<9.2.21"
-            },
-            "require-dev": {
-                "brianium/paratest": "^6.11",
-                "ext-simplexml": "*",
-                "fidry/makefile": "^1.0",
-                "helmich/phpunit-json-assert": "^3.0",
-                "phpspec/prophecy": "^1.15",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/extension-installer": "^1.1.0",
-                "phpstan/phpstan": "^1.10.15",
-                "phpstan/phpstan-phpunit": "^1.0.0",
-                "phpstan/phpstan-strict-rules": "^1.1.0",
-                "phpstan/phpstan-webmozart-assert": "^1.0.2",
-                "phpunit/phpunit": "^9.6",
-                "rector/rector": "^0.16.0",
-                "sidz/phpstan-rules": "^0.4.0",
-                "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
-                "thecodingmachine/phpstan-safe-rule": "^1.2.0"
-            },
-            "bin": [
-                "bin/infection"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Infection\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Maks Rafalko",
-                    "email": "maks.rafalko@gmail.com",
-                    "homepage": "https://twitter.com/maks_rafalko"
-                },
-                {
-                    "name": "Oleg Zhulnev",
-                    "homepage": "https://github.com/sidz"
-                },
-                {
-                    "name": "Gert de Pagter",
-                    "homepage": "https://github.com/BackEndTea"
-                },
-                {
-                    "name": "Théo FIDRY",
-                    "email": "theo.fidry@gmail.com",
-                    "homepage": "https://twitter.com/tfidry"
-                },
-                {
-                    "name": "Alexey Kopytko",
-                    "email": "alexey@kopytko.com",
-                    "homepage": "https://www.alexeykopytko.com"
-                },
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Infection is a Mutation Testing framework for PHP. The mutation adequacy score can be used to measure the effectiveness of a test set in terms of its ability to detect faults.",
-            "keywords": [
-                "coverage",
-                "mutant",
-                "mutation framework",
-                "mutation testing",
-                "testing",
-                "unit testing"
-            ],
-            "support": {
-                "issues": "https://github.com/infection/infection/issues",
-                "source": "https://github.com/infection/infection/tree/0.27.11"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/infection",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/infection",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2024-03-20T07:48:57+00:00"
-        },
-        {
-            "name": "jawira/case-converter",
-            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/abstract-testframework-adapter.git",
