@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Shared\Domain\ValueObject;
 
-use App\Shared\Domain\ValueObject\UuidImpl;
+use App\Shared\Domain\ValueObject\Uuid;
 use App\Tests\Unit\UnitTestCase;
 
-final class UuidImplTest extends UnitTestCase
+final class UuidTest extends UnitTestCase
 {
     public function testConstructor(): void
     {
         $uuidString = $this->faker->uuid();
-        $uuid = new UuidImpl($uuidString);
+        $uuid = new Uuid($uuidString);
 
         $this->assertSame($uuidString, (string) $uuid);
     }
@@ -20,7 +20,7 @@ final class UuidImplTest extends UnitTestCase
     public function testToString(): void
     {
         $uuidString = $this->faker->uuid();
-        $uuid = new UuidImpl($uuidString);
+        $uuid = new Uuid($uuidString);
 
         $this->assertSame($uuidString, $uuid->__toString());
     }
@@ -28,7 +28,7 @@ final class UuidImplTest extends UnitTestCase
     public function testToBinaryConvertible(): void
     {
         $uuidString = $this->faker->uuid();
-        $uuid = new UuidImpl($uuidString);
+        $uuid = new Uuid($uuidString);
 
         $expectedBinary = hex2bin(
             str_replace('-', '', $uuidString)
@@ -41,7 +41,7 @@ final class UuidImplTest extends UnitTestCase
     {
         $additionalChars = 'aa';
         $uuidString = $this->faker->uuid().$additionalChars;
-        $uuid = new UuidImpl($uuidString);
+        $uuid = new Uuid($uuidString);
 
         $expectedBinary = hex2bin(
             str_replace('-', '', $uuidString)
@@ -54,7 +54,7 @@ final class UuidImplTest extends UnitTestCase
     {
         $additionalChar = 'a';
         $uuidString = $this->faker->uuid().$additionalChar;
-        $uuid = new UuidImpl($uuidString);
+        $uuid = new Uuid($uuidString);
 
         $this->assertNull($uuid->toBinary());
     }

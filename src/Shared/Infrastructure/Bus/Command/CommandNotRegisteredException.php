@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus\Command;
 
-use App\Shared\Domain\Bus\Command\Command;
+use App\Shared\Domain\Bus\Command\CommandInterface;
 
-final class CommandNotRegistered extends \RuntimeException
+final class CommandNotRegisteredException extends \RuntimeException
 {
-    public function __construct(Command $command)
+    public function __construct(CommandInterface $command)
     {
         $commandClass = $command::class;
 

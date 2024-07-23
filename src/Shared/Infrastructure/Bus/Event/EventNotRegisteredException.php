@@ -6,7 +6,7 @@ namespace App\Shared\Infrastructure\Bus\Event;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
-final class EventNotRegistered extends \RuntimeException
+final class EventNotRegisteredException extends \RuntimeException
 {
     public function __construct(DomainEvent $event)
     {
