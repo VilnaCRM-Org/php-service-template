@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus;
 
-use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
+use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 
 use function Lambdish\Phunctional\map;
 use function Lambdish\Phunctional\reduce;
@@ -13,7 +13,7 @@ use function Lambdish\Phunctional\reindex;
 final class CallableFirstParameterExtractor
 {
     /**
-     * @param iterable<DomainEventSubscriberInterface> $callables
+     * @param iterable<DomainEventSubscriber> $callables
      *
      * @return array<int, string|null>
      */
@@ -26,9 +26,9 @@ final class CallableFirstParameterExtractor
     }
 
     /**
-     * @param iterable<DomainEventSubscriberInterface> $callables
+     * @param iterable<DomainEventSubscriber> $callables
      *
-     * @return array<int, array<DomainEventSubscriberInterface>>
+     * @return array<int, array<DomainEventSubscriber>>
      */
     public static function forPipedCallables(iterable $callables): array
     {
@@ -58,7 +58,7 @@ final class CallableFirstParameterExtractor
     {
         return static function (
             $subscribers,
-            DomainEventSubscriberInterface $subscriber
+            DomainEventSubscriber $subscriber
         ): array {
             $subscribedEvents = $subscriber->subscribedTo();
 
