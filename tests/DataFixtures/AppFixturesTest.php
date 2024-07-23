@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use App\DataFixtures\AppFixtures;
+namespace App\Tests\DataFixtures;
+
 use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 

@@ -1,0 +1,14 @@
+{
+    "apiHost":"localhost",
+    "apiPort":"8081",
+    "mailCatcherPort":"1080",
+    "batchSize":5000,
+    "delayBetweenScenarios":30,
+    "gettingEmailMaxRetries":300,
+    "usersFileLocation":"/loadTests/",
+    "usersFileName":"users.json",
+    "endpoints":{
+
+
+        }
+    }
