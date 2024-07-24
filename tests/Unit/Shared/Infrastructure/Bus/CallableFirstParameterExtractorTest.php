@@ -8,6 +8,7 @@ use App\Shared\Domain\Bus\Event\DomainEvent;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
 use App\Shared\Infrastructure\Bus\CallableFirstParameterExtractor;
 use App\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Assert;
 
 final class CallableFirstParameterExtractorTest extends UnitTestCase
 {
@@ -31,8 +32,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
             public function __invoke(): void
             {
-                // This method is intentionally left empty because it serves as a placeholder.
-                // In this specific context, __invoke allows the object to be called as a function.
+                Assert::assertTrue(true);
             }
         };
 
@@ -78,8 +78,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
                 public function __invoke(DomainEvent $someClass): void
                 {
-                    // This method is intentionally left empty because it serves as a placeholder.
-                    // In this specific context, __invoke allows the object to be called as a function.
+                    Assert::assertTrue(true);
                 }
             };
 
@@ -102,8 +101,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
                 public function __invoke($someClass): void
                 {
-                    // This method is intentionally left empty because it serves as a placeholder.
-                    // In this specific context, __invoke allows the object to be called as a function.
+                    Assert::assertTrue(true);
                 }
             };
 
@@ -130,8 +128,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
             public function __invoke(): void
             {
-                // This method is intentionally left empty because it serves as a placeholder.
-                // In this specific context, __invoke allows the object to be called as a function.
+                Assert::assertTrue(true);
             }
         };
     }
