@@ -39,4 +39,26 @@ final class AggregateRootTest extends TestCase
         $this->assertSame($event1, $domainEvents[0]);
         $this->assertSame($event2, $domainEvents[1]);
     }
+
+    public function testPullDomainEventsFromOutside(): void
+    {
+        $event1 = $this->createMock(DomainEvent::class);
+        $event2 = $this->createMock(DomainEvent::class);
+
+        $aggregateRoot = new class() extends AggregateRoot {
+            public function recordEvent(DomainEvent $event): void
+            {
+                $this->record($event);
+            }
+        };
+
+        $aggregateRoot->recordEvent($event1);
+        $aggregateRoot->recordEvent($event2);
+
+        $domainEvents = $aggregateRoot->pullDomainEvents();
+
+        $this->assertCount(2, $domainEvents);
+        $this->assertSame($event1, $domainEvents[0]);
+        $this->assertSame($event2, $domainEvents[1]);
+    }
 }
