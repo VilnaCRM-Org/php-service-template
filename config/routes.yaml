@@ -1,3 +1,6 @@
-controllers:
-    resource: ../src/Shared/Infrastructure/Controller/
-    type: attribute
+# config/routes.yaml
+
+eternal_health_check:
+    path: /health
+    controller: App\Eternal\HealthCheck\Application\Processor\HealthCheckProcessor
+    methods: ['GET']

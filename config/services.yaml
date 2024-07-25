@@ -6,6 +6,12 @@
 parameters:
 
 services:
+    App\Eternal\HealthCheck\Application\Processor\HealthCheckProcessor:
+        public: true
+        arguments:
+            $commandBus: '@App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus'
+            $healthCheckCommandFactory: '@App\Eternal\HealthCheck\Application\HealthCheckCommandFactoryInterface'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -20,3 +26,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        # services whose classes are instances of CustomInterface will be tagged automatically
+        App\Shared\Domain\Bus\Command\CommandHandlerInterface:
+            tags: [ 'app.command_handler' ]
+
+
+    App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory', !tagged app.command_handler ]
+        lazy: true
+
+    App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory',  !tagged app.event_subscriber ]
+        lazy: true
+
