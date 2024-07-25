@@ -21,7 +21,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
     public function testExtractForCallables(): void
     {
-        $subscriber = new class() implements DomainEventSubscriberInterface {
+        $subscriber = new class () implements DomainEventSubscriberInterface {
             /**
              * @return array<string>
              */
@@ -78,7 +78,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
                 public function __invoke(DomainEvent $someClass): void
                 {
-                    Assert::assertTrue(true);
+                    Assert::assertNotNull($someClass);
                 }
             };
 
@@ -101,7 +101,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
                 public function __invoke($someClass): void
                 {
-                    Assert::assertTrue(true);
+                    Assert::assertNotNull($someClass);
                 }
             };
 
