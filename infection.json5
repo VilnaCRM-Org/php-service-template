@@ -3,10 +3,11 @@
   "source": {
     "directories": [
       "src"
+    ]
   },
   "logs": {
     "text": "infection.log",
-    "summary": "summary.log"
+    "summary": "summary.log",
   },
   "mutators": {
     "@default": true
