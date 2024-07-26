@@ -195,6 +195,66 @@
             "time": "2024-07-20T08:19:33+00:00"
         },
         {
+            "name": "blackbonjour/stdlib",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BlackBonjour/stdlib.git",
+                "reference": "2c2538996b19a0cb32f5d9a6a626880e1542b93a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BlackBonjour/stdlib/zipball/2c2538996b19a0cb32f5d9a6a626880e1542b93a",
+                "reference": "2c2538996b19a0cb32f5d9a6a626880e1542b93a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BlackBonjour\\Stdlib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erick Dyck",
+                    "email": "info@erickdyck.de",
+                    "homepage": "http://www.erickdyck.de"
+                }
+            ],
+            "description": "Standard library for PHP",
+            "homepage": "https://github.com/BlackBonjour/stdlib",
+            "keywords": [
+                "assertion",
+                "hashmap",
+                "manipulation",
+                "map",
+                "php",
+                "stdlib",
+                "string",
+                "utf-8",
+                "util",
+                "utility"
+            ],
+            "support": {
+                "issues": "https://github.com/BlackBonjour/stdlib/issues",
+                "source": "https://github.com/BlackBonjour/stdlib",
+                "wiki": "https://github.com/BlackBonjour/stdlib/wiki"
+            },
+            "time": "2022-06-01T12:07:10+00:00"
+        },
+        {
             "name": "cfpinto/graphql",
             "version": "v2.0.0",
             "source": {
