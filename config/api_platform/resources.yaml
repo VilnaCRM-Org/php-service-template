@@ -1,5 +1,11 @@
 resources:
-  App\CompanySubdomain\SomeModule\Domain\ExampleApiResource:
+  App\Eternal\HealthCheck\Application\DTO\HealthCheckDto:
+    normalizationContext:
+      groups: ['output']
     operations:
-      ApiPlatform\Metadata\Get:
-        openapi: true
+      health_check:
+        class: 'ApiPlatform\Metadata\Get'
+        processor: 'App\Eternal\HealthCheck\Application\Processor\HealthCheckProcessor'
+        uriTemplate: '/health-check'
+        input: 'App\Eternal\HealthCheck\Application\DTO\HealthCheckDto'
+        output: 'App\Eternal\HealthCheck\Application\DTO\HealthCheckDto'

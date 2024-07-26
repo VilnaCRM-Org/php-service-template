@@ -1,6 +1,2 @@
-# config/routes.yaml
 
-eternal_health_check:
-    path: /health
-    controller: App\Eternal\HealthCheck\Application\Processor\HealthCheckProcessor
-    methods: ['GET']
+
