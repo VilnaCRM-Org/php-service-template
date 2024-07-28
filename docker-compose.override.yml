@@ -21,10 +21,25 @@ services:
     volumes:
       - ./public:/srv/app/public:ro
       - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-
+  localstack:
+    image: localstack/localstack:3.4.0
+    container_name: localstack
+    ports:
+      - "${LOCALSTACK_PORT}:4566"
+    environment:
+      - SERVICES=sqs
+      - DEBUG=1
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - ./infrastructure/docker/php/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
   structurizr:
     image: structurizr/lite
     ports:
       - "${STRUCTURIZR_PORT}:8080"
     volumes:
       - ./:/usr/local/structurizr
+
+volumes:
+  localstack_data:
+  
+  

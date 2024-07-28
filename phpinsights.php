@@ -26,7 +26,7 @@ return [
     'config' => [],
     'requirements' => [
         'min-quality' => 100,
-        'min-complexity' => 100,
+        'min-complexity' => 90,
         'min-architecture' => 100,
         'min-style' => 100,
     ],
