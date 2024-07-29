@@ -1,11 +1,6 @@
 resources:
-  App\Eternal\HealthCheck\Application\DTO\HealthCheckDto:
-    normalizationContext:
-      groups: ['output']
+  App\Internal\HealthCheck\Domain\ValueObject\HealthCheck:
     operations:
-      health_check:
-        class: 'ApiPlatform\Metadata\Get'
-        processor: 'App\Eternal\HealthCheck\Application\Processor\HealthCheckProcessor'
-        uriTemplate: '/health-check'
-        input: 'App\Eternal\HealthCheck\Application\DTO\HealthCheckDto'
-        output: 'App\Eternal\HealthCheck\Application\DTO\HealthCheckDto'
+      ApiPlatform\Metadata\Get:
+        path: '/health'
+        processor: 'App\Internal\HealthCheck\Application\Processor\HealthCheckProcessor'

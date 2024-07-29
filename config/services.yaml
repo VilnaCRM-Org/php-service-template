@@ -6,11 +6,6 @@
 parameters:
 
 services:
-    App\Eternal\HealthCheck\Application\Processor\HealthCheckProcessor:
-        public: true
-        arguments:
-            $commandBus: '@App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus'
-            $healthCheckCommandFactory: '@App\Eternal\HealthCheck\Application\HealthCheckCommandFactoryInterface'
 
     # default configuration for services in *this* file
     _defaults:
@@ -40,4 +35,10 @@ services:
     App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus:
         arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory',  !tagged app.event_subscriber ]
         lazy: true
+
+    App\Internal\HealthCheck\Application\Processor\HealthCheckProcessor:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+            $eventBus: '@App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus'
 
