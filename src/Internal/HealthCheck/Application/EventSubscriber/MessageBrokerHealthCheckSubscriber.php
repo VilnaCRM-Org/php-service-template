@@ -4,24 +4,24 @@ namespace App\Internal\HealthCheck\Application\EventSubscriber;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
+use Aws\Sqs\SqsClient;
+use Aws\Exception\AwsException;
 
-final class DatabaseHealthCheckSubscriber implements DomainEventSubscriberInterface
+final class MessageBrokerHealthCheckSubscriber implements DomainEventSubscriberInterface
 {
-    private Connection $connection;
+    private SqsClient $sqsClient;
 
-    public function __construct(Connection $connection)
+    public function __construct(SqsClient $sqsClient)
     {
-        $this->connection = $connection;
+        $this->sqsClient = $sqsClient;
     }
 
     /**
-     * @throws Exception
+     * @throws AwsException
      */
     public function __invoke(HealthCheckEvent $event): void
     {
-        $this->connection->executeQuery('SELECT 1');
+        $this->sqsClient->listQueues();
     }
 
     public function subscribedTo(): array

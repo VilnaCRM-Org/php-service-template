@@ -4,24 +4,26 @@ namespace App\Internal\HealthCheck\Application\EventSubscriber;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
+use Symfony\Contracts\Cache\CacheInterface;
+use Psr\Cache\CacheException;
 
-final class DatabaseHealthCheckSubscriber implements DomainEventSubscriberInterface
+final class CacheHealthCheckSubscriber implements DomainEventSubscriberInterface
 {
-    private Connection $connection;
+    private CacheInterface $cache;
 
-    public function __construct(Connection $connection)
+    public function __construct(CacheInterface $cache)
     {
-        $this->connection = $connection;
+        $this->cache = $cache;
     }
 
     /**
-     * @throws Exception
+     * @throws CacheException
      */
     public function __invoke(HealthCheckEvent $event): void
     {
-        $this->connection->executeQuery('SELECT 1');
+        $this->cache->get('health_check', function() {
+            return 'ok';
+        });
     }
 
     public function subscribedTo(): array

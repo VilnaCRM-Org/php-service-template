@@ -6,7 +6,6 @@
 parameters:
 
 services:
-
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -23,11 +22,10 @@ services:
     # please note that last definitions always *replace* previous ones
 
     _instanceof:
-        # services whose classes are instances of CustomInterface will be tagged automatically
+        App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface:
+            tags: [ 'app.event_subscriber' ]
         App\Shared\Domain\Bus\Command\CommandHandlerInterface:
             tags: [ 'app.command_handler' ]
-
-
     App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
         arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory', !tagged app.command_handler ]
         lazy: true
@@ -40,5 +38,19 @@ services:
         public: true
         tags: [ 'controller.service_arguments' ]
         arguments:
-            $eventBus: '@App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus'
+            $eventFactory: '@App\Internal\HealthCheck\Domain\Factory\Event\EventFactoryInterface'
+            $eventBus: '@App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus'
+    App\Internal\HealthCheck\Application\EventSubscriber\DatabaseHealthCheckSubscriber:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+
+    Aws\Sqs\SqsClient:
+        arguments:
+            - version: 'latest'
+              region: 'us-east-1'
+              endpoint: 'localstack:%env(LOCALSTACK_PORT)%'
+              credentials:
+                  key: 'fake'
+                  secret: 'fake'
+
 
