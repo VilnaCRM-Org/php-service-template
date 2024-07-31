@@ -1,22 +1,23 @@
-type ExampleApiResource implements Node {
+type HealthCheck implements Node {
   id: ID!
+  status: Boolean!
 }
 
-"""Cursor connection for ExampleApiResource."""
-type ExampleApiResourceCursorConnection {
-  edges: [ExampleApiResourceEdge]
-  pageInfo: ExampleApiResourcePageInfo!
+"""Cursor connection for HealthCheck."""
+type HealthCheckCursorConnection {
+  edges: [HealthCheckEdge]
+  pageInfo: HealthCheckPageInfo!
   totalCount: Int!
 }
 
-"""Edge of ExampleApiResource."""
-type ExampleApiResourceEdge {
-  node: ExampleApiResource
+"""Edge of HealthCheck."""
+type HealthCheckEdge {
+  node: HealthCheck
   cursor: String!
 }
 
 """Information about the current page."""
-type ExampleApiResourcePageInfo {
+type HealthCheckPageInfo {
   endCursor: String
   startCursor: String
   hasNextPage: Boolean!
@@ -24,14 +25,14 @@ type ExampleApiResourcePageInfo {
 }
 
 type Mutation {
-  """Updates a ExampleApiResource."""
-  updateExampleApiResource(input: updateExampleApiResourceInput!): updateExampleApiResourcePayload
+  """Updates a HealthCheck."""
+  updateHealthCheck(input: updateHealthCheckInput!): updateHealthCheckPayload
 
-  """Deletes a ExampleApiResource."""
-  deleteExampleApiResource(input: deleteExampleApiResourceInput!): deleteExampleApiResourcePayload
+  """Deletes a HealthCheck."""
+  deleteHealthCheck(input: deleteHealthCheckInput!): deleteHealthCheckPayload
 
-  """Creates a ExampleApiResource."""
-  createExampleApiResource(input: createExampleApiResourceInput!): createExampleApiResourcePayload
+  """Creates a HealthCheck."""
+  createHealthCheck(input: createHealthCheckInput!): createHealthCheckPayload
 }
 
 """A node, according to the Relay specification."""
@@ -42,7 +43,7 @@ interface Node {
 
 type Query {
   node(id: ID!): Node
-  exampleApiResources(
+  healthChecks(
     """Returns the first n elements from the list."""
     first: Int
 
@@ -58,41 +59,41 @@ type Query {
     Returns the elements in the list that come after the specified cursor.
     """
     after: String
-  ): ExampleApiResourceCursorConnection
-  exampleApiResource(id: ID!): ExampleApiResource
+  ): HealthCheckCursorConnection
+  healthCheck(id: ID!): HealthCheck
 }
 
-"""Creates a ExampleApiResource."""
-input createExampleApiResourceInput {
+"""Creates a HealthCheck."""
+input createHealthCheckInput {
   clientMutationId: String
 }
 
-"""Creates a ExampleApiResource."""
-type createExampleApiResourcePayload {
-  exampleApiResource: ExampleApiResource
+"""Creates a HealthCheck."""
+type createHealthCheckPayload {
+  healthCheck: HealthCheck
   clientMutationId: String
 }
 
-"""Deletes a ExampleApiResource."""
-input deleteExampleApiResourceInput {
+"""Deletes a HealthCheck."""
+input deleteHealthCheckInput {
   id: ID!
   clientMutationId: String
 }
 
-"""Deletes a ExampleApiResource."""
-type deleteExampleApiResourcePayload {
-  exampleApiResource: ExampleApiResource
+"""Deletes a HealthCheck."""
+type deleteHealthCheckPayload {
+  healthCheck: HealthCheck
   clientMutationId: String
 }
 
-"""Updates a ExampleApiResource."""
-input updateExampleApiResourceInput {
+"""Updates a HealthCheck."""
+input updateHealthCheckInput {
   id: ID!
   clientMutationId: String
 }
 
-"""Updates a ExampleApiResource."""
-type updateExampleApiResourcePayload {
-  exampleApiResource: ExampleApiResource
+"""Updates a HealthCheck."""
+type updateHealthCheckPayload {
+  healthCheck: HealthCheck
   clientMutationId: String
 }
