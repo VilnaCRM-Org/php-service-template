@@ -16,11 +16,11 @@ htmlPrefix=$6
 echo "Executing load test for scenario: $scenario"
 echo "Options - Smoke: $runSmoke, Average: $runAverage, Stress: $runStress, Spike: $runSpike"
 
-K6="docker run -v ./tests/Load:/loadTests --net=host --rm \
+# Correct the command structure and quoting
+docker run -v ./tests/Load:/loadTests --net=host --rm \
     --user $(id -u) \
     k6 run --summary-trend-stats='avg,min,med,max,p(95),p(99)' \
-    --out 'web-dashboard=period=1s&export=/loadTests/loadTestsResults/${htmlPrefix}${scenario}.html'"
+    --out "web-dashboard=period=1s&export=/loadTests/loadTestsResults/${htmlPrefix}${scenario}.html" \
+    /loadTests/scripts/$scenario.js
 
-# Run the k6 command
-$K6 /loadTests/scripts/$scenario.js
 echo "Load test for scenario $scenario completed."
