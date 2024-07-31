@@ -4,9 +4,6 @@
     "directories": [
       "src"
     ],
-    "excludes": [
-      "DataFixtures",
-    ]
   },
   "logs": {
     "text": "infection.log",
