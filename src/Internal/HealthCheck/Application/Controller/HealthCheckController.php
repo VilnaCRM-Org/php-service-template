@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Internal\HealthCheck\Application\Controller;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;

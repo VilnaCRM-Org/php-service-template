@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure;
+namespace App\Shared\Infrastructure\Bus;
 
 use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
 
@@ -81,7 +81,9 @@ final class CallableFirstParameterExtractor
         $fistParameterType = $method->getParameters()[0]->getType();
 
         if ($fistParameterType === null) {
-            throw new \LogicException('Missing type hint for the first parameter of __invoke');
+            throw new \LogicException(
+                'Missing type hint for the first parameter of __invoke'
+            );
         }
 
         return $fistParameterType->getName();
