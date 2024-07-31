@@ -8,34 +8,37 @@ servers:
     url: /
     description: ''
 paths:
-  /api/health-check:
+  /api/health:
     get:
-      operationId: health_check
+      operationId: api_health_get
       tags:
-        - HealthCheckDto
+        - HealthCheck
       responses:
-        '200':
-          description: 'HealthCheckDto resource'
+        '204':
+          description: 'HealthCheck resource'
           content:
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/HealthCheckDto.jsonld-output'
+                $ref: '#/components/schemas/HealthCheck.jsonld'
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthCheckDto-output'
+                $ref: '#/components/schemas/HealthCheck'
         '404':
           description: 'Resource not found'
-      summary: 'Retrieves a HealthCheckDto resource.'
-      description: 'Retrieves a HealthCheckDto resource.'
+      summary: 'Retrieves a HealthCheck resource.'
+      description: 'Retrieves a HealthCheck resource.'
       parameters: []
       deprecated: false
 components:
   schemas:
-    HealthCheckDto-output:
+    HealthCheck:
       type: object
       description: ''
       deprecated: false
-    HealthCheckDto.jsonld-output:
+      properties:
+        status:
+          type: boolean
+    HealthCheck.jsonld:
       type: object
       description: ''
       deprecated: false
@@ -63,6 +66,8 @@ components:
         '@type':
           readOnly: true
           type: string
+        status:
+          type: boolean
   responses: {  }
   parameters: {  }
   examples: {  }
