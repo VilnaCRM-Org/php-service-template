@@ -1,14 +1,49 @@
 {
-    "apiHost":"localhost",
-    "apiPort":"8081",
-    "mailCatcherPort":"1080",
-    "batchSize":5000,
-    "delayBetweenScenarios":30,
-    "gettingEmailMaxRetries":300,
-    "usersFileLocation":"/loadTests/",
-    "usersFileName":"users.json",
-    "endpoints":{
-
-
+    "apiHost": "localhost",
+    "apiPort": "80",
+    "batchSize": 5000,
+    "delayBetweenScenarios": 30,
+    "gettingEmailMaxRetries": 300,
+    "usersFileLocation": "/loadTests/",
+    "endpoints": {
+        "healthCheck": {
+            "setupTimeoutInMinutes": 10,
+            "teardownTimeoutInMinutes": 10,
+            "smoke": {
+                "threshold": 50,
+                "rps": 10,
+                "vus": 10,
+                "duration": 10
+            },
+            "average": {
+                "threshold": 200,
+                "rps": 50,
+                "vus": 50,
+                "duration": {
+                    "rise": 5,
+                    "plateau": 20,
+                    "fall": 5
+                }
+            },
+            "stress": {
+                "threshold": 1000,
+                "rps": 300,
+                "vus": 300,
+                "duration": {
+                    "rise": 5,
+                    "plateau": 20,
+                    "fall": 5
+                }
+            },
+            "spike": {
+                "threshold": 5000,
+                "rps": 400,
+                "vus": 400,
+                "duration": {
+                    "rise": 10,
+                    "fall": 10
+                }
+            }
         }
     }
+}
