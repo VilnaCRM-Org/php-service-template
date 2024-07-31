@@ -3,11 +3,10 @@
 namespace App\Internal\HealthCheck\Application\EventSubscriber;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
-use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
 use Aws\Sqs\SqsClient;
-use Aws\Exception\AwsException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class MessageBrokerHealthCheckSubscriber implements DomainEventSubscriberInterface
+class MessageBrokerHealthCheckSubscriber implements EventSubscriberInterface
 {
     private SqsClient $sqsClient;
 
@@ -16,16 +15,13 @@ final class MessageBrokerHealthCheckSubscriber implements DomainEventSubscriberI
         $this->sqsClient = $sqsClient;
     }
 
-    /**
-     * @throws AwsException
-     */
-    public function __invoke(HealthCheckEvent $event): void
+    public function onHealthCheck(HealthCheckEvent $event): void
     {
         $this->sqsClient->listQueues();
     }
 
-    public function subscribedTo(): array
+    public static function getSubscribedEvents(): array
     {
-        return [HealthCheckEvent::class];
+        return [HealthCheckEvent::class => 'onHealthCheck'];
     }
 }

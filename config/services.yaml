@@ -34,16 +34,20 @@ services:
         arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory',  !tagged app.event_subscriber ]
         lazy: true
 
-    App\Internal\HealthCheck\Application\Processor\HealthCheckProcessor:
-        public: true
-        tags: [ 'controller.service_arguments' ]
-        arguments:
-            $eventFactory: '@App\Internal\HealthCheck\Domain\Factory\Event\EventFactoryInterface'
-            $eventBus: '@App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus'
     App\Internal\HealthCheck\Application\EventSubscriber\DatabaseHealthCheckSubscriber:
         arguments:
             $connection: '@doctrine.dbal.default_connection'
+        tags:
+            - { name: 'kernel.event_subscriber' }
 
+    App\Internal\HealthCheck\Application\EventSubscriber\CacheHealthCheckSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Internal\HealthCheck\Application\EventSubscriber\MessageBrokerHealthCheckSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+    App\Internal\HealthCheck\Application\Controller\HealthCheckController: ~
     Aws\Sqs\SqsClient:
         arguments:
             - version: 'latest'

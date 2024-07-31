@@ -2,5 +2,7 @@ resources:
   App\Internal\HealthCheck\Domain\ValueObject\HealthCheck:
     operations:
       ApiPlatform\Metadata\Get:
-        path: '/health'
-        processor: 'App\Internal\HealthCheck\Application\Processor\HealthCheckProcessor'
+          uriTemplate: '/health'
+          controller: 'App\Internal\HealthCheck\Application\Controller\HealthCheckController'
+          status: 204
+          itemOperations: { }

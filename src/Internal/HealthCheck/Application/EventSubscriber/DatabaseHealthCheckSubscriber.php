@@ -3,11 +3,10 @@
 namespace App\Internal\HealthCheck\Application\EventSubscriber;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
-use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class DatabaseHealthCheckSubscriber implements DomainEventSubscriberInterface
+final class DatabaseHealthCheckSubscriber implements EventSubscriberInterface
 {
     private Connection $connection;
 
@@ -16,16 +15,16 @@ final class DatabaseHealthCheckSubscriber implements DomainEventSubscriberInterf
         $this->connection = $connection;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function __invoke(HealthCheckEvent $event): void
+    public function onHealthCheck(HealthCheckEvent $event): void
     {
         $this->connection->executeQuery('SELECT 1');
+        $this->connection->getDatabase();
+        $this->connection->beginTransaction();
+        $this->connection->isConnected();
     }
 
-    public function subscribedTo(): array
+    public static function getSubscribedEvents(): array
     {
-        return [HealthCheckEvent::class];
+        return [HealthCheckEvent::class => 'onHealthCheck'];
     }
 }

@@ -3,11 +3,10 @@
 namespace App\Internal\HealthCheck\Application\EventSubscriber;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
-use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\Cache\CacheInterface;
-use Psr\Cache\CacheException;
 
-final class CacheHealthCheckSubscriber implements DomainEventSubscriberInterface
+final class CacheHealthCheckSubscriber implements EventSubscriberInterface
 {
     private CacheInterface $cache;
 
@@ -16,18 +15,15 @@ final class CacheHealthCheckSubscriber implements DomainEventSubscriberInterface
         $this->cache = $cache;
     }
 
-    /**
-     * @throws CacheException
-     */
-    public function __invoke(HealthCheckEvent $event): void
+    public function onHealthCheck(HealthCheckEvent $event): void
     {
-        $this->cache->get('health_check', function() {
+        $this->cache->get('health_check', function () {
             return 'ok';
         });
     }
 
-    public function subscribedTo(): array
+    public static function getSubscribedEvents(): array
     {
-        return [HealthCheckEvent::class];
+        return [HealthCheckEvent::class => 'onHealthCheck'];
     }
 }
