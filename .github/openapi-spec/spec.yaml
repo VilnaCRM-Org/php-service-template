@@ -35,9 +35,6 @@ components:
       type: object
       description: ''
       deprecated: false
-      properties:
-        status:
-          type: boolean
     HealthCheck.jsonld:
       type: object
       description: ''
@@ -66,8 +63,6 @@ components:
         '@type':
           readOnly: true
           type: string
-        status:
-          type: boolean
   responses: {  }
   parameters: {  }
   examples: {  }
