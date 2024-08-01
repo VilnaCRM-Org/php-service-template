@@ -15,12 +15,13 @@ htmlPrefix=$6
 
 echo "Executing load test for scenario: $scenario"
 echo "Options - Smoke: $runSmoke, Average: $runAverage, Stress: $runStress, Spike: $runSpike"
-
-# Correct the command structure and quoting
-docker run -v ./tests/Load:/loadTests --net=host --rm \
+K6="docker run -v ./tests/Load:/loadTests --net=host --rm \
     --user $(id -u) \
     k6 run --summary-trend-stats='avg,min,med,max,p(95),p(99)' \
-    --out "web-dashboard=period=1s&export=/loadTests/loadTestsResults/${htmlPrefix}${scenario}.html" \
-    /loadTests/scripts/$scenario.js
+    --out 'web-dashboard=period=1s&export=/loadTests/loadTestsResults/${htmlPrefix}${scenario}.html'"
 
-echo "Load test for scenario $scenario completed."
+if [[ $scenario != "createUser" && $scenario != "graphQLCreateUser" && $scenario != "createUserBatch" ]]; then
+  eval "$K6" /loadTests/utils/prepareUsers.js -e scenarioName="${scenario}" -e run_smoke="${runSmoke}" -e run_average="${runAverage}" -e run_stress="${runStress}" -e run_spike="${runSpike}"
+fi
+
+eval "$K6" "/loadTests/scripts/${scenario}.js" -e run_smoke="${runSmoke}" -e run_average="${runAverage}" -e run_stress="${runStress}" -e run_spike="${runSpike}"

@@ -6,11 +6,36 @@ export default class InsertUsersUtils {
         this.utils = utils;
         this.config = utils.getConfig();
         this.scenarioName = scenarioName;
+        this.additionalUsersRatio = 1.1;
         this.smokeConfig = this.config.endpoints[scenarioName].smoke;
         this.averageConfig = this.config.endpoints[scenarioName].average;
         this.stressConfig = this.config.endpoints[scenarioName].stress;
         this.spikeConfig = this.config.endpoints[scenarioName].spike;
     }
+
+    execInsertUsersCommand() {
+        const runSmoke = this.utils.getCLIVariable('run_smoke') || 'true';
+        const runAverage = this.utils.getCLIVariable('run_average') || 'true';
+        const runStress = this.utils.getCLIVariable('run_stress') || 'true';
+        const runSpike = this.utils.getCLIVariable('run_spike') || 'true';
+        exec.command(
+            "make",
+            [
+                `SCENARIO_NAME=${this.scenarioName}`,
+                `RUN_SMOKE=${runSmoke}`,
+                `RUN_AVERAGE=${runAverage}`,
+                `RUN_STRESS=${runStress}`,
+                `RUN_SPIKE=${runSpike}`,
+                `load-tests-prepare-users`,
+            ]);
+    }
+
+    loadInsertedUsers() {
+        return JSON.parse(open(`../${this.utils.getConfig()['usersFileName']}`));
+    }
+
+
+
     countTotalRequest() {
         const requestsMap = {
             'run_smoke': this.countSmokeRequest.bind(this),
@@ -44,32 +69,32 @@ export default class InsertUsersUtils {
 
     countDefaultRequests(config) {
         const riseRequests = this.countRequestForRampingRate(
-                0,
-                config.rps,
-                config.duration.rise
-            );
+            0,
+            config.rps,
+            config.duration.rise
+        );
 
         const plateauRequests = config.rps * config.duration.plateau;
 
         const fallRequests = this.countRequestForRampingRate(
-                config.rps,
-                0, config.duration.fall
-            );
+            config.rps,
+            0, config.duration.fall
+        );
 
         return riseRequests + plateauRequests + fallRequests;
     }
 
     countSpikeRequest() {
         const spikeRiseRequests = this.countRequestForRampingRate(
-                0,
-                this.spikeConfig.rps,
-                this.spikeConfig.duration.rise
-            );
+            0,
+            this.spikeConfig.rps,
+            this.spikeConfig.duration.rise
+        );
 
         const spikeFallRequests = this.countRequestForRampingRate(
-                this.spikeConfig.rps,
-                0, this.spikeConfig.duration.fall
-            );
+            this.spikeConfig.rps,
+            0, this.spikeConfig.duration.fall
+        );
 
         return spikeRiseRequests + spikeFallRequests;
     }

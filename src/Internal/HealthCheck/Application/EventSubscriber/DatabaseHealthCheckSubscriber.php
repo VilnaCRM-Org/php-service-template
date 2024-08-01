@@ -20,9 +20,6 @@ final class DatabaseHealthCheckSubscriber implements EventSubscriberInterface
     public function onHealthCheck(HealthCheckEvent $event): void
     {
         $this->connection->executeQuery('SELECT 1');
-        $this->connection->getDatabase();
-        $this->connection->beginTransaction();
-        $this->connection->isConnected();
     }
 
     public static function getSubscribedEvents(): array

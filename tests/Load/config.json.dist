@@ -6,7 +6,7 @@
     "gettingEmailMaxRetries": 300,
     "usersFileLocation": "/loadTests/",
     "endpoints": {
-        "healthCheck": {
+        "health": {
             "setupTimeoutInMinutes": 10,
             "teardownTimeoutInMinutes": 10,
             "smoke": {
