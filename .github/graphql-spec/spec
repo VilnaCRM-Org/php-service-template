@@ -1,6 +1,5 @@
 type HealthCheck implements Node {
   id: ID!
-  status: Boolean!
 }
 
 """Cursor connection for HealthCheck."""
