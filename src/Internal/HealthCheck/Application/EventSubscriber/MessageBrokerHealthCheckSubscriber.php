@@ -20,7 +20,7 @@ class MessageBrokerHealthCheckSubscriber implements EventSubscriberInterface
 
     public function onHealthCheck(HealthCheckEvent $event): void
     {
-            $this->sqsClient->createQueue(['QueueName' => $this->queueName]);
+        $this->sqsClient->createQueue(['QueueName' => $this->queueName]);
     }
 
     public static function getSubscribedEvents(): array

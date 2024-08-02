@@ -7,9 +7,9 @@ namespace App\Tests\Unit\Internal\HealthCheck\Application\EventSubscriber;
 use App\Internal\HealthCheck\Application\EventSubscriber\MessageBrokerHealthCheckSubscriber;
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Tests\Unit\UnitTestCase;
-use Aws\Sqs\SqsClient;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
+use Aws\Sqs\SqsClient;
 
 final class MessageBrokerHealthCheckSubscriberTest extends UnitTestCase
 {

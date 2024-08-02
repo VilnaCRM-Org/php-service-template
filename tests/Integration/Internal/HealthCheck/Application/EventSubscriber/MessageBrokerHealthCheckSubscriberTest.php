@@ -13,7 +13,6 @@ use Aws\Sqs\SqsClient;
 final class MessageBrokerHealthCheckSubscriberTest extends IntegrationTestCase
 {
     private SqsClient $sqsClient;
-    private MessageBrokerHealthCheckSubscriber $subscriber;
     private string $testQueueName = 'test-queue';
 
     protected function setUp(): void
@@ -25,8 +24,6 @@ final class MessageBrokerHealthCheckSubscriberTest extends IntegrationTestCase
 
     public function testOnHealthCheck(): void
     {
-        $event = new HealthCheckEvent();
-
         try {
             $this->sqsClient->createQueue(['QueueName' => $this->testQueueName]);
             $result = $this->sqsClient->getQueueUrl(['QueueName' => $this->testQueueName]);
