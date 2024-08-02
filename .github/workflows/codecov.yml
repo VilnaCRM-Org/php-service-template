@@ -1,52 +1,29 @@
-name: Codecov Report
+name: test coverage
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  test-and-report:
+  codecov:
     runs-on: ubuntu-latest
-
+    name: run codecov
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@master
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-      - name: Start application
+      - name: Install dependencies
+        run: composer self-update && composer install --dev --no-scripts --no-progress && composer dump-autoload
+      - name: Start Application
         run: make start
-
-      - name: Setup test database
+      - name: Setup Test Database
         run: make setup-test-db
-
-      - name: Run unit tests and collect coverage
-        run: make ci-tests
-
-      - name: Copy coverage.xml to workspace
-        run: docker cp user-service-php-1:/coverage/coverage.xml /tmp/coverage.xml
-
-      - name: Check if coverage.xml exists
-        run: |
-          if [ ! -f /tmp/coverage.xml ]; then
-            echo "coverage.xml does not exist and cannot be uploaded."
-            exit 1
-          fi
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - name: Run tests and collect coverage
+        run: vendor/bin/phpunit --coverage-clover coverage.xml
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: /tmp/coverage.xml
           flags: unittests
           name: codecov-umbrella
           fail_ci_if_error: true
