@@ -19,12 +19,15 @@ jobs:
         run: make start
       - name: Setup Test Database
         run: make setup-test-db
-      - name: Run tests and collect coverage
-        run: vendor/bin/phpunit --coverage-clover coverage.xml
+      - name: Execute Unit and Integration tests
+        run: make ci-tests
+      - name: Copy coverage report to host
+        run: docker cp php-service-template-php-1:/coverage/coverage.xml /tmp
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unittests
           name: codecov-umbrella
+          files: /tmp/coverage.xml
           fail_ci_if_error: true
           verbose: true
