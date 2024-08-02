@@ -11,6 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class MessageBrokerHealthCheckSubscriber implements EventSubscriberInterface
 {
     private SqsClient $sqsClient;
+    private string $queueName = 'health-check-queue';
 
     public function __construct(SqsClient $sqsClient)
     {
@@ -19,7 +20,7 @@ class MessageBrokerHealthCheckSubscriber implements EventSubscriberInterface
 
     public function onHealthCheck(HealthCheckEvent $event): void
     {
-        $this->sqsClient->listQueues();
+            $this->sqsClient->createQueue(['QueueName' => $this->queueName]);
     }
 
     public static function getSubscribedEvents(): array
