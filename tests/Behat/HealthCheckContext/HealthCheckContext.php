@@ -30,11 +30,6 @@ class HealthCheckContext implements Context
         $this->response = $this->kernel->handle(Request::create(
             $path,
             $method,
-            [],
-            [],
-            [],
-            ['HTTP_ACCEPT' => 'application/json',
-            ],
         ));
     }
 
