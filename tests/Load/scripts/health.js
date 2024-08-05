@@ -17,8 +17,8 @@ export default async function health() {
 
     utils.checkResponse(
         response,
-        'is status 200',
-        (res) => res.status === 200
+        'is status 204',
+        (res) => res.status === 204
     );
 }
 

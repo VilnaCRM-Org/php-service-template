@@ -7,13 +7,13 @@
     "usersFileLocation": "/loadTests/",
     "endpoints": {
         "health": {
-            "setupTimeoutInMinutes": 10,
-            "teardownTimeoutInMinutes": 10,
+            "setupTimeoutInMinutes": 30,
+            "teardownTimeoutInMinutes": 30,
             "smoke": {
-                "threshold": 50,
-                "rps": 2,
-                "vus": 2,
-                "duration": 5
+                "threshold": 100,
+                "rps": 10,
+                "vus": 10,
+                "duration": 10
             },
             "average": {
                 "threshold": 200,

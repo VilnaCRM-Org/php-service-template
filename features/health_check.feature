@@ -4,6 +4,5 @@ Feature: Health Check Operations
   I want to verify the health of various subsystems
 
   Scenario: Checking the health of the entire system
-    Given the system is running
     When GET request is send to "/api/health"
     Then the response status code should be 204

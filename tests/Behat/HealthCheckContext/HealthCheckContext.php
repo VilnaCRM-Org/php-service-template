@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Behat\HealthCheckContext;
 
 use Behat\Behat\Context\Context;
+use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -21,31 +22,27 @@ class HealthCheckContext implements Context
     }
 
     /**
-     * @Given the system is running
-     */
-    public function theSystemIsRunning()
+     * @When :method request is send to :path
+    */
+    public function getRequestIsSendTo(string $method, string $path)
     {
-        // Assume the system is set to an operational state.
-    }
-
-    /**
-     * @When GET request is send to :url
-     */
-    public function getRequestIsSendTo($url)
-    {
-        // Create a request and handle it using the Symfony kernel.
-        $request = Request::create($url, 'GET');
-        $this->response = $this->kernel->handle($request);
+        $contentType = 'application/json';
+        $this->response = $this->kernel->handle(Request::create(
+            $path,
+            $method,
+            [],
+            [],
+            [],
+            ['HTTP_ACCEPT' => 'application/json',
+            ],
+        ));
     }
 
     /**
      * @Then the response status code should be :statusCode
      */
-    public function theResponseStatusCodeShouldBe($statusCode)
+    public function theResponseStatusCodeShouldBe(string $statusCode): void
     {
-        // Check the response status code.
-        if ($this->response->getStatusCode() !== (int) $statusCode) {
-            throw new \Exception('Expected status code ' . $statusCode . ' but got ' . $this->response->getStatusCode());
-        }
+        Assert::assertEquals($statusCode, $this->response->getStatusCode());
     }
 }
