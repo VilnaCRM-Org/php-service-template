@@ -24,7 +24,7 @@ class HealthCheckContext implements Context
     /**
      * @When :method request is send to :path
     */
-    public function getRequestIsSendTo(string $method, string $path)
+    public function requestSendTo(string $method, string $path)
     {
         $contentType = 'application/json';
         $this->response = $this->kernel->handle(Request::create(
