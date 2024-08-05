@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Behat\HealthCheckContext;
 
 use Behat\Behat\Context\Context;
@@ -14,8 +16,7 @@ class HealthCheckContext implements Context
 
     public function __construct(
         KernelInterface $kernel
-    )
-    {
+    ) {
         $this->kernel = $kernel;
     }
 
@@ -43,7 +44,7 @@ class HealthCheckContext implements Context
     public function theResponseStatusCodeShouldBe($statusCode)
     {
         // Check the response status code.
-        if ($this->response->getStatusCode() !== (int)$statusCode) {
+        if ($this->response->getStatusCode() !== (int) $statusCode) {
             throw new \Exception('Expected status code ' . $statusCode . ' but got ' . $this->response->getStatusCode());
         }
     }

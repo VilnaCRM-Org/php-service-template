@@ -26,4 +26,3 @@ class HealthCheckController extends AbstractController
         return new Response(status: Response::HTTP_NO_CONTENT);
     }
 }
-

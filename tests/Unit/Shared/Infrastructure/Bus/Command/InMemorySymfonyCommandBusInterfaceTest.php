@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Shared\Infrastructure\Bus\Command;
 
 use App\Shared\Domain\Bus\Command\CommandInterface;
 use App\Shared\Infrastructure\Bus\Command\CommandNotRegisteredException;
+use App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBusInterface;
 use App\Shared\Infrastructure\Bus\MessageBusFactory;
 use App\Tests\Unit\UnitTestCase;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
@@ -39,7 +40,7 @@ final class InMemorySymfonyCommandBusInterfaceTest extends UnitTestCase
             ->willThrowException(new NoHandlerForMessageException());
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
-        $commandBus = new InMemorySymfonyCommandBusInterfaceTest(
+        $commandBus = new InMemorySymfonyCommandBusInterface(
             $this->messageBusFactory,
             $this->commandHandlers
         );
@@ -60,7 +61,7 @@ final class InMemorySymfonyCommandBusInterfaceTest extends UnitTestCase
             );
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
-        $commandBus = new InMemorySymfonyCommandBusInterfaceTest(
+        $commandBus = new InMemorySymfonyCommandBusInterface(
             $this->messageBusFactory,
             $this->commandHandlers
         );
@@ -79,7 +80,7 @@ final class InMemorySymfonyCommandBusInterfaceTest extends UnitTestCase
             ->willThrowException(new \RuntimeException());
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
-        $commandBus = new InMemorySymfonyCommandBusInterfaceTest(
+        $commandBus = new InMemorySymfonyCommandBusInterface(
             $this->messageBusFactory,
             $this->commandHandlers
         );
