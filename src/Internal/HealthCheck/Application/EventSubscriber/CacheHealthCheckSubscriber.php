@@ -19,13 +19,23 @@ final class CacheHealthCheckSubscriber implements EventSubscriberInterface
 
     public function onHealthCheck(HealthCheckEvent $event): void
     {
-        $this->cache->get('health_check', function () {
-            return 'ok';
+        $this->cache->get('health_check', static function () {
+            return self::cacheMissHandler();
         });
     }
 
+    /**
+     * Returns an array of event names this subscriber wants to listen to.
+     *
+     * @return array<object, string> The event names to listen to
+     */
     public static function getSubscribedEvents(): array
     {
         return [HealthCheckEvent::class => 'onHealthCheck'];
+    }
+
+    private static function cacheMissHandler(): string
+    {
+        return 'ok';
     }
 }

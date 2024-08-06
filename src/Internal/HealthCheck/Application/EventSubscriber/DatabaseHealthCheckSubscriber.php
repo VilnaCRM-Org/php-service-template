@@ -22,6 +22,9 @@ final class DatabaseHealthCheckSubscriber implements EventSubscriberInterface
         $this->connection->executeQuery('SELECT 1');
     }
 
+    /**
+     * @return array<object, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [HealthCheckEvent::class => 'onHealthCheck'];

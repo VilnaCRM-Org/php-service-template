@@ -12,7 +12,8 @@ final class EventNotRegisteredException extends \RuntimeException
     {
         $eventClass = $event::class;
 
-        parent::__construct("The event <{$eventClass}> ".
-            "hasn't an event handler associated");
+        parent::__construct(
+            "The event <{$eventClass}> hasn't an event handler associated"
+        );
     }
 }

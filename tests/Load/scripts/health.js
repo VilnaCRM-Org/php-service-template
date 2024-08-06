@@ -11,7 +11,6 @@ const scenarioUtils = new ScenarioUtils(utils, scenarioName);
 export const options = scenarioUtils.getOptions();
 
 export default async function health() {
-    const num = counter.up();
 
     const response = await http.get(`${utils.getBaseHttpUrl()}/health`);
 
@@ -20,8 +19,4 @@ export default async function health() {
         'is status 204',
         (res) => res.status === 204
     );
-}
-
-export function teardown(data) {
-
 }

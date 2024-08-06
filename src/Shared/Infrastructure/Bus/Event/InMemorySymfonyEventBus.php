@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBus;
 
-class InMemorySymfonyEventBus implements EventBusInterface
+final class InMemorySymfonyEventBus implements EventBusInterface
 {
     private readonly MessageBus $bus;
 

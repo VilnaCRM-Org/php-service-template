@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class HealthCheckController extends AbstractController
+final class HealthCheckController extends AbstractController
 {
     private EventDispatcherInterface $eventDispatcher;
 

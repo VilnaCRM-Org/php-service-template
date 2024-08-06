@@ -44,7 +44,7 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
 
-    App\Internal\HealthCheck\Application\EventSubscriber\MessageBrokerHealthCheckSubscriber:
+    App\Internal\HealthCheck\Application\EventSubscriber\BrokerHealthCheckSubscriber:
         tags:
             - { name: 'kernel.event_subscriber' }
     App\Internal\HealthCheck\Application\Controller\HealthCheckController: ~

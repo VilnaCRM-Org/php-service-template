@@ -1,11 +1,8 @@
-import InsertUsersUtils from './insertUsersUtils.js';
 import Utils from './utils.js';
-import file from 'k6/x/file';
+import http from 'k6/http';
 
 const utils = new Utils();
-const filepath = utils.getConfig()['usersFileLocation'] + utils.getConfig()['usersFileName']
 const scenarioName = utils.getCLIVariable('scenarioName');
-const insertUsersUtils = new InsertUsersUtils(utils, scenarioName);
 
 
 export const options = {
@@ -16,7 +13,8 @@ export const options = {
     insecureSkipTLSVerify: true,
     batchPerHost: utils.getConfig().batchSize,
 }
-
-export default function func(data) {
-
+export default function func()
+{
+    const url = 'https://httpbin.test.k6.io/get';
+    http.get(url);
 }

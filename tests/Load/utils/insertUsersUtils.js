@@ -1,4 +1,3 @@
-import http from 'k6/http';
 import exec from 'k6/x/exec';
 
 export default class InsertUsersUtils {

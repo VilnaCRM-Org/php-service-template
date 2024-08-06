@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Internal\HealthCheck\Application\EventSubscriber;
 
-use App\Internal\HealthCheck\Application\EventSubscriber\MessageBrokerHealthCheckSubscriber;
+use App\Internal\HealthCheck\Application\EventSubscriber\BrokerHealthCheckSubscriber;
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Tests\Integration\IntegrationTestCase;
 use Aws\Exception\AwsException;
 use Aws\Sqs\SqsClient;
 
-final class MessageBrokerHealthCheckSubscriberTest extends IntegrationTestCase
+final class BrokerHealthCheckSubscriberTest extends IntegrationTestCase
 {
     private SqsClient $sqsClient;
     private string $testQueueName = 'test-queue';
@@ -19,7 +19,7 @@ final class MessageBrokerHealthCheckSubscriberTest extends IntegrationTestCase
     {
         parent::setUp();
         $this->sqsClient = $this->container->get(SqsClient::class);
-        $this->subscriber = new MessageBrokerHealthCheckSubscriber($this->sqsClient);
+        $this->subscriber = new BrokerHealthCheckSubscriber($this->sqsClient);
     }
 
     public function testOnHealthCheck(): void
@@ -40,7 +40,7 @@ final class MessageBrokerHealthCheckSubscriberTest extends IntegrationTestCase
     {
         $this->assertSame(
             [HealthCheckEvent::class => 'onHealthCheck'],
-            MessageBrokerHealthCheckSubscriber::getSubscribedEvents()
+            BrokerHealthCheckSubscriber::getSubscribedEvents()
         );
     }
 }
