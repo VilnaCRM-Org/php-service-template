@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import ScenarioUtils from '../utils/scenarioUtils.js';
 import Utils from '../utils/utils.js';
+import { sleep } from 'k6';
 
 const scenarioName = 'health';
 
@@ -9,10 +10,10 @@ const scenarioUtils = new ScenarioUtils(utils, scenarioName);
 
 export const options = scenarioUtils.getOptions();
 
-export default async function health() {
+sleep(5)
 
-    const response = await http.get(`${utils.getBaseHttpUrl()}/health`);
-
+export default function health() {
+    const response = http.get(`${utils.getBaseHttpUrl()}/health`);
     utils.checkResponse(
         response,
         'is status 204',
