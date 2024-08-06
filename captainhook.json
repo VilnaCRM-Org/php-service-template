@@ -2,7 +2,7 @@
     "config": {
         "run": {
             "mode": "docker",
-            "exec": "docker compose exec -i php"
+            "exec": "make sh"
         }
     },
     "commit-msg": {
@@ -35,12 +35,12 @@
                 "conditions": []
             },
             {
-                "action": "make check-requirements",
+                "action": "docker compose exec -i php symfony check:requirements",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "make check-security",
+                "action": "docker compose exec -i php symfony security:check",
                 "options": [],
                 "conditions": []
             },
