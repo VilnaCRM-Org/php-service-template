@@ -1,12 +1,18 @@
 {
+    "config": {
+        "run": {
+            "mode": "docker",
+            "exec": "docker compose exec -i php"
+        }
+    },
     "commit-msg": {
         "enabled": true,
         "actions": [
             {
                 "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Regex",
                 "options": {
-                    "regex": "/^(feat|fix|refactor)\\(\\#\\d+\\):.*$/i",
-                    "error": "The commit message should be in the format: feat|fix|refactor(#1):"
+                    "regex": "/^(feat|fix|refactor|build|chore|ci|doc|style|perf|test)\\(\\#\\d+\\):.*$/i",
+                    "error": "The commit message should be in the format: feat|fix|refactor|build|chore|ci|doc|style|perf|test(#1):"
                 }
             }
         ]
@@ -24,42 +30,32 @@
                 "conditions": []
             },
             {
-                "action": "make phpcsfixer",
+                "action": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "make check-requirements",
+                "action": "./vendor/bin/psalm",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "make check-security",
+                "action": "./vendor/bin/psalm --taint-analysis",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "make psalm",
+                "action": "./vendor/bin/phpinsights --no-interaction",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "make psalm-security",
+                "action": "./vendor/bin/phpunit --testsuite=Unit && ./vendor/bin/phpunit --testsuite=Integration",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "make phpinsights",
-                "options": [],
-                "conditions": []
-            },
-            {
-                "action": "make phpunit",
-                "options": [],
-                "conditions": []
-            },
-            {
-                "action": "make behat",
+                "action": "APP_ENV=test ./vendor/bin/behat",
                 "options": [],
                 "conditions": []
             }
