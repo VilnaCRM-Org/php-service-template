@@ -35,6 +35,16 @@
                 "conditions": []
             },
             {
+                "action": "make check-requirements",
+                "options": [],
+                "conditions": []
+            },
+            {
+                "action": "make check-security",
+                "options": [],
+                "conditions": []
+            },
+            {
                 "action": "./vendor/bin/psalm",
                 "options": [],
                 "conditions": []
