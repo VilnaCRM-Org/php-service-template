@@ -1,10 +1,4 @@
 {
-    "config": {
-        "run": {
-            "mode": "docker",
-            "exec": "make sh"
-        }
-    },
     "commit-msg": {
         "enabled": true,
         "actions": [
@@ -31,16 +25,6 @@
             },
             {
                 "action": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php",
-                "options": [],
-                "conditions": []
-            },
-            {
-                "action": "docker compose exec -i php symfony check:requirements",
-                "options": [],
-                "conditions": []
-            },
-            {
-                "action": "docker compose exec -i php symfony security:check",
                 "options": [],
                 "conditions": []
             },
