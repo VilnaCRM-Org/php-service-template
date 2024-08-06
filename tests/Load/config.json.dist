@@ -10,9 +10,9 @@
             "setupTimeoutInMinutes": 30,
             "teardownTimeoutInMinutes": 30,
             "smoke": {
-                "threshold": 400,
-                "rps": 1,
-                "vus": 1,
+                "threshold": 140,
+                "rps": 7,
+                "vus": 7,
                 "duration": 10
             },
             "average": {
