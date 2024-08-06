@@ -40,6 +40,16 @@
                 "conditions": []
             },
             {
+                "action": "symfony check:requirements",
+                "options": [],
+                "conditions": []
+            },
+            {
+                "action": "symfony check:security",
+                "options": [],
+                "conditions": []
+            },
+            {
                 "action": "./vendor/bin/psalm --taint-analysis",
                 "options": [],
                 "conditions": []
