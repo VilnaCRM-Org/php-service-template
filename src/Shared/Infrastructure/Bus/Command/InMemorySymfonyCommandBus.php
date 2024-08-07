@@ -11,6 +11,7 @@ use App\Shared\Infrastructure\Bus\MessageBusFactory;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBus;
+use Throwable;
 
 final class InMemorySymfonyCommandBus implements CommandBusInterface
 {
@@ -27,16 +28,56 @@ final class InMemorySymfonyCommandBus implements CommandBusInterface
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function dispatch(CommandInterface $command): void
     {
+        $this->executeDispatch(
+            fn () => $this->bus->dispatch($command),
+            $command
+        );
+    }
+
+    /**
+     * Handles the dispatch logic and exception
+     * handling using a higher-order function.
+     */
+    private function executeDispatch(
+        callable $dispatchAction,
+        CommandInterface $command
+    ): void {
         try {
-            $this->bus->dispatch($command);
-        } catch (NoHandlerForMessageException) {
-            throw new CommandNotRegisteredException($command);
-        } catch (HandlerFailedException $error) {
-            throw $error->getPrevious() ?? $error;
+            $dispatchAction();
+        } catch (HandlerFailedException $exception) {
+            $this->handleException($exception, $command);
         }
+    }
+
+    /**
+     * Decides which exception to throw based on the type of error encountered.
+     *
+     * @throws Throwable
+     */
+    private function handleException(
+        HandlerFailedException $exception,
+        CommandInterface $command
+    ): void {
+        $previous = $exception->getPrevious();
+
+        throw match (true) {
+            $this->isNoHandlerEx($previous) => $this->createException($command),
+            default => $previous ?? $exception,
+        };
+    }
+
+    private function isNoHandlerEx(?Throwable $exception): bool
+    {
+        return $exception instanceof NoHandlerForMessageException;
+    }
+
+    private function createException(
+        CommandInterface $command
+    ): CommandNotRegisteredException {
+        return new CommandNotRegisteredException($command);
     }
 }

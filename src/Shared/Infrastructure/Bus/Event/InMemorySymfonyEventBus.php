@@ -12,9 +12,9 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBus;
 
-final class InMemorySymfonyEventBus implements EventBusInterface
+final readonly class InMemorySymfonyEventBus implements EventBusInterface
 {
-    private readonly MessageBus $bus;
+    private MessageBus $bus;
 
     /**
      * @param iterable<DomainEventSubscriberInterface> $subscribers
@@ -23,19 +23,31 @@ final class InMemorySymfonyEventBus implements EventBusInterface
         MessageBusFactory $busFactory,
         iterable $subscribers
     ) {
-        $this->bus = $busFactory->create($subscribers);
+        $this->bus = $this->initializeBus($busFactory, $subscribers);
     }
-
     public function publish(DomainEvent ...$events): void
     {
-        foreach ($events as $event) {
-            try {
-                $this->bus->dispatch($event);
-            } catch (NoHandlerForMessageException) {
-                throw new EventNotRegisteredException($event);
-            } catch (HandlerFailedException $error) {
-                throw $error->getPrevious() ?? $error;
-            }
+        array_walk($events, [$this, 'dispatchEvent']);
+    }
+
+    /**
+     * @param iterable<DomainEventSubscriberInterface> $subscribers
+     */
+    private function initializeBus(
+        MessageBusFactory $busFactory,
+        iterable $subscribers
+    ): MessageBus {
+        return $busFactory->create($subscribers);
+    }
+
+    private function dispatchEvent(DomainEvent $event): void
+    {
+        try {
+            $this->bus->dispatch($event);
+        } catch (NoHandlerForMessageException) {
+            throw new EventNotRegisteredException($event);
+        } catch (HandlerFailedException $exception) {
+            throw $exception->getPrevious() ?? $exception;
         }
     }
 }

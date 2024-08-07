@@ -11,23 +11,31 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 final class BrokerHealthCheckSubscriber implements EventSubscriberInterface
 {
     private SqsClient $sqsClient;
-    private string $queueName = 'health-check-queue';
+    private string $queueName;
 
-    public function __construct(SqsClient $sqsClient)
-    {
+    public function __construct(
+        SqsClient $sqsClient,
+        string $queueName = 'health-check-queue'
+    ) {
         $this->sqsClient = $sqsClient;
+        $this->queueName = $queueName;
     }
 
     public function onHealthCheck(HealthCheckEvent $event): void
     {
-        $this->sqsClient->createQueue(['QueueName' => $this->queueName]);
+        $this->createQueue($this->queueName);
     }
 
     /**
-     * @return array<object, string>
+     * @return array<class-string, string>
      */
     public static function getSubscribedEvents(): array
     {
         return [HealthCheckEvent::class => 'onHealthCheck'];
+    }
+
+    private function createQueue(string $queueName): void
+    {
+        $this->sqsClient->createQueue(['QueueName' => $queueName]);
     }
 }

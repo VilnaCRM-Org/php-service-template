@@ -27,7 +27,7 @@ class CacheHealthCheckSubscriberTest extends UnitTestCase
         $this->cache->expects($this->once())
             ->method('get')
             ->with(
-                'health_check',
+                $this->equalTo('health_check'),
                 $this->isInstanceOf(\Closure::class)
             )
             ->willReturn('ok');

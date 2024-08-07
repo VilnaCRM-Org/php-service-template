@@ -11,10 +11,15 @@ final class UuidTransformer
 {
     public function transformFromSymfonyUuid(SymfonyUuid $symfonyUuid): Uuid
     {
-        return new Uuid((string) $symfonyUuid);
+        return $this->createUuid((string) $symfonyUuid);
     }
 
     public function transformFromString(string $uuid): Uuid
+    {
+        return $this->createUuid($uuid);
+    }
+
+    private function createUuid(string $uuid): Uuid
     {
         return new Uuid($uuid);
     }
