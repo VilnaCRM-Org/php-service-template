@@ -1,3 +1,28 @@
+type ExampleApiResource implements Node {
+  id: ID!
+}
+
+"""Cursor connection for ExampleApiResource."""
+type ExampleApiResourceCursorConnection {
+  edges: [ExampleApiResourceEdge]
+  pageInfo: ExampleApiResourcePageInfo!
+  totalCount: Int!
+}
+
+"""Edge of ExampleApiResource."""
+type ExampleApiResourceEdge {
+  node: ExampleApiResource
+  cursor: String!
+}
+
+"""Information about the current page."""
+type ExampleApiResourcePageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type HealthCheck implements Node {
   id: ID!
 }
@@ -24,6 +49,15 @@ type HealthCheckPageInfo {
 }
 
 type Mutation {
+  """Updates a ExampleApiResource."""
+  updateExampleApiResource(input: updateExampleApiResourceInput!): updateExampleApiResourcePayload
+
+  """Deletes a ExampleApiResource."""
+  deleteExampleApiResource(input: deleteExampleApiResourceInput!): deleteExampleApiResourcePayload
+
+  """Creates a ExampleApiResource."""
+  createExampleApiResource(input: createExampleApiResourceInput!): createExampleApiResourcePayload
+
   """Updates a HealthCheck."""
   updateHealthCheck(input: updateHealthCheckInput!): updateHealthCheckPayload
 
@@ -42,6 +76,24 @@ interface Node {
 
 type Query {
   node(id: ID!): Node
+  exampleApiResources(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ExampleApiResourceCursorConnection
+  exampleApiResource(id: ID!): ExampleApiResource
   healthChecks(
     """Returns the first n elements from the list."""
     first: Int
@@ -62,6 +114,17 @@ type Query {
   healthCheck(id: ID!): HealthCheck
 }
 
+"""Creates a ExampleApiResource."""
+input createExampleApiResourceInput {
+  clientMutationId: String
+}
+
+"""Creates a ExampleApiResource."""
+type createExampleApiResourcePayload {
+  exampleApiResource: ExampleApiResource
+  clientMutationId: String
+}
+
 """Creates a HealthCheck."""
 input createHealthCheckInput {
   clientMutationId: String
@@ -70,6 +133,18 @@ input createHealthCheckInput {
 """Creates a HealthCheck."""
 type createHealthCheckPayload {
   healthCheck: HealthCheck
+  clientMutationId: String
+}
+
+"""Deletes a ExampleApiResource."""
+input deleteExampleApiResourceInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"""Deletes a ExampleApiResource."""
+type deleteExampleApiResourcePayload {
+  exampleApiResource: ExampleApiResource
   clientMutationId: String
 }
 
@@ -82,6 +157,18 @@ input deleteHealthCheckInput {
 """Deletes a HealthCheck."""
 type deleteHealthCheckPayload {
   healthCheck: HealthCheck
+  clientMutationId: String
+}
+
+"""Updates a ExampleApiResource."""
+input updateExampleApiResourceInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"""Updates a ExampleApiResource."""
+type updateExampleApiResourcePayload {
+  exampleApiResource: ExampleApiResource
   clientMutationId: String
 }
 
