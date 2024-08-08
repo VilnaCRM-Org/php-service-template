@@ -8,6 +8,24 @@ servers:
     url: /
     description: ''
 paths:
+  /api/example_api_resources:
+    get:
+      operationId: api_example_api_resources_get
+      tags:
+        - ExampleApiResource
+      responses:
+        '200':
+          description: 'ExampleApiResource resource'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleApiResource'
+        '404':
+          description: 'Resource not found'
+      summary: 'Retrieves a ExampleApiResource resource.'
+      description: 'Retrieves a ExampleApiResource resource.'
+      parameters: []
+      deprecated: false
   /api/health:
     get:
       operationId: api_health_get
@@ -28,6 +46,10 @@ paths:
       deprecated: false
 components:
   schemas:
+    ExampleApiResource:
+      type: object
+      description: ''
+      deprecated: false
     HealthCheck:
       type: object
       description: ''
