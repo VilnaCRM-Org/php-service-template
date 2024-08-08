@@ -11,7 +11,7 @@ export const options = scenarioUtils.getOptions();
 
 export default function health()
 {
-    const response = http.get(`${utils.getBaseHttpUrl()} / health`);
+    const response = http.get(`${utils.getBaseHttpUrl()}/health`);
     utils.checkResponse(
         response,
         'is status 204',

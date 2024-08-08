@@ -1,4 +1,4 @@
-import { check } from 'k6';
+import {check} from 'k6';
 
 export default class Utils {
     constructor() {
