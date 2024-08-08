@@ -1,4 +1,9 @@
 resources:
+  App\CompanySubdomain\SomeModule\Domain\ExampleApiResource:
+    operations:
+      ApiPlatform\Metadata\Get:
+        openapi: true
+
   App\Internal\HealthCheck\Domain\ValueObject\HealthCheck:
     operations:
       ApiPlatform\Metadata\Get:

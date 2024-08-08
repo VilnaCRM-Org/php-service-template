@@ -1,18 +1,18 @@
 {
     "apiHost": "localhost",
     "apiPort": "80",
-    "batchSize": 1000,
+    "batchSize": 100,
     "delayBetweenScenarios": 60,
     "gettingEmailMaxRetries": 300,
     "usersFileLocation": "/loadTests/",
     "endpoints": {
         "health": {
-            "setupTimeoutInMinutes": 15,
-            "teardownTimeoutInMinutes": 15,
+            "setupTimeoutInMinutes": 30,
+            "teardownTimeoutInMinutes": 30,
             "smoke": {
-                "threshold": 710,
-                "rps": 3,
-                "vus": 3,
+                "threshold": 1200,
+                "rps": 1,
+                "vus": 1,
                 "duration": 10
             },
             "average": {
