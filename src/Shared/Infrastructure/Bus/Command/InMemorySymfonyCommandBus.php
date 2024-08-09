@@ -11,7 +11,6 @@ use App\Shared\Infrastructure\Bus\MessageBusFactory;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBus;
-use Throwable;
 
 final class InMemorySymfonyCommandBus implements CommandBusInterface
 {
@@ -27,57 +26,28 @@ final class InMemorySymfonyCommandBus implements CommandBusInterface
         $this->bus = $busFactory->create($commandHandlers);
     }
 
-    /**
-     * @throws Throwable
-     */
     public function dispatch(CommandInterface $command): void
     {
-        $this->executeDispatch(
-            fn () => $this->bus->dispatch($command),
-            $command
-        );
-    }
-
-    /**
-     * Handles the dispatch logic and exception
-     * handling using a higher-order function.
-     */
-    private function executeDispatch(
-        callable $dispatchAction,
-        CommandInterface $command
-    ): void {
         try {
-            $dispatchAction();
-        } catch (HandlerFailedException $exception) {
-            $this->handleException($exception, $command);
+            $this->bus->dispatch($command);
+        } catch (\Throwable $error) {
+            throw $this->handleError($error, $command);
         }
     }
 
-    /**
-     * Decides which exception to throw based on the type of error encountered.
-     *
-     * @throws Throwable
-     */
-    private function handleException(
-        HandlerFailedException $exception,
+    private function handleError(
+        \Throwable $error,
         CommandInterface $command
-    ): void {
-        $previous = $exception->getPrevious();
+    ): \Throwable {
+        $errorMap = [
+            NoHandlerForMessageException::class => static fn (
 
-        throw match (true) {
-            $this->isNoHandlerEx($previous) => $this->createException($command),
-            default => $previous ?? $exception,
-        };
-    }
+            ) => new CommandNotRegisteredException($command),
+            HandlerFailedException::class => static fn (
+                $e
+            ) => $e->getPrevious() ?? $e,
+        ];
 
-    private function isNoHandlerEx(?Throwable $exception): bool
-    {
-        return $exception instanceof NoHandlerForMessageException;
-    }
-
-    private function createException(
-        CommandInterface $command
-    ): CommandNotRegisteredException {
-        return new CommandNotRegisteredException($command);
+        return $errorMap[$error::class]($error) ?? $error;
     }
 }

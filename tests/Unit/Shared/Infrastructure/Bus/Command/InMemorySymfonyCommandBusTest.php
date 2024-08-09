@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Shared\Infrastructure\Bus\Command;
 
 use App\Shared\Domain\Bus\Command\CommandInterface;
 use App\Shared\Infrastructure\Bus\Command\CommandNotRegisteredException;
-use App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBusInterface;
+use App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus;
 use App\Shared\Infrastructure\Bus\MessageBusFactory;
 use App\Tests\Unit\UnitTestCase;
 use Symfony\Component\Messenger\Envelope;
@@ -37,7 +37,7 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
 
-        $commandBus = new InMemorySymfonyCommandBusInterface(
+        $commandBus = new InMemorySymfonyCommandBus(
             $this->messageBusFactory,
             $this->commandHandlers
         );
@@ -61,7 +61,7 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
 
-        $commandBus = new InMemorySymfonyCommandBusInterface(
+        $commandBus = new InMemorySymfonyCommandBus(
             $this->messageBusFactory,
             $this->commandHandlers
         );
@@ -86,7 +86,7 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
 
-        $commandBus = new InMemorySymfonyCommandBusInterface(
+        $commandBus = new InMemorySymfonyCommandBus(
             $this->messageBusFactory,
             $this->commandHandlers
         );
@@ -108,7 +108,7 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         $this->messageBusFactory->method('create')
             ->willReturn($messageBus);
 
-        $commandBus = new InMemorySymfonyCommandBusInterface(
+        $commandBus = new InMemorySymfonyCommandBus(
             $this->messageBusFactory,
             $this->commandHandlers
         );
