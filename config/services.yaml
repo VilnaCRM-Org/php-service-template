@@ -20,3 +20,41 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface:
+            tags: [ 'app.event_subscriber' ]
+        App\Shared\Domain\Bus\Command\CommandHandlerInterface:
+            tags: [ 'app.command_handler' ]
+    App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory', !tagged app.command_handler ]
+        lazy: true
+
+    App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory',  !tagged app.event_subscriber ]
+        lazy: true
+
+    App\Internal\HealthCheck\Application\EventSubscriber\DatabaseHealthCheckSubscriber:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Internal\HealthCheck\Application\EventSubscriber\CacheHealthCheckSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Internal\HealthCheck\Application\EventSubscriber\BrokerHealthCheckSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+    App\Internal\HealthCheck\Application\Controller\HealthCheckController: ~
+    Aws\Sqs\SqsClient:
+        arguments:
+            - version: 'latest'
+              region: 'us-east-1'
+              endpoint: 'localstack:%env(LOCALSTACK_PORT)%'
+              credentials:
+                  key: 'fake'
+                  secret: 'fake'
+
+

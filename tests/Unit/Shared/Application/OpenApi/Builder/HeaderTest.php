@@ -25,10 +25,10 @@ final class HeaderTest extends UnitTestCase
             $example
         );
 
-        $this->assertEquals($headerValue, $header->name);
-        $this->assertEquals($description, $header->description);
-        $this->assertEquals($type, $header->type);
-        $this->assertEquals($format, $header->format);
-        $this->assertEquals($example, $header->example);
+        $this->assertEquals($headerValue, $header->getName());
+        $this->assertEquals($description, $header->getDescription());
+        $this->assertEquals($type, $header->getType());
+        $this->assertEquals($format, $header->getFormat());
+        $this->assertEquals($example, $header->getExample());
     }
 }

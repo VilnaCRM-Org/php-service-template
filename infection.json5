@@ -3,7 +3,7 @@
   "source": {
     "directories": [
       "src"
-    ]
+    ],
   },
   "logs": {
     "text": "infection.log",

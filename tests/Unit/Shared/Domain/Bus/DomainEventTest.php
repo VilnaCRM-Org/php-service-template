@@ -34,8 +34,8 @@ class DomainEventTest extends UnitTestCase
 
         $expectedDate = (
         new \DateTimeImmutable())->format(
-                'Y-m-d\TH:i:s+00:00'
-            );
+            'Y-m-d\TH:i:s+00:00'
+        );
         $this->assertEquals($expectedDate, $event->occurredOn());
     }
 

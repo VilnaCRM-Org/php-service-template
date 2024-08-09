@@ -3,3 +3,11 @@ resources:
     operations:
       ApiPlatform\Metadata\Get:
         openapi: true
+
+  App\Internal\HealthCheck\Domain\ValueObject\HealthCheck:
+    operations:
+      ApiPlatform\Metadata\Get:
+          uriTemplate: '/health'
+          controller: 'App\Internal\HealthCheck\Application\Controller\HealthCheckController'
+          status: 204
+          itemOperations: { }
