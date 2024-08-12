@@ -4,7 +4,6 @@ api_platform:
     version: '1.0.0'
 
     use_symfony_listeners: false
-    keep_legacy_inflector: false
 
     defaults:
         extra_properties:

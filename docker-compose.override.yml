@@ -23,7 +23,7 @@ services:
       - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
 
   structurizr:
-    image: structurizr/lite
+    image: structurizr/lite:2024.07.02
     ports:
       - "${STRUCTURIZR_PORT}:8080"
     volumes:
