@@ -1,6 +1,6 @@
 import exec from 'k6/x/exec';
 
-export default class InsertUsersUtils {
+export default class LoadTestConfigManager {
     constructor(utils, scenarioName) {
         this.utils = utils;
         this.config = utils.getConfig();
@@ -25,15 +25,8 @@ export default class InsertUsersUtils {
                 `RUN_AVERAGE=${runAverage}`,
                 `RUN_STRESS=${runStress}`,
                 `RUN_SPIKE=${runSpike}`,
-                `load-tests-prepare-users`,
             ]);
     }
-
-    loadInsertedUsers() {
-        return JSON.parse(open(`../${this.utils.getConfig()['usersFileName']}`));
-    }
-
-
 
     countTotalRequest() {
         const requestsMap = {
