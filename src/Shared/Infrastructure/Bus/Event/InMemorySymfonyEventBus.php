@@ -25,6 +25,7 @@ final readonly class InMemorySymfonyEventBus implements EventBusInterface
     ) {
         $this->bus = $this->initializeBus($busFactory, $subscribers);
     }
+
     public function publish(DomainEvent ...$events): void
     {
         array_walk($events, [$this, 'dispatchEvent']);

@@ -6,10 +6,6 @@ namespace App\Shared\Infrastructure\Bus;
 
 use App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface;
 
-use function Lambdish\Phunctional\map;
-use function Lambdish\Phunctional\reduce;
-use function Lambdish\Phunctional\reindex;
-
 final class CallableFirstParameterExtractor
 {
     /**
@@ -19,10 +15,11 @@ final class CallableFirstParameterExtractor
      */
     public static function forCallables(iterable $callables): array
     {
-        return map(
-            self::unflatten(),
-            reindex(self::classExtractor(new self()), $callables)
-        );
+        $indexed = [];
+        foreach ($callables as $key => $callable) {
+            $indexed[$key] = self::classExtractor(new self())($callable);
+        }
+        return array_map(self::unflatten(), $indexed);
     }
 
     /**
@@ -32,7 +29,7 @@ final class CallableFirstParameterExtractor
      */
     public static function forPipedCallables(iterable $callables): array
     {
-        return reduce(self::pipedCallablesReducer(), $callables, []);
+        return array_reduce($callables, self::pipedCallablesReducer(), []);
     }
 
     public function extract(object|string $class): ?string
@@ -54,12 +51,14 @@ final class CallableFirstParameterExtractor
             $handler
         );
     }
+
     private static function extractHandler(
         self $parameterExtractor,
         callable $handler
     ): ?string {
         return $parameterExtractor->extract($handler);
     }
+
     /**
      * @return array<int, array<DomainEventSubscriberInterface>>
      */

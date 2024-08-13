@@ -17,6 +17,7 @@ class DomainEventTest extends UnitTestCase
         $event = $this->getMockForAbstractClass(DomainEvent::class, [$eventId, $occurredOn]);
         $this->assertEquals($occurredOn, $event->occurredOn());
     }
+
     public function testEventIdIsAccessibleAndCorrect(): void
     {
         $eventId = 'event-id';
@@ -38,5 +39,4 @@ class DomainEventTest extends UnitTestCase
         );
         $this->assertEquals($expectedDate, $event->occurredOn());
     }
-
 }

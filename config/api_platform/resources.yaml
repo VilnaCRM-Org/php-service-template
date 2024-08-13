@@ -9,5 +9,9 @@ resources:
       ApiPlatform\Metadata\Get:
           uriTemplate: '/health'
           controller: 'App\Internal\HealthCheck\Application\Controller\HealthCheckController'
-          status: 204
-          itemOperations: { }
+          openapiContext:
+            responses:
+              '204':
+                description: 'Health check passed with no content to return.'
+              '500':
+                description: 'Internal server error occurred, possibly due to a failure in one or more services being unavailable.'
