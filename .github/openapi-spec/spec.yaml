@@ -33,13 +33,9 @@ paths:
         - HealthCheck
       responses:
         '204':
-          description: 'HealthCheck resource'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HealthCheck'
-        '404':
-          description: 'Resource not found'
+          description: 'Health check passed with no content to return.'
+        '500':
+          description: 'Internal server error occurred, possibly due to a failure in one or more services being unavailable.'
       summary: 'Retrieves a HealthCheck resource.'
       description: 'Retrieves a HealthCheck resource.'
       parameters: []
