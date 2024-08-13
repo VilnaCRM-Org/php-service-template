@@ -15,11 +15,19 @@ final class CallableFirstParameterExtractor
      */
     public static function forCallables(iterable $callables): array
     {
-        $indexed = [];
-        foreach ($callables as $key => $callable) {
-            $indexed[$key] = self::classExtractor(new self())($callable);
-        }
-        return array_map(self::unflatten(), $indexed);
+        $callableArray = iterator_to_array($callables);
+
+        $keys = array_map(
+            self::classExtractor(new self()),
+            $callableArray
+        );
+
+        $values = array_map(
+            self::unflatten(),
+            $callableArray
+        );
+
+        return array_combine($keys, $values);
     }
 
     /**
@@ -29,7 +37,11 @@ final class CallableFirstParameterExtractor
      */
     public static function forPipedCallables(iterable $callables): array
     {
-        return array_reduce($callables, self::pipedCallablesReducer(), []);
+        return array_reduce(
+            iterator_to_array($callables),
+            self::pipedCallablesReducer(),
+            []
+        );
     }
 
     public function extract(object|string $class): ?string
@@ -46,7 +58,9 @@ final class CallableFirstParameterExtractor
 
     private static function classExtractor(self $parameterExtractor): callable
     {
-        return static fn (callable $handler): ?string => self::extractHandler(
+        return static fn (
+            callable $handler
+        ): ?string => self::extractHandler(
             $parameterExtractor,
             $handler
         );
@@ -59,9 +73,6 @@ final class CallableFirstParameterExtractor
         return $parameterExtractor->extract($handler);
     }
 
-    /**
-     * @return array<int, array<DomainEventSubscriberInterface>>
-     */
     private static function pipedCallablesReducer(): callable
     {
         return static fn (

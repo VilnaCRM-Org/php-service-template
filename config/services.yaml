@@ -34,20 +34,6 @@ services:
         arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory',  !tagged app.event_subscriber ]
         lazy: true
 
-    App\Internal\HealthCheck\Application\EventSubscriber\DatabaseHealthCheckSubscriber:
-        arguments:
-            $connection: '@doctrine.dbal.default_connection'
-        tags:
-            - { name: 'kernel.event_subscriber' }
-
-    App\Internal\HealthCheck\Application\EventSubscriber\CacheHealthCheckSubscriber:
-        tags:
-            - { name: 'kernel.event_subscriber' }
-
-    App\Internal\HealthCheck\Application\EventSubscriber\BrokerHealthCheckSubscriber:
-        tags:
-            - { name: 'kernel.event_subscriber' }
-    App\Internal\HealthCheck\Application\Controller\HealthCheckController: ~
     Aws\Sqs\SqsClient:
         arguments:
             - version: 'latest'
