@@ -8,34 +8,31 @@ use App\Internal\HealthCheck\Application\EventSub\BrokerCheckSubscriber;
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Tests\Integration\IntegrationTestCase;
 use Aws\Sqs\SqsClient;
-use PHPUnit\Framework\MockObject\MockObject;
 
 final class BrokerCheckSubscriberTest extends IntegrationTestCase
 {
-    private MockObject $sqsClient;
-    private BrokerCheckSubscriber $subscriber;
+    private SqsClient $sqsClient;
     private string $testQueueName = 'test-queue';
+    private BrokerCheckSubscriber $subscriber;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->sqsClient = $this->createMock(SqsClient::class);
-
-        $this->subscriber = new BrokerCheckSubscriber(
-            $this->sqsClient,
-            $this->testQueueName
-        );
+        $this->sqsClient = $this->container->get(SqsClient::class);
+        $this->subscriber = new BrokerCheckSubscriber($this->sqsClient);
     }
 
     public function testOnHealthCheck(): void
     {
-        $this->sqsClient->expects($this->once())
-            ->method('createQueue')
-            ->with(['QueueName' => $this->testQueueName]);
+        $this->sqsClient->createQueue(['QueueName' => $this->testQueueName]);
 
-        $event = $this->createMock(HealthCheckEvent::class);
-        $this->subscriber->onHealthCheck($event);
+        $result = $this->sqsClient->getQueueUrl(
+            ['QueueName' => $this->testQueueName]
+        );
+        $this->subscriber->onHealthCheck(new HealthCheckEvent());
+        $queueUrl = $result->get('QueueUrl');
+        $this->assertIsString($queueUrl, 'Queue URL should be a string');
+        $this->assertNotEmpty($queueUrl, 'Queue URL should not be empty');
     }
 
     public function testGetSubscribedEvents(): void
