@@ -11,7 +11,7 @@ use App\Tests\Unit\UnitTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class HealthCheckControllerTest extends UnitTestCase
+final class HealthCheckControllerTest extends UnitTestCase
 {
     private EventDispatcherInterface $eventDispatcher;
     private HealthCheckEventFactory $eventFactory;
@@ -21,9 +21,16 @@ class HealthCheckControllerTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->eventFactory = $this->createMock(HealthCheckEventFactory::class);
-        $this->controller = new HealthCheckController($this->eventDispatcher, $this->eventFactory);
+        $this->eventDispatcher = $this->createMock(
+            EventDispatcherInterface::class
+        );
+        $this->eventFactory = $this->createMock(
+            HealthCheckEventFactory::class
+        );
+        $this->controller = new HealthCheckController(
+            $this->eventDispatcher,
+            $this->eventFactory
+        );
     }
 
     public function testInvokeDispatchesHealthCheckEvent(): void
@@ -36,11 +43,17 @@ class HealthCheckControllerTest extends UnitTestCase
 
         $this->eventDispatcher->expects($this->once())
             ->method('dispatch')
-            ->with($this->isInstanceOf(HealthCheckEvent::class), HealthCheckEvent::class);
+            ->with(
+                $this->isInstanceOf(HealthCheckEvent::class),
+                HealthCheckEvent::class
+            );
 
         $response = ($this->controller)();
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
+        $this->assertEquals(
+            Response::HTTP_NO_CONTENT,
+            $response->getStatusCode()
+        );
     }
 }

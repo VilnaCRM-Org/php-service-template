@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Internal\HealthCheck\Application\EventSubscriber;
+namespace App\Internal\HealthCheck\Application\EventSub;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

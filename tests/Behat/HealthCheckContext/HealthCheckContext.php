@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class HealthCheckContext implements Context
+final class HealthCheckContext implements Context
 {
     private KernelInterface $kernel;
     private Response $response;
@@ -23,8 +23,8 @@ class HealthCheckContext implements Context
 
     /**
      * @When :method request is send to :path
-    */
-    public function requestSendTo(string $method, string $path)
+     */
+    public function requestSendTo(string $method, string $path): void
     {
         $this->response = $this->kernel->handle(Request::create(
             $path,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Shared\Infrastructure\Bus\Command;
 
+use App\Shared\Domain\Bus\Command\CommandHandlerInterface;
 use App\Shared\Domain\Bus\Command\CommandInterface;
 use App\Shared\Infrastructure\Bus\Command\CommandNotRegisteredException;
 use App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus;
@@ -17,6 +18,10 @@ use Symfony\Component\Messenger\MessageBus;
 final class InMemorySymfonyCommandBusTest extends UnitTestCase
 {
     private MessageBusFactory $messageBusFactory;
+
+    /**
+     * @var iterable<CommandHandlerInterface> $commandHandlers
+     */
     private array $commandHandlers;
 
     protected function setUp(): void
@@ -46,12 +51,16 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         $commandBus->dispatch($command);
     }
 
-    public function testDispatchWithHandlerFailedExceptionWithInnerException(): void
-    {
+    public function testDispatchWithHandlerFailedExceptionWithInnerException(
+
+    ): void {
         $command = $this->createMock(CommandInterface::class);
         $envelope = new Envelope($command);
-        $innerException = new \Exception("Inner exception");
-        $handlerFailedException = new HandlerFailedException($envelope, [$innerException]);
+        $innerException = new \Exception('Inner exception');
+        $handlerFailedException = new HandlerFailedException(
+            $envelope,
+            [$innerException]
+        );
 
         $messageBus = $this->createMock(MessageBus::class);
         $messageBus->expects($this->once())
@@ -67,16 +76,20 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         );
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("Inner exception");
+        $this->expectExceptionMessage('Inner exception');
         $commandBus->dispatch($command);
     }
 
-    public function testDispatchWithHandlerFailedExceptionWithoutInnerException(): void
-    {
+    public function testDispatchWithHandlerFailedExceptionWithoutInnerException(
+
+    ): void {
         $command = $this->createMock(CommandInterface::class);
         $envelope = new Envelope($command);
-        $dummyException = new \RuntimeException("No handlers executed");
-        $handlerFailedException = new HandlerFailedException($envelope, [$dummyException]);
+        $dummyException = new \RuntimeException('No handlers executed');
+        $handlerFailedException = new HandlerFailedException(
+            $envelope,
+            [$dummyException]
+        );
 
         $messageBus = $this->createMock(MessageBus::class);
         $messageBus->expects($this->once())
@@ -92,7 +105,7 @@ final class InMemorySymfonyCommandBusTest extends UnitTestCase
         );
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage("No handlers executed");
+        $this->expectExceptionMessage('No handlers executed');
         $commandBus->dispatch($command);
     }
 

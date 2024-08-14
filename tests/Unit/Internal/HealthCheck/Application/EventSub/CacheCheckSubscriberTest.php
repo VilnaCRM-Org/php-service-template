@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Internal\HealthCheck\Application\EventSubscriber;
+namespace App\Tests\Unit\Internal\HealthCheck\Application\EventSub;
 
-use App\Internal\HealthCheck\Application\EventSubscriber\CacheHealthCheckSubscriber;
+use App\Internal\HealthCheck\Application\EventSub\CacheCheckSubscriber;
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Tests\Unit\UnitTestCase;
 use Symfony\Contracts\Cache\CacheInterface;
 
-class CacheHealthCheckSubscriberTest extends UnitTestCase
+final class CacheCheckSubscriberTest extends UnitTestCase
 {
     private CacheInterface $cache;
-    private CacheHealthCheckSubscriber $subscriber;
+    private CacheCheckSubscriber $subscriber;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->cache = $this->createMock(CacheInterface::class);
-        $this->subscriber = new CacheHealthCheckSubscriber($this->cache);
+        $this->subscriber = new CacheCheckSubscriber($this->cache);
     }
 
     public function testOnHealthCheck(): void
@@ -40,7 +40,7 @@ class CacheHealthCheckSubscriberTest extends UnitTestCase
     {
         $this->assertSame(
             [HealthCheckEvent::class => 'onHealthCheck'],
-            CacheHealthCheckSubscriber::getSubscribedEvents()
+            CacheCheckSubscriber::getSubscribedEvents()
         );
     }
 }

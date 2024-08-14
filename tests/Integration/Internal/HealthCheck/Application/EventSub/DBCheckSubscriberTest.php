@@ -2,24 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Internal\HealthCheck\Application\EventSubscriber;
+namespace App\Tests\Integration\Internal\HealthCheck\Application\EventSub;
 
-use App\Internal\HealthCheck\Application\EventSubscriber\DatabaseHealthCheckSubscriber;
+use App\Internal\HealthCheck\Application\EventSub\DBCheckSubscriber;
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
 use App\Tests\Integration\IntegrationTestCase;
 use Doctrine\DBAL\Connection;
 
-final class DatabaseHealthCheckSubscriberTest extends IntegrationTestCase
+final class DBCheckSubscriberTest extends IntegrationTestCase
 {
     private Connection $connection;
-    private DatabaseHealthCheckSubscriber $subscriber;
+    private DBCheckSubscriber $subscriber;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->connection = $this->container->get('doctrine.dbal.default_connection');
-        $this->subscriber = new DatabaseHealthCheckSubscriber($this->connection);
+        $this->connection = $this->container->get(
+            'doctrine.dbal.default_connection'
+        );
+        $this->subscriber = new DBCheckSubscriber($this->connection);
     }
 
     public function testOnHealthCheck(): void
@@ -37,7 +39,7 @@ final class DatabaseHealthCheckSubscriberTest extends IntegrationTestCase
     {
         $this->assertSame(
             [HealthCheckEvent::class => 'onHealthCheck'],
-            DatabaseHealthCheckSubscriber::getSubscribedEvents()
+            DBCheckSubscriber::getSubscribedEvents()
         );
     }
 }
