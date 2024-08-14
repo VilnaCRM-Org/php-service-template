@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Internal\HealthCheck\Application\Controller;
 
 use App\Internal\HealthCheck\Application\Controller\HealthCheckController;
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
+use App\Internal\HealthCheck\Domain\Factory\Event\HealthCheckEventFactory;
 use App\Tests\Unit\UnitTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HealthCheckControllerTest extends UnitTestCase
 {
     private EventDispatcherInterface $eventDispatcher;
+    private HealthCheckEventFactory $eventFactory;
     private HealthCheckController $controller;
 
     protected function setUp(): void
@@ -20,11 +22,18 @@ class HealthCheckControllerTest extends UnitTestCase
         parent::setUp();
 
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->controller = new HealthCheckController($this->eventDispatcher);
+        $this->eventFactory = $this->createMock(HealthCheckEventFactory::class);
+        $this->controller = new HealthCheckController($this->eventDispatcher, $this->eventFactory);
     }
 
     public function testInvokeDispatchesHealthCheckEvent(): void
     {
+        $healthCheckEvent = new HealthCheckEvent();
+
+        $this->eventFactory->expects($this->once())
+            ->method('createHealthCheckEvent')
+            ->willReturn($healthCheckEvent);
+
         $this->eventDispatcher->expects($this->once())
             ->method('dispatch')
             ->with($this->isInstanceOf(HealthCheckEvent::class), HealthCheckEvent::class);
