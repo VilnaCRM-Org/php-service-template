@@ -17,8 +17,6 @@ final class InMemorySymfonyCommandBusInterface implements CommandBusInterface
     private MessageBus $bus;
 
     /**
-     * Constructor for InMemorySymfonyCommandBus.
-     *
      * @param iterable<CommandHandlerInterface> $commandHandlers
      */
     public function __construct(
@@ -29,8 +27,6 @@ final class InMemorySymfonyCommandBusInterface implements CommandBusInterface
     }
 
     /**
-     * Dispatches a command to the appropriate handler.
-     *
      * @param CommandInterface $command Command to be dispatched.
      *
      * @throws \Throwable Throws an exception if handling fails.
@@ -47,8 +43,6 @@ final class InMemorySymfonyCommandBusInterface implements CommandBusInterface
     }
 
     /**
-     * Handle cases where no handler is registered for the command.
-     *
      * @param CommandInterface $command Command that lacks a handler.
      */
     private function handleNoHandlerException(CommandInterface $command): void
@@ -57,8 +51,6 @@ final class InMemorySymfonyCommandBusInterface implements CommandBusInterface
     }
 
     /**
-     * Rethrow the underlying exception from a failed handler.
-     *
      * @param HandlerFailedException $exception Exception to process.
      */
     private function rethrowException(HandlerFailedException $exception): void
