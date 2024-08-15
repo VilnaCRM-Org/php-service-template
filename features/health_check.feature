@@ -6,3 +6,8 @@ Feature: Health Check Operations
   Scenario: Checking the health of the entire system
     When GET request is send to "api/health"
     Then the response status code should be 204
+
+  Scenario: Checking the health when cache is unavailable
+    Given the cache is not working
+    When GET request is send to "api/health"
+    Then the response status code should be 500
