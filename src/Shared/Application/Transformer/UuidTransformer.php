@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Shared\Application\Transformer;
 
-use App\Shared\Application\Factory\UuidFactory;
+use App\Shared\Domain\Factory\UuidFactoryInterface;
 use App\Shared\Domain\ValueObject\Uuid;
 use Symfony\Component\Uid\AbstractUid as SymfonyUuid;
 
-final class UuidTransformer
+final readonly class UuidTransformer
 {
-    public function __construct(private readonly UuidFactory $uuidFactory)
-    {
+    public function __construct(
+        private UuidFactoryInterface $uuidFactory
+    ) {
     }
 
     public function transformFromSymfonyUuid(SymfonyUuid $symfonyUuid): Uuid

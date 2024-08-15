@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Shared\Application\Transformer;
 
-use App\Shared\Application\Factory\UuidFactory;
 use App\Shared\Application\Transformer\UuidTransformer;
+use App\Shared\Domain\Factory\UuidFactoryInterface;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Tests\Unit\UnitTestCase;
 use Symfony\Component\Uid\AbstractUid;
 
 final class UuidTransformerTest extends UnitTestCase
 {
-    private UuidFactory $uuidFactory;
+    private UuidFactoryInterface $uuidFactory;
     private UuidTransformer $uuidTransformer;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->uuidFactory = $this->createMock(UuidFactory::class);
+        $this->uuidFactory = $this->createMock(UuidFactoryInterface::class);
         $this->uuidTransformer = new UuidTransformer($this->uuidFactory);
     }
 
@@ -51,8 +51,7 @@ final class UuidTransformerTest extends UnitTestCase
             ->with($uuidString)
             ->willReturn($expectedUuid);
 
-        $result = $this->uuidTransformer
-            ->transformFromString($uuidString);
+        $result = $this->uuidTransformer->transformFromString($uuidString);
 
         $this->assertSame($expectedUuid, $result);
     }
