@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Shared\Application\Transformer;
 
+use App\Shared\Application\Factory\UuidFactory;
 use App\Shared\Domain\ValueObject\Uuid;
 use Symfony\Component\Uid\AbstractUid as SymfonyUuid;
 
 final class UuidTransformer
 {
+    public function __construct(private readonly UuidFactory $uuidFactory)
+    {
+    }
+
     public function transformFromSymfonyUuid(SymfonyUuid $symfonyUuid): Uuid
     {
         return $this->createUuid((string) $symfonyUuid);
@@ -21,6 +26,6 @@ final class UuidTransformer
 
     private function createUuid(string $uuid): Uuid
     {
-        return new Uuid($uuid);
+        return $this->uuidFactory->create($uuid);
     }
 }
