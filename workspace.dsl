@@ -44,9 +44,6 @@ workspace {
                     uuidFactory = component "UuidFactory" "Creates UUIDs" "Factory" {
                         tags "Item"
                     }
-                    inMemorySymfonyCommandBus = component "InMemorySymfonyCommandBus" "Handles command dispatching" "CommandBus" {
-                        tags "Item"
-                    }
                     inMemorySymfonyEventBus = component "InMemorySymfonyEventBus" "Handles event publishing" "EventBus" {
                         tags "Item"
                     }
@@ -72,7 +69,6 @@ workspace {
                 dbCheckSubscriber -> database "checks"
                 cacheCheckSubscriber -> cache "checks"
                 brokerCheckSubscriber -> messageBroker "checks"
-                inMemorySymfonyCommandBus -> uuidFactory "uses"
                 inMemorySymfonyEventBus -> uuidFactory "uses"
             }
         }
