@@ -38,32 +38,61 @@ help:
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 phpcsfixer: ## A tool to automatically fix PHP Coding Standards issues
-	$(DOCKER_COMPOSE) exec -e PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
+	if [ "$$CI" = "1" ]; then \
+            		PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php; \
+            	else \
+            		$(DOCKER_COMPOSE) exec -e PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php; \
+            	fi
 
 composer-validate: ## The validate command validates a given composer.json and composer.lock
 	$(COMPOSER) validate
 
 check-requirements: ## Checks requirements for running Symfony and gives useful recommendations to optimize PHP for Symfony.
-	$(SYMFONY_BIN) check:requirements
+	if [ "$$CI" = "1" ]; then \
+            		symfony check:requirements; \
+            	else \
+            		$(SYMFONY_BIN) check:requirements; \
+            	fi
 
 check-security: ## Checks security issues in project dependencies. Without arguments, it looks for a "composer.lock" file in the current directory. Pass it explicitly to check a specific "composer.lock" file.
-	$(SYMFONY_BIN) security:check
+	if [ "$$CI" = "1" ]; then \
+            		symfony check:security; \
+            	else \
+            		$(SYMFONY_BIN) security:check; \
+            	fi
 
 psalm: ## A static analysis tool for finding errors in PHP applications
-	$(PSALM)
+	if [ "$$CI" = "1" ]; then \
+            		./vendor/bin/psalm; \
+            	else \
+            		$(PSALM); \
+            	fi
 
 psalm-security: ## Psalm security analysis
-	$(PSALM) --taint-analysis
+	if [ "$$CI" = "1" ]; then \
+            		./vendor/bin/psalm --taint-analysis; \
+            	else \
+            		$(PSALM) --taint-analysis; \
+            	fi
+
 
 phpinsights: ## Instant PHP quality checks and static analysis tool
-	$(EXEC_PHP) ./vendor/bin/phpinsights --no-interaction
+	if [ "$$CI" = "1" ]; then \
+            		./vendor/bin/phpinsights --no-interaction; \
+            	else \
+            		$(EXEC_PHP) ./vendor/bin/phpinsights --no-interaction; \
+            	fi
 
 ci-phpinsights:
 	vendor/bin/phpinsights -n --ansi --format=github-action
 	vendor/bin/phpinsights analyse tests -n --ansi --format=github-action
 
 unit-tests: ## Run unit tests
-	$(EXEC_PHP_TEST_ENV) ./vendor/bin/phpunit --testsuite=Unit
+	if [ "$$CI" = "1" ]; then \
+        		./vendor/bin/phpunit --testsuite=Unit; \
+        	else \
+        		$(EXEC_PHP_TEST_ENV) ./vendor/bin/phpunit --testsuite=Unit; \
+        	fi
 
 deptrac: ## Check directory structure
 	$(DEPTRAC) analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered
@@ -72,11 +101,18 @@ deptrac-debug: ## Find files unassigned for Deptrac
 	$(DEPTRAC) debug:unassigned --config-file=deptrac.yaml
 
 behat: ## A php framework for autotesting business expectations
-	$(DOCKER_COMPOSE) exec -e APP_ENV=test php ./vendor/bin/behat
+	if [ "$$CI" = "1" ]; then \
+    		APP_ENV=test ./vendor/bin/behat; \
+    	else \
+    		$(DOCKER_COMPOSE) exec -e APP_ENV=test php ./vendor/bin/behat; \
+    	fi
 
 integration-tests: ## Run integration tests
-	$(EXEC_PHP_TEST_ENV) ./vendor/bin/phpunit --testsuite=Integration
-
+	if [ "$$CI" = "1" ]; then \
+        		./vendor/bin/phpunit --testsuite=Integration; \
+        	else \
+        		$(EXEC_PHP_TEST_ENV) ./vendor/bin/phpunit --testsuite=Integration; \
+        	fi
 ci-tests:
 	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage -e APP_ENV=test php sh -c 'php -d memory_limit=-1 ./vendor/bin/phpunit --coverage-clover /coverage/coverage.xml'
 

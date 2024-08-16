@@ -30,42 +30,47 @@
                 "conditions": []
             },
             {
-                "action": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php",
+                "action": "CI=1 make phpcsfixer",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/psalm",
+                "action": "CI=1 make psalm",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "symfony check:requirements",
+                "action": "CI=1 make check-requirements",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "symfony check:security",
+                "action": "CI=1 make check-security",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/psalm --taint-analysis",
+                "action": "CI=1 make psalm-security",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/phpinsights --no-interaction",
+                "action": "CI=1 make phpinsights",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "./vendor/bin/phpunit --testsuite=Unit && ./vendor/bin/phpunit --testsuite=Integration",
+                "action": "CI=1 make unit-tests",
                 "options": [],
                 "conditions": []
             },
             {
-                "action": "APP_ENV=test ./vendor/bin/behat",
+                "action": "CI=1 make integration-tests",
+                "options": [],
+                "conditions": []
+            },
+            {
+                "action": "CI=1 make behat",
                 "options": [],
                 "conditions": []
             }
