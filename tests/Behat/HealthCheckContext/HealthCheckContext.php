@@ -6,6 +6,7 @@ namespace App\Tests\Behat\HealthCheckContext;
 
 use Behat\Behat\Context\Context;
 use PHPUnit\Framework\Assert;
+use Symfony\Component\Cache\Exception\CacheException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -55,7 +56,7 @@ final class HealthCheckContext implements Context
                 ?float $beta = null,
                 ?array &$metadata = null
             ): mixed {
-                throw new \Exception('Cache error');
+                throw new CacheException();
             }
 
             public function delete(string $key): bool
