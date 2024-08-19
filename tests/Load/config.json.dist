@@ -1,10 +1,7 @@
 {
     "apiHost": "localhost",
     "apiPort": "80",
-    "batchSize": 100,
     "delayBetweenScenarios": 60,
-    "gettingEmailMaxRetries": 300,
-    "usersFileLocation": "/loadTests/",
     "endpoints": {
         "health": {
             "setupTimeoutInMinutes": 30,
