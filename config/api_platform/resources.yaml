@@ -14,4 +14,4 @@ resources:
               '204':
                 description: 'Health check passed with no content to return.'
               '500':
-                description: 'Internal server error occurred, possibly due to a failure in one or more services being unavailable.'
+                description: 'Health check failed. One or more services are not functioning properly.'
