@@ -5,7 +5,7 @@ services:
 
     Symfony\Contracts\Cache\CacheInterface:
         public: true
-        class: Symfony\Component\Cache\Adapter\FilesystemAdapter
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
 
     App\Tests\Behat\:
         resource: '../tests/Behat/*'
