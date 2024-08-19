@@ -37,3 +37,4 @@
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.
 - [ ] You have only one commit (if not, squash them into one commit).
+- [ ] Structurizr documentation has been updated to reflect any changes.
