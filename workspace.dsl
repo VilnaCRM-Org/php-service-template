@@ -7,14 +7,11 @@ workspace {
             "structurizr.groupSeparator" "/"
         }
 
-        softwareSystem = softwareSystem "PHP Symfony Application" {
-            webApplication = container "Web Application" {
+        softwareSystem = softwareSystem "VilnaCRM" {
+            webApplication = container "PHP Service Template" {
 
                 group "Application" {
                     healthCheckController = component "HealthCheckController" "Handles health check requests" "Controller" {
-                        tags "Item"
-                    }
-                    uuidTransformer = component "UuidTransformer" "Transforms UUIDs" "Transformer" {
                         tags "Item"
                     }
                 }
@@ -45,6 +42,9 @@ workspace {
                         tags "Item"
                     }
                     inMemorySymfonyEventBus = component "InMemorySymfonyEventBus" "Handles event publishing" "EventBus" {
+                        tags "Item"
+                    }
+                    uuidTransformer = component "UuidTransformer" "Transforms UUIDs" "Transformer" {
                         tags "Item"
                     }
                 }

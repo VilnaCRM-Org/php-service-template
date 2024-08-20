@@ -58,10 +58,12 @@ services:
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
-      - POSTGRES_DB=${POSTGRES_DB:-app}
+      - POSTGRES_DB=${DB_NAME:-app}
       # You should definitely change the password in production
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
       - POSTGRES_USER=${POSTGRES_USER:-app}
+    ports:
+      - '${DB_PORT}:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
