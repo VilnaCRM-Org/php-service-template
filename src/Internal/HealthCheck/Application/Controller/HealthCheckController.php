@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Internal\HealthCheck\Application\Controller;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
-use App\Internal\HealthCheck\Domain\Factory\Event\HealthCheckEventFactory;
+use App\Internal\HealthCheck\Infrastructure\Factory\Event\HealthEventFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 final class HealthCheckController extends AbstractController
 {
     private EventDispatcherInterface $eventDispatcher;
-    private HealthCheckEventFactory $eventFactory;
+    private HealthEventFactory $eventFactory;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        HealthCheckEventFactory $eventFactory
+        HealthEventFactory $eventFactory
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->eventFactory = $eventFactory;

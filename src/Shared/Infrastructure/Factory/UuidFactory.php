@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\Factory;
+namespace App\Shared\Infrastructure\Factory;
 
+use App\Shared\Domain\Factory\UuidFactoryInterface;
 use App\Shared\Domain\ValueObject\Uuid;
 
 final class UuidFactory implements UuidFactoryInterface

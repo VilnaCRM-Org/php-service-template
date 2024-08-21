@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Shared\Domain\Factory;
 
-use App\Shared\Domain\Factory\UuidFactory;
 use App\Shared\Domain\ValueObject\Uuid;
+use App\Shared\Infrastructure\Factory\UuidFactory;
 use PHPUnit\Framework\TestCase;
 
 final class UuidFactoryTest extends TestCase

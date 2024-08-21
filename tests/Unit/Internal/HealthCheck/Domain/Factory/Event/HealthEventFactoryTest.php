@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Internal\HealthCheck\Domain\Factory\Event;
 
 use App\Internal\HealthCheck\Domain\Event\HealthCheckEvent;
-use App\Internal\HealthCheck\Domain\Factory\Event\HealthCheckEventFactory;
+use App\Internal\HealthCheck\Infrastructure\Factory\Event\HealthEventFactory;
 use App\Tests\Unit\UnitTestCase;
 
-final class HealthCheckEventFactoryTest extends UnitTestCase
+final class HealthEventFactoryTest extends UnitTestCase
 {
-    private HealthCheckEventFactory $factory;
+    private HealthEventFactory $factory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->factory = new HealthCheckEventFactory();
+        $this->factory = new HealthEventFactory();
     }
 
     public function testCreateHealthCheckEvent(): void
