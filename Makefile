@@ -34,13 +34,9 @@ INFECTION     = ./vendor/bin/infection
 
 # Conditional execution based on CI environment variable
 ifeq ($(CI),1)
-  RUN_ON =
-  RUN_ON_TEST =
-  DOCKER_COMPOSE_EXEC =
+  EXEC_ENV =
 else
-  RUN_ON = $(EXEC_PHP)
-  RUN_ON_TEST = $(EXEC_PHP_TEST_ENV)
-  DOCKER_COMPOSE_EXEC = $(DOCKER_COMPOSE) exec -e
+  EXEC_ENV = $(EXEC_PHP_TEST_ENV)
 endif
 
 help:
@@ -48,32 +44,35 @@ help:
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 phpcsfixer: ## A tool to automatically fix PHP Coding Standards issues
-	$(DOCKER_COMPOSE_EXEC) PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
-
+ifeq ($(CI),1)
+	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
+else
+	$(DOCKER_COMPOSE) exec -e PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
+endif
 composer-validate: ## The validate command validates a given composer.json and composer.lock
 	$(COMPOSER) validate
 
 check-requirements: ## Checks requirements for running Symfony and gives useful recommendations to optimize PHP for Symfony.
-	$(RUN_ON) $(SYMFONY_BIN) check:requirements
+	$(EXEC_ENV) $(SYMFONY_BIN) check:requirements
 
 check-security: ## Checks security issues in project dependencies. Without arguments, it looks for a "composer.lock" file in the current directory. Pass it explicitly to check a specific "composer.lock" file.
-	$(RUN_ON) $(SYMFONY_BIN) security:check
+	$(EXEC_ENV) $(SYMFONY_BIN) security:check
 
 psalm: ## A static analysis tool for finding errors in PHP applications
-	$(RUN_ON) $(PSALM)
+	$(EXEC_ENV) $(PSALM)
 
 psalm-security: ## Psalm security analysis
-	$(RUN_ON) $(PSALM) --taint-analysis
+	$(EXEC_ENV) $(PSALM) --taint-analysis
 
 phpinsights: ## Instant PHP quality checks and static analysis tool
-	$(RUN_ON) ./vendor/bin/phpinsights --no-interaction
+	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction
 
 ci-phpinsights:
 	vendor/bin/phpinsights -n --ansi --format=github-action
 	vendor/bin/phpinsights analyse tests -n --ansi --format=github-action
 
 unit-tests: ## Run unit tests
-	$(RUN_ON_TEST) $(PHPUNIT) --testsuite=Unit
+	$(EXEC_ENV) $(PHPUNIT) --testsuite=Unit
 
 deptrac: ## Check directory structure
 	$(DEPTRAC) analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered
@@ -82,16 +81,16 @@ deptrac-debug: ## Find files unassigned for Deptrac
 	$(DEPTRAC) debug:unassigned --config-file=deptrac.yaml
 
 behat: ## A php framework for autotesting business expectations
-	$(RUN_ON_TEST) ./vendor/bin/behat
+	$(EXEC_ENV) ./vendor/bin/behat
 
 integration-tests: ## Run integration tests
-	$(RUN_ON_TEST) $(PHPUNIT) --testsuite=Integration
+	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
 
 ci-tests:
 	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage -e APP_ENV=test php sh -c 'php -d memory_limit=-1 $(PHPUNIT) --coverage-clover /coverage/coverage.xml'
 
 e2e-tests: ## Run end-to-end tests
-	$(RUN_ON_TEST) ./vendor/bin/behat
+	$(EXEC_ENV) ./vendor/bin/behat
 
 setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) c:c
@@ -120,7 +119,7 @@ build-k6-docker:
 	$(DOCKER) build -t k6 -f ./tests/Load/Dockerfile .
 
 infection: ## Run mutations test.
-	$(RUN_ON) php -d memory_limit=-1 $(INFECTION) --test-framework-options="--testsuite=Unit" --show-mutations -j8
+	$(EXEC_ENV) php -d memory_limit=-1 $(INFECTION) --test-framework-options="--testsuite=Unit" --show-mutations -j8
 
 execute-load-tests-script: build-k6-docker ## Execute single load test scenario.
 	tests/Load/execute-load-test.sh $(scenario) $(or $(runSmoke),true) $(or $(runAverage),true) $(or $(runStress),true) $(or $(runSpike),true)
