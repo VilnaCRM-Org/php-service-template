@@ -56,12 +56,12 @@ services:
         protocol: udp
 
   database:
-    image: postgres:${DB_VERSION:-16}-alpine
+    image: postgres:${DB_VERSION}-alpine
     environment:
-      - POSTGRES_DB=${DB_NAME:-app}
+      - POSTGRES_DB=${DB_NAME}
       # You should definitely change the password in production
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-!ChangeMe!}
-      - POSTGRES_USER=${DB_USER:-app}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
     ports:
       - '${DB_PORT}:5432'
     volumes:
