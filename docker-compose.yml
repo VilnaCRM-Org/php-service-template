@@ -23,7 +23,7 @@ services:
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
       MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-      DB_URL: postgresql://${DB_USER:-app}:${DB_PASSWORD:-!ChangeMe!}@database:5432/${DB_NAME:-app}?serverVersion=${DB_VERSION:-14}
+      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:{DB_PORT}/${DB_NAME}?serverVersion=${DB_VERSION}
 
   caddy:
     build:
