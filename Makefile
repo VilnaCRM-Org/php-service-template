@@ -33,11 +33,8 @@ INFECTION     = ./vendor/bin/infection
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
 # Conditional execution based on CI environment variable
-ifeq ($(CI),1)
-EXEC_ENV =
-else
-EXEC_ENV = $(EXEC_PHP_TEST_ENV)
-endif
+EXEC_ENV := $(if $(CI),,$(EXEC_PHP_TEST_ENV))
+FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
 
 PHP_CS_FIXER_CMD = php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
 
@@ -47,9 +44,9 @@ help:
 
 phpcsfixer: ## A tool to automatically fix PHP Coding Standards issues
 ifeq ($(CI),1)
-	PHP_CS_FIXER_IGNORE_ENV=1 $(PHP_CS_FIXER_CMD)
+	$(FIXER_ENV) $(PHP_CS_FIXER_CMD)
 else
-	$(DOCKER_COMPOSE) exec -e PHP_CS_FIXER_IGNORE_ENV=1 $(PHP_CS_FIXER_CMD)
+	$(DOCKER_COMPOSE) exec -e $(FIXER_ENV) $(PHP_CS_FIXER_CMD)
 endif
 composer-validate: ## The validate command validates a given composer.json and composer.lock
 	$(COMPOSER) validate
