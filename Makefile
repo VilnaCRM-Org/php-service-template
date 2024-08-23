@@ -33,7 +33,11 @@ INFECTION     = ./vendor/bin/infection
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
 # Conditional execution based on CI environment variable
-EXEC_ENV = $(if $(CI),,$(EXEC_PHP_TEST_ENV))
+ifeq ($(CI),1)
+EXEC_ENV =
+else
+EXEC_ENV = $(EXEC_PHP_TEST_ENV)
+endif
 
 PHP_CS_FIXER_CMD = php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
 
