@@ -37,20 +37,23 @@ EXEC_ENV ?= $(EXEC_PHP_TEST_ENV)
 ifeq ($(CI),1)
   EXEC_ENV =
 endif
-FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
 
+FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
 PHP_CS_FIXER_CMD = php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
+
+ifeq ($(CI),1)
+    RUN_PHP_CS_FIXER = $(FIXER_ENV) $(PHP_CS_FIXER_CMD)
+else
+    RUN_PHP_CS_FIXER = $(DOCKER_COMPOSE) exec -e $(FIXER_ENV) php $(PHP_CS_FIXER_CMD)
+endif
 
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 phpcsfixer: ## A tool to automatically fix PHP Coding Standards issues
-ifeq ($(CI),1)
-	$(FIXER_ENV) $(PHP_CS_FIXER_CMD)
-else
-	$(DOCKER_COMPOSE) exec -e $(FIXER_ENV) $(PHP_CS_FIXER_CMD)
-endif
+	$(RUN_PHP_CS_FIXER)
+
 composer-validate: ## The validate command validates a given composer.json and composer.lock
 	$(COMPOSER) validate
 
