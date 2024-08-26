@@ -38,13 +38,22 @@ ifeq ($(CI),1)
   EXEC_ENV =
 endif
 
+# Variables for environment and commands
 FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
 PHP_CS_FIXER_CMD = php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
+COVERAGE_CMD = php -d memory_limit=-1 ./vendor/bin/phpunit --coverage-clover /coverage/coverage.xml
 
+define DOCKER_EXEC_WITH_ENV
+$(DOCKER_COMPOSE) exec -e $(1) php $(2)
+endef
+
+# Conditional execution based on CI environment variable
 ifeq ($(CI),1)
     RUN_PHP_CS_FIXER = $(FIXER_ENV) $(PHP_CS_FIXER_CMD)
+    RUN_TESTS_COVERAGE = XDEBUG_MODE=coverage $(COVERAGE_CMD)
 else
-    RUN_PHP_CS_FIXER = $(DOCKER_COMPOSE) exec -e $(FIXER_ENV) php $(PHP_CS_FIXER_CMD)
+    RUN_PHP_CS_FIXER = $(call DOCKER_EXEC_WITH_ENV,$(FIXER_ENV),$(PHP_CS_FIXER_CMD))
+    RUN_TESTS_COVERAGE = $(call DOCKER_EXEC_WITH_ENV,APP_ENV=test -e XDEBUG_MODE=coverage,$(COVERAGE_CMD))
 endif
 
 help:
@@ -70,11 +79,7 @@ psalm-security: ## Psalm security analysis
 	$(EXEC_ENV) $(PSALM) --taint-analysis
 
 phpinsights: ## Instant PHP quality checks and static analysis tool
-	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction
-
-ci-phpinsights:
-	vendor/bin/phpinsights -n --ansi --format=github-action
-	vendor/bin/phpinsights analyse tests -n --ansi --format=github-action
+	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction --ansi --format=github-action
 
 unit-tests: ## Run unit tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Unit
@@ -91,8 +96,9 @@ behat: ## A php framework for autotesting business expectations
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
 
-ci-tests:
-	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage -e APP_ENV=test php sh -c 'php -d memory_limit=-1 $(PHPUNIT) --coverage-clover /coverage/coverage.xml'
+tests-with-coverage: ## Run tests with coverage
+	$(RUN_TESTS_COVERAGE)
+
 
 e2e-tests: ## Run end-to-end tests
 	$(EXEC_ENV) ./vendor/bin/behat
