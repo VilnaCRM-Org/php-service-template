@@ -26,4 +26,4 @@ jobs:
         uses: bats-core/bats-action@2.0.0
 
       - name: Run Bats tests
-        run: bats tests/CLI/bats/test.bats
+        run: make bats

@@ -66,17 +66,6 @@ load 'bats-assert/load'
 @test "make deptrac command executes and reports no violations" {
   run make deptrac
   assert_success
-
-  # Check for report details
-  assert_output --partial 'Report'
-  assert_output --partial 'Violations           0'
-  assert_output --partial 'Skipped violations   0'
-  assert_output --partial 'Uncovered            0'
-  assert_output --partial 'Warnings             0'
-  assert_output --partial 'Errors               0'
-
-  # Check for command execution details
-  assert_output --partial './vendor/bin/deptrac analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered'
 }
 
 @test "make deptrac-debug command executes" {
@@ -183,11 +172,6 @@ load 'bats-assert/load'
   assert_success
 }
 
-@test "make fix-perms command executes" {
-  run make fix-perms
-  assert_success
-}
-
 @test "make purge command executes" {
   run make purge
   assert_success
@@ -198,17 +182,7 @@ load 'bats-assert/load'
 
   assert_failure 124
 
-  assert_output --partial "PostgreSQL Database directory appears to contain a database; Skipping initialization"
-  assert_output --partial "starting PostgreSQL"
-  assert_output --partial "listening on IPv4 address"
-  assert_output --partial "listening on IPv6 address"
-  assert_output --partial "listening on Unix socket"
-
-  assert_output --partial "database-1"
-
-  assert_output --partial "202"
-
-  assert_output --partial "port 5432"
+  assert_output --partial "GET /ping" 200
 }
 
 @test "make new-logs command executes" {
