@@ -1,0 +1,17 @@
+name: bats core tests
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  my_test:
+    runs-on: ubuntu-latest
+    name: Install Bats and bats libs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Bats and bats libs
+        uses: bats-core/bats-action@2.0.0
+      - name: Run Bats tests
+        run: $HOME/bin/bats tests/CLI/bats-core/test.bats
