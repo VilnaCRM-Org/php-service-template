@@ -144,24 +144,6 @@ doctrine-migrations-generate: ## Generates a blank migration class
 cache-clear: ## Clears and warms up the application cache for a given environment and debug mode
 	$(SYMFONY) c:c
 
-first-release: ## Generate changelog from a project's commit messages for the first release
-	$(EXEC_PHP) ./vendor/bin/conventional-changelog --first-release --commit --no-change-without-commits
-
-changelog-generate: ## Generate changelog from a project's commit messages
-	$(EXEC_PHP) ./vendor/bin/conventional-changelog
-
-release: ## Generate changelogs and release notes from a project's commit messages for the first release
-	$(EXEC_PHP) ./vendor/bin/conventional-changelog --commit --no-change-without-commits
-
-release-patch: ## Generate changelogs and commit new patch tag from a project's commit messages
-	$(EXEC_PHP) ./vendor/bin/conventional-changelog --patch --commit --no-change-without-commits
-
-release-minor: ## Generate changelogs and commit new minor tag from a project's commit messages
-	$(EXEC_PHP) ./vendor/bin/conventional-changelog --minor --commit --no-change-without-commits
-
-release-major: ## Generate changelogs and commit new major tag from a project's commit messages
-	$(EXEC_PHP) ./vendor/bin/conventional-changelog --major --commit --no-change-without-commits
-
 install: composer.lock ## Install vendors according to the current composer.lock file
 	@$(COMPOSER) install --no-progress --prefer-dist --optimize-autoloader
 
