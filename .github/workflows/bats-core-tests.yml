@@ -9,9 +9,22 @@ jobs:
     runs-on: ubuntu-latest
     name: Install Bats and bats libs
     steps:
+      -
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ vars.PHP_VERSION }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Start Application
+        run: make start
+
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Setup Bats and bats libs
         uses: bats-core/bats-action@2.0.0
+
       - name: Run Bats tests
         run: bats tests/CLI/bats/test.bats
