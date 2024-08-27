@@ -14,4 +14,4 @@ jobs:
       - name: Setup Bats and bats libs
         uses: bats-core/bats-action@2.0.0
       - name: Run Bats tests
-        run: bats tests/CLI/bats-core/test.bats
+        run: bats tests/CLI/bats/test.bats
