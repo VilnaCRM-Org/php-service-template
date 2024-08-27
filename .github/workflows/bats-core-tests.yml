@@ -5,10 +5,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  tests:
+  my_test:
     runs-on: ubuntu-latest
     name: Install Bats and bats libs
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
@@ -18,9 +21,6 @@ jobs:
 
       - name: Start Application
         run: make start
-
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Setup Bats and bats libs
         uses: bats-core/bats-action@2.0.0
