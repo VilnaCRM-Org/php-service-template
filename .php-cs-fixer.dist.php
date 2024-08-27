@@ -18,7 +18,8 @@ return (new PhpCsFixer\Config())
         'class_definition' => [
             'multi_line_extends_each_single_line' => true,
             'single_line' => false,
-            'single_item_single_line' => false
+            'single_item_single_line' => false,
+            'space_before_parenthesis' => false
         ],
         'no_unused_imports' => true,
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
