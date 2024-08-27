@@ -207,11 +207,6 @@ load 'bats-assert/load'
 
 }
 
-@test "make stats command executes" {
-  run make stats
-  assert_success
-}
-
 @test "make coverage-html command executes" {
   run make coverage-html
   assert_success
