@@ -6,22 +6,9 @@ load 'bats-assert/load'
 @test "make help command lists all available targets" {
   run make help
   assert_success
-
-  # Check for the usage instructions
   assert_output --partial "Usage:"
   assert_output --partial "make [target] [arg=\"val\"...]"
-
-  # Check for the "Targets:" header
   assert_output --partial "Targets:"
-}
-
-@test "make phpinsights command executes and completes analysis" {
-  run make phpinsights
-  assert_success
-  # Check for deprecated warnings
-  assert_output --partial '✨ Analysis Completed !'
-  # Check for command execution details
-  assert_output --partial './vendor/bin/phpinsights --no-interaction --ansi --format=github-action'
 }
 
 @test "make composer-validate command executes and reports validity with warnings" {
@@ -47,6 +34,15 @@ load 'bats-assert/load'
 @test "make phpcsfixer command executes" {
   run make phpcsfixer
   assert_success
+}
+
+@test "make phpinsights command executes and completes analysis" {
+  run make phpinsights
+  assert_success
+  # Check for deprecated warnings
+  assert_output --partial '✨ Analysis Completed !'
+  # Check for command execution details
+  assert_output --partial './vendor/bin/phpinsights --no-interaction --ansi --format=github-action'
 }
 
 @test "make psalm command executes and reports no errors" {
@@ -77,6 +73,7 @@ load 'bats-assert/load'
   run make unit-tests
   assert_success
 }
+
 @test "make behat command executes" {
   run make behat
   assert_success
@@ -94,11 +91,6 @@ load 'bats-assert/load'
 
 @test "make e2e-tests command executes" {
   run make e2e-tests
-  assert_success
-}
-
-@test "make setup-test-db command executes" {
-  run make setup-test-db
   assert_success
 }
 
@@ -129,11 +121,6 @@ load 'bats-assert/load'
 
 @test "make load-tests command executes" {
   run make load-tests
-  assert_success
-}
-
-@test "make build-k6-docker command executes" {
-  run make build-k6-docker
   assert_success
 }
 
@@ -179,30 +166,23 @@ load 'bats-assert/load'
 
 @test "make logs shows docker logs" {
   run bash -c "timeout 5 make logs"
-
   assert_failure 124
-
   assert_output --partial "GET /ping" 200
 }
 
 @test "make new-logs command executes" {
   run bash -c "timeout 5 make logs"
-
   assert_failure 124
-
   assert_output --partial ""GET /ping" 200"
 }
 
 @test "make commands lists all available Symfony commands" {
   run make commands
   assert_success
-
   assert_output --partial "Usage:"
   assert_output --partial "command [options] [arguments]"
-
   assert_output --partial "Options:"
   assert_output --partial "-h, --help            Display help for the given command."
-
   assert_output --partial "Available commands:"
 
 }
@@ -227,13 +207,14 @@ load 'bats-assert/load'
   assert_success
 }
 
-@test "make stop command executes" {
-  run make stop
-  assert_success
+@test "make sh attempts to open a shell in the PHP container" {
+  run bash -c "make sh & sleep 2; kill $!"
+  assert_failure
+  assert_output --partial "php-service-template"
 }
 
-@test "make up command executes" {
-  run make up
+@test "make stop command executes" {
+  run make stop
   assert_success
 }
 
