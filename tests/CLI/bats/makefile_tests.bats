@@ -61,7 +61,7 @@ load 'bats-assert/load'
 
 @test "make deptrac command executes and reports no violations" {
   run make deptrac
-  assert_output --partial 'Report'
+  assert_output --partial './vendor/bin/deptrac analyse'
   assert_success
 }
 
