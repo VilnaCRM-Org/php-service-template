@@ -40,9 +40,7 @@ load 'bats-assert/load'
 @test "make phpinsights command executes and completes analysis" {
   run make phpinsights
   assert_success
-  # Check for deprecated warnings
   assert_output --partial '✨ Analysis Completed !'
-  # Check for command execution details
   assert_output --partial './vendor/bin/phpinsights --no-interaction --ansi --format=github-action'
 }
 
