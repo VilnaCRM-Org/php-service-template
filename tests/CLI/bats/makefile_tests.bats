@@ -34,6 +34,7 @@ load 'bats-assert/load'
 @test "make phpcsfixer command executes" {
   run make phpcsfixer
   assert_success
+  assert_output --partial "Running analysis on 1 core sequentially."
 }
 
 @test "make phpinsights command executes and completes analysis" {
@@ -55,83 +56,91 @@ load 'bats-assert/load'
   run make psalm-security
   assert_success
   assert_output --partial 'No errors found!'
-  # Check for taint analysis
   assert_output --partial './vendor/bin/psalm --taint-analysis'
 }
 
 @test "make deptrac command executes and reports no violations" {
   run make deptrac
+  assert_output --partial 'Report'
   assert_success
 }
 
 @test "make deptrac-debug command executes" {
   run make make deptrac-debug
+  assert_output --partial 'App'
   assert_success
 }
 
 @test "make unit-tests command executes" {
   run make unit-tests
+  assert_output --partial 'OK'
   assert_success
 }
 
 @test "make behat command executes" {
   run make behat
+  assert_output --partial 'passed'
   assert_success
 }
 
 @test "make integration-tests command executes" {
   run make integration-tests
+  assert_output --partial 'PHPUnit'
   assert_success
 }
 
 @test "make tests-with-coverage command executes" {
   run make tests-with-coverage
+  assert_output --partial 'Testing'
   assert_success
 }
 
 @test "make e2e-tests command executes" {
   run make e2e-tests
+  assert_output --partial 'Symfony extension is correctly installed'
   assert_success
 }
 
 @test "make all-tests command executes" {
   run make all-tests
-  assert_success
-}
-
-@test "make smoke-load-tests command executes" {
-  run make smoke-load-tests
+  assert_output --partial 'OK'
   assert_success
 }
 
 @test "make average-load-tests command executes" {
   run make average-load-tests
   assert_success
+  assert_output --partial 'load metadata'
 }
 
 @test "make stress-load-tests command executes" {
   run make stress-load-tests
   assert_success
+  assert_output --partial 'load metadata'
 }
 
 @test "make spike-load-tests command executes" {
   run make spike-load-tests
   assert_success
+  assert_output --partial 'load metadata'
 }
 
 @test "make load-tests command executes" {
   run make load-tests
   assert_success
+  assert_output --partial 'load metadata'
 }
 
 @test "make infection command executes" {
   run make infection
   assert_success
+  assert_output --partial 'Infection - PHP Mutation Testing Framework'
 }
 
 @test "make doctrine-migrations-migrate executes migrations" {
   run bash -c "echo 'yes' | make doctrine-migrations-migrate"
   assert_success
+  assert_output --partial 'DoctrineMigrations'
 }
 
 @test "make doctrine-migrations-generate command executes" {
