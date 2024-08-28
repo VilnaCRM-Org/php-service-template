@@ -156,9 +156,6 @@ update: ## Update vendors according to the current composer.json file
 cache-warmup: ## Warmup the Symfony cache
 	@$(SYMFONY) cache:warmup
 
-fix-perms: ## Fix permissions of all var files
-	@chmod -R 777 var/*
-
 purge: ## Purge cache and logs
 	@rm -rf var/cache/* var/logs/*
 
