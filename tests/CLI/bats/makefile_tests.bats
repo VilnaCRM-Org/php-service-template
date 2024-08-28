@@ -154,6 +154,23 @@ load 'bats-assert/load'
   assert_success
 }
 
+@test "make stats command executes" {
+  run make stats
+  assert_success
+}
+
+@test "make load-fixtures command executes" {
+   run bash -c "make load-fixtures & sleep 2; kill $!"
+   assert_failure
+   assert_output --partial "Successfully deleted cache entries."
+}
+
+@test "make build command starts successfully and shows initial build output" {
+  run timeout 5 make build
+  assert_failure 124
+  assert_output --partial "docker compose build --pull --no-cache"
+}
+
 @test "make cache-warmup command executes" {
   run make cache-warmup
   assert_success
