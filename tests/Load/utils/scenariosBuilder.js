@@ -10,7 +10,7 @@ export default class ScenariosBuilder {
             executor: 'constant-arrival-rate',
             rate: smokeConfig.rps,
             timeUnit: '1s',
-            duration: smokeConfig.duration + 's',
+            duration: `${smokeConfig.duration}s`,
             preAllocatedVUs: smokeConfig.vus,
             tags: {test_type: 'smoke'},
         };
@@ -46,14 +46,14 @@ export default class ScenariosBuilder {
             stages: [
                 {
                     target: spikeConfig.rps,
-                    duration: spikeConfig.duration.rise + 's'
+                    duration: `${spikeConfig.duration.rise}s`
             },
                 {
                     target: 0,
-                    duration: spikeConfig.duration.fall + 's'
+                    duration: `${spikeConfig.duration.fall}s`
             },
             ],
-            startTime: startTime + 's',
+            startTime: `${startTime}s`,
             tags: { test_type: 'spike' },
         };
 
@@ -70,18 +70,18 @@ export default class ScenariosBuilder {
             stages: [
                 {
                     target: config.rps,
-                    duration: config.duration.rise + 's'
+                    duration: `${config.duration.rise}s`
             },
                 {
                     target: config.rps,
-                    duration: config.duration.plateau + 's'
+                    duration: `${config.duration.plateau}s`
             },
                 {
                     target: 0,
-                    duration: config.duration.fall + 's'
+                    duration: `${config.duration.fall}s`
             },
             ],
-            startTime: startTime + 's',
+            startTime: `${startTime}s`,
             tags: { test_type: scenarioName },
         };
 

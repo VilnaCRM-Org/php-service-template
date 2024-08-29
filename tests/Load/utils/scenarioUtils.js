@@ -9,8 +9,8 @@ export default class ScenarioUtils {
         this.averageConfig = this.config.endpoints[scenarioName].average;
         this.stressConfig = this.config.endpoints[scenarioName].stress;
         this.spikeConfig = this.config.endpoints[scenarioName].spike;
-        this.setupTimeout = this.config.endpoints[scenarioName].setupTimeoutInMinutes + 'm';
-        this.teardownTimeout = this.config.endpoints[scenarioName].teardownTimeoutInMinutes + 'm';
+        this.setupTimeout = `${this.config.endpoints[scenarioName].setupTimeoutInMinutes}m`;
+        this.teardownTimeout = `${this.config.endpoints[scenarioName].teardownTimeoutInMinutes}m`
         this.delay = this.config.delayBetweenScenarios;
         this.averageTestStartTime = 0;
         this.stressTestStartTime = 0;

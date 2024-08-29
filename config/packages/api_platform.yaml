@@ -10,10 +10,10 @@ api_platform:
             rfc_7807_compliant_errors: true
 
     formats:
-        json: [ 'application/json' ]
+        json: ['application/json']
 
     error_formats:
-        jsonproblem: [ 'application/problem+json' ]
+        jsonproblem: ['application/problem+json']
 
     resource_class_directories:
         - '%kernel.project_dir%/src/Internal/HealthCheck/Domain/ValueObject'
