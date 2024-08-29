@@ -35,10 +35,10 @@ services:
         lazy: true
 
     Aws\Sqs\SqsClient:
-      arguments:
-        - version: '%env(AWS_SQS_VERSION)%'
-          region: '%env(AWS_SQS_REGION)%'
-          endpoint: '%env(AWS_SQS_ENDPOINT_BASE)%:%env(LOCALSTACK_PORT)%'
-          credentials:
-            key: '%env(AWS_SQS_KEY)%'
-            secret: '%env(AWS_SQS_SECRET)%'
+        arguments:
+          - version: '%env(AWS_SQS_VERSION)%'
+            region: '%env(AWS_SQS_REGION)%'
+            endpoint: '%env(AWS_SQS_ENDPOINT_BASE)%:%env(LOCALSTACK_PORT)%'
+            credentials:
+              key: '%env(AWS_SQS_KEY)%'
+              secret: '%env(AWS_SQS_SECRET)%'

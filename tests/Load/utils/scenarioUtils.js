@@ -1,5 +1,5 @@
 import ScenariosBuilder from './scenariosBuilder.js';
-import ThresholdsBuilder from './thesholdsBuilder.js';
+import ThresholdsBuilder from './thresholdsBuilder.js';
 
 export default class ScenarioUtils {
     constructor(utils, scenarioName) {
@@ -10,7 +10,7 @@ export default class ScenarioUtils {
         this.stressConfig = this.config.endpoints[scenarioName].stress;
         this.spikeConfig = this.config.endpoints[scenarioName].spike;
         this.setupTimeout = `${this.config.endpoints[scenarioName].setupTimeoutInMinutes}m`;
-        this.teardownTimeout = `${this.config.endpoints[scenarioName].teardownTimeoutInMinutes}m`
+        this.teardownTimeout = `${this.config.endpoints[scenarioName].teardownTimeoutInMinutes}m`;
         this.delay = this.config.delayBetweenScenarios;
         this.averageTestStartTime = 0;
         this.stressTestStartTime = 0;
