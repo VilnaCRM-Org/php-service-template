@@ -74,7 +74,6 @@ psalm-security               Psalm security analysis
 purge                        Purge cache and logs
 sh                           Log to the docker container
 start                        Start docker
-stats                        Commits by the hour for the main author of this project
 stop                         Stop docker and the Symfony binary server
 up                           Start the docker hub (PHP, caddy)
 ```

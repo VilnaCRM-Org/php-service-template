@@ -166,11 +166,6 @@ load 'bats-assert/load'
   assert_success
 }
 
-@test "make stats command executes" {
-  run make stats
-  assert_success
-}
-
 @test "make load-fixtures command executes" {
    run bash -c "make load-fixtures & sleep 2; kill $!"
    assert_failure
