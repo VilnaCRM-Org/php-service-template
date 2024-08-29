@@ -135,6 +135,11 @@ load 'bats-assert/load'
   assert_output --partial 'Infection - PHP Mutation Testing Framework'
 }
 
+@test "make execute-load-tests-script command executes" {
+  run make execute-load-tests-script
+  assert_output --partial "true true true true"
+}
+
 @test "make doctrine-migrations-migrate executes migrations" {
   run bash -c "echo 'yes' | make doctrine-migrations-migrate"
   assert_success

@@ -102,7 +102,6 @@ integration-tests: ## Run integration tests
 tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
 
-
 e2e-tests: ## Run end-to-end tests
 	$(EXEC_ENV) ./vendor/bin/behat
 
