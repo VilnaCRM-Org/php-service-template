@@ -146,7 +146,6 @@ EOF
 
   run make deptrac
 
-  # Clean up the temporary file
   rm -f src/Shared/Domain/Factory/UuidTransformer.php
   rmdir src/Shared/Domain/Factory
 
@@ -168,7 +167,6 @@ EOF
 }
 
 @test "make unit-tests should fail if tests fail" {
-  # Temporarily create a failing test
   echo "<?php
   use PHPUnit\Framework\TestCase;
   class FailingTest extends TestCase {
@@ -179,7 +177,6 @@ EOF
 
   run make unit-tests
 
-  # Remove the temporary test
   rm tests/Unit/FailingTest.php
 
   assert_failure
@@ -199,7 +196,6 @@ EOF
 
   run make composer-validate
 
-  # Restore original composer.json
   mv composer.json.bak composer.json
 
   assert_failure
