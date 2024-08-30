@@ -35,7 +35,7 @@ paths:
         '204':
           description: 'Health check passed with no content to return.'
         '500':
-          description: 'Health check failed. One or more services are not functioning properly.'
+          description: 'Health check failed.'
       summary: 'Retrieves a HealthCheck resource.'
       description: 'Retrieves a HealthCheck resource.'
       parameters: []
