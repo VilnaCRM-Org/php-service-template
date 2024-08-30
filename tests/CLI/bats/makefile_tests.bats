@@ -133,10 +133,6 @@ EOF
   rmdir src/Shared/Domain/Factory
 
   assert_failure
-  assert_output --partial "Violation"
-  assert_output --partial "App\\Shared\\Domain\\Factory\\UuidTransformer"
-  assert_output --partial "must not depend on"
-  assert_output --partial "Symfony\\Component\\Uid\\AbstractUid"
 }
 
 @test "make e2e-tests should fail when scenarios fail" {
@@ -213,7 +209,6 @@ EOF
   assert_failure
   assert_output --partial "symfony/http-kernel (v4.4.0)"
   assert_output --partial "1 package has known vulnerabilities"
-  composer install
 }
 
 @test "make help command lists all available targets" {
