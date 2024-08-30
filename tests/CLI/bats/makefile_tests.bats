@@ -3,6 +3,24 @@
 load 'bats-support/load'
 load 'bats-assert/load'
 
+@test "make check-security should report vulnerabilities if present" {
+  cp composer.lock composer.lock.bak
+
+  original_content=$(cat composer.lock)
+
+  modified_content=$(echo "$original_content" | jq '.packages += [{"name": "symfony/http-kernel", "version": "v4.4.0"}]')
+
+  echo "$modified_content" > composer.lock
+
+  run make check-security
+
+  mv composer.lock.bak composer.lock
+
+  assert_failure
+  assert_output --partial "symfony/http-kernel (v4.4.0)"
+  assert_output --partial "1 package has known vulnerabilities"
+}
+
 @test "make infection should fail due to partly covered class" {
   cat << EOF > src/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBus.php
 <?php
@@ -187,29 +205,6 @@ EOF
   assert_failure
   assert_output --partial "does not contain valid JSON"
 }
-
-@test "make check-security should report vulnerabilities if present" {
-  cat << EOF > composer.lock
-{
-    "packages": [
-        {
-            "name": "symfony/http-kernel",
-            "version": "v4.4.0"
-        }
-    ]
-}
-EOF
-
-  run make check-security
-
-  # Remove the temporary composer.lock file
-  rm composer.lock
-  assert_failure
-  assert_output --partial "symfony/http-kernel (v4.4.0)"
-  assert_output --partial "1 package has known vulnerabilities"
-}
-
-composer install
 
 @test "make help command lists all available targets" {
   run make help
