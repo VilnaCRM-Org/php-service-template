@@ -176,7 +176,6 @@ EOF
 }
 
 @test "make composer-validate should fail with invalid composer.json" {
-  # Temporarily modify composer.json to make it invalid
   mv composer.json composer.json.bak
   echo "{" > composer.json
 
@@ -190,7 +189,6 @@ EOF
 }
 
 @test "make check-security should report vulnerabilities if present" {
-  # Temporarily create a composer.lock file with a known vulnerable package
   cat << EOF > composer.lock
 {
     "packages": [
@@ -210,6 +208,8 @@ EOF
   assert_output --partial "symfony/http-kernel (v4.4.0)"
   assert_output --partial "1 package has known vulnerabilities"
 }
+
+composer install
 
 @test "make help command lists all available targets" {
   run make help
