@@ -24,6 +24,9 @@ jobs:
 
       - name: Setup Bats and bats libs
         uses: bats-core/bats-action@2.0.0
+        with:
+          support-path: '/tests/CLI/bats'
+          assert-path: '/tests/CLI/bats'
 
       - name: Run Bats tests
         run: make bats
