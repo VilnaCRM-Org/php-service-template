@@ -27,8 +27,6 @@ jobs:
         with:
           support-path: ${{ github.workspace }}/tests/CLI/bats/bats-support
           assert-path: ${{ github.workspace }}/tests/CLI/bats/bats-assert
-          detik-path: ${{ github.workspace }}/tests/CLI/bats/bats-detik
-          file-path: ${{ github.workspace }}/tests/CLI/bats/bats-file
 
       - name: Run Bats tests
         run: make bats
