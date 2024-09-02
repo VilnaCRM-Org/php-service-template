@@ -22,52 +22,14 @@ load 'bats-assert/load'
 }
 
 @test "make infection should fail due to partly covered class" {
-  cat << EOF > src/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBus.php
-<?php
+  mv tests/CLI/bats/bats-php/PartlyCoveredEventBus.php src/Shared/Infrastructure/Bus/Event/
 
-declare(strict_types=1);
-
-namespace App\Shared\Infrastructure\Bus\Event;
-
-use App\Shared\Domain\Bus\Event\DomainEvent;
-use App\Shared\Domain\Bus\Event\EventBus;
-use Symfony\Component\Messenger\MessageBus;
-
-final class PartlyCoveredEventBus implements EventBus
-{
-    private MessageBus \$bus;
-
-    public function __construct(MessageBus \$bus)
-    {
-        \$this->bus = \$bus;
-    }
-
-    public function publish(DomainEvent ...\$events): void
-    {
-        foreach (\$events as \$event) {
-            \$this->bus->dispatch(\$event);
-        }
-    }
-
-    public function getEventCount(array \$events): int
-    {
-        \$count = 0;
-        foreach (\$events as \$event) {
-            if (\$event instanceof DomainEvent) {
-                \$count++;
-            }
-        }
-        return \$count;
-    }
-}
-EOF
   composer dump-autoload
 
   run make unit-tests
   run make infection
 
-  rm -f src/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBus.php
-  rm -f tests/Unit/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBusTest.php
+  mv src/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBus.php tests/CLI/bats/bats-php/
 
   assert_output --partial "8 mutants were not covered by tests"
 }
@@ -80,28 +42,11 @@ EOF
 }
 
 @test "make psalm should fail when there are errors" {
-  TEST_DIR="src/Shared/Application/PsalmTest_$(date +%s)"
-  mkdir -p "$TEST_DIR"
-  cat << EOF > "$TEST_DIR/PsalmErrorExample.php"
-<?php
-declare(strict_types=1);
-
-namespace App\Shared\Application\PsalmTest;
-
-class PsalmErrorExample
-{
-    public function exampleMethod(): void
-    {
-        \$undefinedVariable;  // This will cause a Psalm error
-        \$number = "not a number";
-        return \$number;  // This will cause another Psalm error (invalid return type)
-    }
-}
-EOF
+  mv tests/CLI/bats/bats-php/PsalmErrorExample.php src/Shared/Application/
 
   run make psalm
 
-  rm -rf "$TEST_DIR"
+  mv src/Shared/Application/PsalmErrorExample.php tests/CLI/bats/bats-php/
 
   assert_failure
   assert_output --partial "UndefinedVariable"
@@ -109,46 +54,13 @@ EOF
 }
 
 @test "make deptrac should fail when there are dependency violations" {
-  mkdir -p src/Shared/Domain/Factory
-  cat << EOF > src/Shared/Domain/Factory/UuidTransformer.php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Shared\Domain\Factory;
-
-use App\Shared\Domain\ValueObject\Uuid;
-use Symfony\Component\Uid\AbstractUid as SymfonyUuid;
-
-final readonly class UuidTransformer
-{
-    public function __construct(
-        private UuidFactoryInterface \$uuidFactory
-    ) {
-    }
-
-    public function transformFromSymfonyUuid(SymfonyUuid \$symfonyUuid): Uuid
-    {
-        return \$this->createUuid((string) \$symfonyUuid);
-    }
-
-    public function transformFromString(string \$uuid): Uuid
-    {
-        return \$this->createUuid(\$uuid);
-    }
-
-    private function createUuid(string \$uuid): Uuid
-    {
-        return \$this->uuidFactory->create(\$uuid);
-    }
-}
-EOF
+  mkdir src/Shared/Domain/Factory/
+  mv tests/CLI/bats/bats-php/UuidTransformer.php src/Shared/Domain/Factory/
 
   run make deptrac
 
-  rm -f src/Shared/Domain/Factory/UuidTransformer.php
-  rmdir src/Shared/Domain/Factory
-
+  mv src/Shared/Domain/Factory/UuidTransformer.php tests/CLI/bats/bats-php/
+  rmdir src/Shared/Domain/Factory/
   assert_failure
 }
 
@@ -160,24 +72,22 @@ EOF
 }
 
 @test "make phpinsights should fail when code quality is low" {
-  echo "<?php while(true){echo 'infinite loop';}" > temp_bad_code.php
+  mv tests/CLI/bats/bats-php/temp_bad_code.php temp_bad_code.php
+
   run make phpinsights
-  rm temp_bad_code.php
+
+  mv temp_bad_code.php tests/CLI/bats/bats-php/
+
+  assert_failure
   assert_output --partial "The style score is too low"
 }
 
 @test "make unit-tests should fail if tests fail" {
-  echo "<?php
-  use PHPUnit\Framework\TestCase;
-  class FailingTest extends TestCase {
-    public function testFailure() {
-      \$this->assertTrue(false);
-    }
-  }" > tests/Unit/FailingTest.php
+  mv tests/CLI/bats/bats-php/FailingTest.php tests/Unit/
 
   run make unit-tests
 
-  rm tests/Unit/FailingTest.php
+  mv tests/Unit/FailingTest.php tests/CLI/bats/bats-php/
 
   assert_failure
   assert_output --partial "FAILURES!"
