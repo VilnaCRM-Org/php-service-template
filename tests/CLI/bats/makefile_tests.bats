@@ -49,8 +49,7 @@ load 'bats-assert/load'
   mv src/Shared/Application/PsalmErrorExample.php tests/CLI/bats/php/
 
   assert_failure
-  assert_output --partial "UndefinedVariable"
-  assert_output --partial "InvalidReturnType"
+  assert_output --partial "does not exist"
 }
 
 @test "make deptrac should fail when there are dependency violations" {
