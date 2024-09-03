@@ -26,7 +26,7 @@ final class HealthCheckContext implements Context
     /**
      * @When :method request is sent to :path
      */
-    public function requestSendTo(string $method, string $path): void
+    public function sendRequestTo(string $method, string $path): void
     {
         $this->response = $this->kernel->handle(Request::create(
             $path,
