@@ -22,14 +22,14 @@ load 'bats-assert/load'
 }
 
 @test "make infection should fail due to partly covered class" {
-  mv tests/CLI/bats/bats-php/PartlyCoveredEventBus.php src/Shared/Infrastructure/Bus/Event/
+  mv tests/CLI/bats/php/PartlyCoveredEventBus.php src/Shared/Infrastructure/Bus/Event/
 
   composer dump-autoload
 
   run make unit-tests
   run make infection
 
-  mv src/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBus.php tests/CLI/bats/bats-php/
+  mv src/Shared/Infrastructure/Bus/Event/PartlyCoveredEventBus.php tests/CLI/bats/php/
 
   assert_output --partial "8 mutants were not covered by tests"
 }
@@ -42,11 +42,11 @@ load 'bats-assert/load'
 }
 
 @test "make psalm should fail when there are errors" {
-  mv tests/CLI/bats/bats-php/PsalmErrorExample.php src/Shared/Application/
+  mv tests/CLI/bats/php/PsalmErrorExample.php src/Shared/Application/
 
   run make psalm
 
-  mv src/Shared/Application/PsalmErrorExample.php tests/CLI/bats/bats-php/
+  mv src/Shared/Application/PsalmErrorExample.php tests/CLI/bats/php/
 
   assert_failure
   assert_output --partial "UndefinedVariable"
@@ -55,11 +55,11 @@ load 'bats-assert/load'
 
 @test "make deptrac should fail when there are dependency violations" {
   mkdir src/Shared/Domain/Factory/
-  mv tests/CLI/bats/bats-php/UuidTransformer.php src/Shared/Domain/Factory/
+  mv tests/CLI/bats/php/UuidTransformer.php src/Shared/Domain/Factory/
 
   run make deptrac
 
-  mv src/Shared/Domain/Factory/UuidTransformer.php tests/CLI/bats/bats-php/
+  mv src/Shared/Domain/Factory/UuidTransformer.php tests/CLI/bats/php/
   rmdir src/Shared/Domain/Factory/
   assert_failure
 }
@@ -72,22 +72,22 @@ load 'bats-assert/load'
 }
 
 @test "make phpinsights should fail when code quality is low" {
-  mv tests/CLI/bats/bats-php/temp_bad_code.php temp_bad_code.php
+  mv tests/CLI/bats/php/temp_bad_code.php temp_bad_code.php
 
   run make phpinsights
 
-  mv temp_bad_code.php tests/CLI/bats/bats-php/
+  mv temp_bad_code.php tests/CLI/bats/php/
 
   assert_failure
   assert_output --partial "The style score is too low"
 }
 
 @test "make unit-tests should fail if tests fail" {
-  mv tests/CLI/bats/bats-php/FailingTest.php tests/Unit/
+  mv tests/CLI/bats/php/FailingTest.php tests/Unit/
 
   run make unit-tests
 
-  mv tests/Unit/FailingTest.php tests/CLI/bats/bats-php/
+  mv tests/Unit/FailingTest.php tests/CLI/bats/php/
 
   assert_failure
   assert_output --partial "FAILURES!"
