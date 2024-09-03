@@ -19,7 +19,6 @@ final class CacheCheckSubscriber extends BaseHealthCheckSubscriber
     public function onHealthCheck(HealthCheckEvent $event): void
     {
         $this->cache->get('health_check', static fn (
-
         ) => self::cacheMissHandler());
     }
 
