@@ -25,4 +25,11 @@ final class HealthEventFactoryTest extends UnitTestCase
 
         $this->assertInstanceOf(HealthCheckEvent::class, $event);
     }
+
+    public function testCreateHealthCheckEventDoesNotThrowException(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $this->factory->createHealthCheckEvent();
+    }
 }
