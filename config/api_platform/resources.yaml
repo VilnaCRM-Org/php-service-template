@@ -3,3 +3,15 @@ resources:
     operations:
       ApiPlatform\Metadata\Get:
         openapi: true
+
+  App\Internal\HealthCheck\Domain\ValueObject\HealthCheck:
+    operations:
+      ApiPlatform\Metadata\Get:
+        uriTemplate: '/health'
+        controller: 'App\Internal\HealthCheck\Application\Controller\HealthCheckController'
+        openapiContext:
+          responses:
+            '204':
+              description: 'Health check passed with no content to return.'
+            '500':
+              description: 'Health check failed.'

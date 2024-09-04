@@ -56,7 +56,7 @@ psalm-security: ## Psalm security analysis
 	$(PSALM) --taint-analysis
 
 phpinsights: ## Instant PHP quality checks and static analysis tool
-	$(EXEC_PHP) ./vendor/bin/phpinsights --no-interaction
+	$(EXEC_PHP) ./vendor/bin/phpinsights --no-interaction && ./vendor/bin/phpinsights analyse tests --no-interaction
 
 ci-phpinsights:
 	vendor/bin/phpinsights -n --ansi --format=github-action

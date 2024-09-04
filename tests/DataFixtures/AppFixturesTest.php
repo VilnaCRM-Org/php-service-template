@@ -14,9 +14,11 @@ final class AppFixturesTest extends TestCase
         $manager->flush();
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
-        $managerMock = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
+        $managerMock = $this->getMockBuilder(
+            ObjectManager::class
+        )->disableOriginalConstructor()->getMock();
         $managerMock
             ->expects($this->once())
             ->method('flush');

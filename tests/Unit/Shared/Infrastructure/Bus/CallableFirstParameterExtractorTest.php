@@ -21,7 +21,7 @@ final class CallableFirstParameterExtractorTest extends UnitTestCase
 
     public function testExtractForCallables(): void
     {
-        $subscriber = new class () implements DomainEventSubscriberInterface {
+        $subscriber = new class() implements DomainEventSubscriberInterface {
             /**
              * @return array<string>
              */

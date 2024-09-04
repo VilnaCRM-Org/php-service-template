@@ -25,5 +25,8 @@ return (new PhpCsFixer\Config())
         'cast_spaces' => true,
         'binary_operator_spaces' => true,
         'declare_strict_types' => true,
+        'class_attributes_separation' => [
+            'elements' => ['method' => 'one']
+        ],
     ])
     ->setFinder($finder);
