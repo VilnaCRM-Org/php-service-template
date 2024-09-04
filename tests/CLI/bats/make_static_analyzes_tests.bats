@@ -9,13 +9,6 @@ load 'bats-assert/load'
   assert_output --partial "Running analysis on 1 core sequentially."
 }
 
-@test "make phpinsights command executes and completes analysis" {
-  run make phpinsights
-  assert_success
-  assert_output --partial '✨ Analysis Completed !'
-  assert_output --partial './vendor/bin/phpinsights --no-interaction --ansi --format=github-action'
-}
-
 @test "make psalm command executes and reports no errors" {
   run make psalm
   assert_success

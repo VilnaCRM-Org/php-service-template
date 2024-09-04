@@ -24,6 +24,13 @@ load 'bats-assert/load'
   assert_output --partial "Your system is ready to run Symfony projects"
 }
 
+@test "make phpinsights command executes and completes analysis" {
+  run make phpinsights
+  assert_success
+  assert_output --partial '✨ Analysis Completed !'
+  assert_output --partial './vendor/bin/phpinsights --no-interaction --ansi --format=github-action'
+}
+
 @test "make check-security command executes and reports no vulnerabilities" {
   run make check-security
   assert_success
