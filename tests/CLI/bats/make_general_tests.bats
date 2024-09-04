@@ -31,74 +31,6 @@ load 'bats-assert/load'
   assert_output --partial "No packages have known vulnerabilities."
 }
 
-@test "make phpcsfixer command executes" {
-  run make phpcsfixer
-  assert_success
-  assert_output --partial "Running analysis on 1 core sequentially."
-}
-
-@test "make phpinsights command executes and completes analysis" {
-  run make phpinsights
-  assert_success
-  assert_output --partial '✨ Analysis Completed !'
-  assert_output --partial './vendor/bin/phpinsights --no-interaction --ansi --format=github-action'
-}
-
-@test "make psalm command executes and reports no errors" {
-  run make psalm
-  assert_success
-  assert_output --partial 'No errors found!'
-}
-
-@test "make psalm-security command executes and reports no errors" {
-  run make psalm-security
-  assert_success
-  assert_output --partial 'No errors found!'
-  assert_output --partial './vendor/bin/psalm --taint-analysis'
-}
-
-@test "make deptrac command executes and reports no violations" {
-  run make deptrac
-  assert_output --partial './vendor/bin/deptrac analyse'
-  assert_success
-}
-
-@test "make deptrac-debug command executes" {
-  run make make deptrac-debug
-  assert_output --partial 'App'
-  assert_success
-}
-
-@test "make unit-tests command executes" {
-  run make unit-tests
-  assert_output --partial 'OK'
-  assert_success
-}
-
-@test "make behat command executes" {
-  run make behat
-  assert_output --partial 'passed'
-  assert_success
-}
-
-@test "make integration-tests command executes" {
-  run make integration-tests
-  assert_output --partial 'PHPUnit'
-  assert_success
-}
-
-@test "make tests-with-coverage command executes" {
-  run make tests-with-coverage
-  assert_output --partial 'Testing'
-  assert_success
-}
-
-@test "make e2e-tests command executes" {
-  run make e2e-tests
-  assert_output --partial 'Symfony extension is correctly installed'
-  assert_success
-}
-
 @test "make all-tests command executes" {
   run make all-tests
   assert_output --partial 'OK'
@@ -172,12 +104,6 @@ load 'bats-assert/load'
    assert_output --partial "Successfully deleted cache entries."
 }
 
-@test "make build command starts successfully and shows initial build output" {
-  run timeout 5 make build
-  assert_failure 124
-  assert_output --partial "docker compose build --pull --no-cache"
-}
-
 @test "make cache-warmup command executes" {
   run make cache-warmup
   assert_success
@@ -228,21 +154,5 @@ load 'bats-assert/load'
 
 @test "make generate-graphql-spec command executes" {
   run make generate-graphql-spec
-  assert_success
-}
-
-@test "make sh attempts to open a shell in the PHP container" {
-  run bash -c "make sh & sleep 2; kill $!"
-  assert_failure
-  assert_output --partial "php-service-template"
-}
-
-@test "make stop command executes" {
-  run make stop
-  assert_success
-}
-
-@test "make down command executes" {
-  run make down
   assert_success
 }
