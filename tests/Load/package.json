@@ -1,7 +1,7 @@
 {
   "name": "Load",
   "version": "1.0.0",
-  "description": "",
+  "description": "Load testing package for the project",
   "main": "index.js",
   "keywords": [],
   "author": "",
