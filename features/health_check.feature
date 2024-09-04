@@ -11,3 +11,16 @@ Feature: Health Check Operations
     Given the cache is not working
     When GET request is sent to "/api/health"
     Then the response status code should be 500
+    And the response body should contain "Cache is not working"
+
+  Scenario: Checking the health when the database is unavailable
+    Given the database is not available
+    When GET request is sent to "/api/health"
+    Then the response status code should be 500
+    And the response body should contain "Database is not available"
+
+  Scenario: Checking the health when the queue service is unavailable
+    Given the message broker is not available
+    When GET request is sent to "/api/health"
+    Then the response status code should be 500
+    And the response body should contain "Message broker is not available"
