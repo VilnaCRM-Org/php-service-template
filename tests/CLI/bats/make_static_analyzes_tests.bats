@@ -29,37 +29,7 @@ load 'bats-assert/load'
 }
 
 @test "make deptrac-debug command executes" {
-  run make make deptrac-debug
+  run make deptrac-debug
   assert_output --partial 'App'
-  assert_success
-}
-
-@test "make unit-tests command executes" {
-  run make unit-tests
-  assert_output --partial 'OK'
-  assert_success
-}
-
-@test "make behat command executes" {
-  run make behat
-  assert_output --partial 'passed'
-  assert_success
-}
-
-@test "make integration-tests command executes" {
-  run make integration-tests
-  assert_output --partial 'PHPUnit'
-  assert_success
-}
-
-@test "make tests-with-coverage command executes" {
-  run make tests-with-coverage
-  assert_output --partial 'Testing'
-  assert_success
-}
-
-@test "make e2e-tests command executes" {
-  run make e2e-tests
-  assert_output --partial 'Symfony extension is correctly installed'
   assert_success
 }

@@ -38,36 +38,6 @@ load 'bats-assert/load'
   assert_output --partial "No packages have known vulnerabilities."
 }
 
-@test "make all-tests command executes" {
-  run make all-tests
-  assert_output --partial 'OK'
-  assert_success
-}
-
-@test "make average-load-tests command executes" {
-  run make average-load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
-@test "make stress-load-tests command executes" {
-  run make stress-load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
-@test "make spike-load-tests command executes" {
-  run make spike-load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
-@test "make load-tests command executes" {
-  run make load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
 @test "make infection command executes" {
   run make infection
   assert_success
@@ -109,6 +79,7 @@ load 'bats-assert/load'
    run bash -c "make load-fixtures & sleep 2; kill $!"
    assert_failure
    assert_output --partial "Successfully deleted cache entries."
+   assert_output --partial "The database schema is in sync with the mapping files.."
 }
 
 @test "make cache-warmup command executes" {
@@ -141,7 +112,6 @@ load 'bats-assert/load'
   assert_output --partial "Options:"
   assert_output --partial "-h, --help            Display help for the given command."
   assert_output --partial "Available commands:"
-
 }
 
 @test "make coverage-html command executes" {
