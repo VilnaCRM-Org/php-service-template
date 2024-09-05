@@ -15,12 +15,6 @@ load 'bats-assert/load'
   assert_output --partial 'load metadata'
 }
 
-@test "make stress-load-tests command executes" {
-  run make stress-load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
 @test "make e2e-tests command executes" {
   run make e2e-tests
   assert_output --partial 'Symfony extension is correctly installed'

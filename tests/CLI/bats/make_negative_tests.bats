@@ -21,7 +21,7 @@ teardown() {
   mv src/Shared/Application/PsalmErrorExample.php tests/CLI/bats/php/
   mv tests/DemoContext.php tests/Behat/
   mv src/Shared/Domain/Factory/UuidTransformer.php tests/CLI/bats/php/
-  rmdir src/Shared/Domain/Factory/
+  rm -r src/Shared/Domain/Factory/
 }
 
 @test "make check-security should report vulnerabilities if present" {
