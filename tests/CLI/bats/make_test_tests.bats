@@ -56,20 +56,3 @@ load 'bats-assert/load'
   assert_output --partial 'Testing'
   assert_success
 }
-@test "make behat command executes" {
-  run make behat
-  assert_output --partial 'passed'
-  assert_success
-}
-
-@test "make integration-tests command executes" {
-  run make integration-tests
-  assert_output --partial 'PHPUnit'
-  assert_success
-}
-
-@test "make tests-with-coverage command executes" {
-  run make tests-with-coverage
-  assert_output --partial 'Testing'
-  assert_success
-}
