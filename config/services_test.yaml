@@ -3,5 +3,9 @@ services:
         autowire: true
         autoconfigure: true
 
+    Symfony\Contracts\Cache\CacheInterface:
+        public: true
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+
     App\Tests\Behat\:
         resource: '../tests/Behat/*'

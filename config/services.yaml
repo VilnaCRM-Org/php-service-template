@@ -20,3 +20,25 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface:
+            tags: ['app.event_subscriber']
+        App\Shared\Domain\Bus\Command\CommandHandlerInterface:
+            tags: ['app.command_handler']
+    App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory', !tagged app.command_handler]
+        lazy: true
+
+    App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\MessageBusFactory', !tagged app.event_subscriber]
+        lazy: true
+
+    Aws\Sqs\SqsClient:
+        arguments:
+          - version: '%env(AWS_SQS_VERSION)%'
+            region: '%env(AWS_SQS_REGION)%'
+            endpoint: '%env(AWS_SQS_ENDPOINT_BASE)%:%env(LOCALSTACK_PORT)%'
+            credentials:
+              key: '%env(AWS_SQS_KEY)%'
+              secret: '%env(AWS_SQS_SECRET)%'

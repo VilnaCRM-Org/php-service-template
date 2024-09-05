@@ -82,7 +82,7 @@ psalm-security: ## Psalm security analysis
 	$(EXEC_ENV) $(PSALM) --taint-analysis
 
 phpinsights: ## Instant PHP quality checks and static analysis tool
-	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction --ansi --format=github-action
+	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction --ansi --format=github-action && ./vendor/bin/phpinsights analyse tests --no-interaction
 
 unit-tests: ## Run unit tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Unit
