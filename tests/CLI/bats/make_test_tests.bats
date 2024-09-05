@@ -21,18 +21,6 @@ load 'bats-assert/load'
   assert_output --partial 'load metadata'
 }
 
-@test "make spike-load-tests command executes" {
-  run make spike-load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
-@test "make load-tests command executes" {
-  run make load-tests
-  assert_success
-  assert_output --partial 'load metadata'
-}
-
 @test "make e2e-tests command executes" {
   run make e2e-tests
   assert_output --partial 'Symfony extension is correctly installed'

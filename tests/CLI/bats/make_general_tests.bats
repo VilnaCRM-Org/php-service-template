@@ -3,6 +3,11 @@
 load 'bats-support/load'
 load 'bats-assert/load'
 
+@test "make setup-test-db works correctly" {
+  run make setup-test-db
+  assert_success
+}
+
 @test "make help command lists all available targets" {
   run make help
   assert_success
