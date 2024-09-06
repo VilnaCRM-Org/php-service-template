@@ -39,8 +39,7 @@ RUN apk add --no-cache \
 	;
 
 RUN set -eux; \
-    apk update --no-cache && \
-    apk upgrade openssl libssl3
+    apk upgrade --no-cache openssl libssl3
 
 RUN set -eux; \
     install-php-extensions \
