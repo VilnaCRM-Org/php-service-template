@@ -84,7 +84,7 @@ load 'bats-assert/load'
    run bash -c "make load-fixtures & sleep 2; kill $!"
    assert_failure
    assert_output --partial "Successfully deleted cache entries."
-   assert_output --partial "The database schema is in sync with the mapping files.."
+   assert_output --partial "The database schema is in sync with the mapping files."
 }
 
 @test "make cache-warmup command executes" {
@@ -122,9 +122,15 @@ load 'bats-assert/load'
 @test "make coverage-html command executes" {
   run make coverage-html
   assert_success
+  coverage_html_dir="coverage/html/index.html"
+  [ -f "$coverage_html_dir" ]
+  assert_success
 }
 
 @test "make generate-openapi-spec command executes" {
   run make generate-openapi-spec
+  assert_success
+  graphql_dir=".github/graphql-spec/spec"
+  [ -f "$graphql_dir" ]
   assert_success
 }

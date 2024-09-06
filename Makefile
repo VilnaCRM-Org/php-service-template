@@ -193,7 +193,7 @@ load-fixtures: ## Build the DB, control the schema validity, load fixtures and c
 	@$(SYMFONY) d:f:l
 
 coverage-html: ## Create the code coverage report with PHPUnit
-	$(EXEC_PHP) php -d memory_limit=-1 vendor/bin/phpunit --coverage-html=var/coverage
+	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage php php -d memory_limit=-1 vendor/bin/phpunit --coverage-html=coverage/html
 
 coverage-xml: ## Create the code coverage report with PHPUnit
 	$(DOCKER_COMPOSE) exec -e XDEBUG_MODE=coverage php php -d memory_limit=-1 vendor/bin/phpunit --coverage-clover coverage/coverage.xml
