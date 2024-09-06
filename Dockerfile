@@ -43,11 +43,11 @@ RUN set -eux; \
 
 RUN set -eux; \
     install-php-extensions \
-    	intl \
-    	zip \
-    	apcu \
-		opcache \
-        pdo_mysql \
+        intl \
+        zip \
+        apcu \
+        opcache \
+        pdo_pgsql \
         redis \
         openssl \
         xsl \
