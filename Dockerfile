@@ -39,6 +39,10 @@ RUN apk add --no-cache \
 	;
 
 RUN set -eux; \
+    apk update --no-cache && \
+    apk upgrade openssl libssl3
+
+RUN set -eux; \
     install-php-extensions \
         intl \
         zip \
@@ -46,7 +50,6 @@ RUN set -eux; \
         opcache \
         pdo_pgsql \
         redis \
-        openssl \
         xsl \
     ;
 
