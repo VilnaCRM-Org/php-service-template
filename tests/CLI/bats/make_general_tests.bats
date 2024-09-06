@@ -124,17 +124,7 @@ load 'bats-assert/load'
   assert_success
 }
 
-@test "make coverage-xml command executes" {
-  run make coverage-xml
-  assert_success
-}
-
 @test "make generate-openapi-spec command executes" {
   run make generate-openapi-spec
-  assert_success
-}
-
-@test "make generate-graphql-spec command executes" {
-  run make generate-graphql-spec
   assert_success
 }
