@@ -53,11 +53,14 @@ load 'bats-assert/load'
 }
 
 @test "make deptrac should fail when there are dependency violations" {
-  mv tests/CLI/bats/php/UuidTransformer.php src/Shared/Domain/Factory/
+  mkdir src/CompanySubdomain/SomeModule/Domain/Entity/
+  mv tests/CLI/bats/php/SomeEntity.php src/CompanySubdomain/SomeModule/Domain/Entity/
 
   run make deptrac
 
-  mv src/Shared/Domain/Factory/UuidTransformer.php tests/CLI/bats/php/
+  mv src/CompanySubdomain/SomeModule/Domain/Entity/SomeEntity.php tests/CLI/bats/php/
+  rmdir src/CompanySubdomain/SomeModule/Domain/Entity/
+  assert_output --partial "App\CompanySubdomain\SomeModule\Domain\Entity\SomeEntity must not depend on App\CompanySubdomain\SomeModule\Application\Command\SomeCommand"
   assert_failure
 }
 
