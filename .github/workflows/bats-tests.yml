@@ -1,4 +1,4 @@
-name: bats core tests
+name: CLI testing
 
 on:
   pull_request:

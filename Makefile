@@ -33,10 +33,7 @@ INFECTION     = ./vendor/bin/infection
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
 # Conditional execution based on CI environment variable
-EXEC_ENV ?= $(EXEC_PHP_TEST_ENV)
-ifeq ($(CI),1)
-  EXEC_ENV =
-endif
+EXEC_ENV ?= $(if $(CI),,$(EXEC_PHP_TEST_ENV))
 
 # Variables for environment and commands
 FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
