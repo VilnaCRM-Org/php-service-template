@@ -22,6 +22,7 @@ SYMFONY_TEST_ENV = $(EXEC_PHP_TEST_ENV) bin/console
 
 # Executables: vendors
 PHPUNIT       = ./vendor/bin/phpunit
+BEHAT         = ./vendor/bin/behat
 PSALM         = ./vendor/bin/psalm
 PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
 DEPTRAC       = ./vendor/bin/deptrac
@@ -33,6 +34,7 @@ INFECTION     = ./vendor/bin/infection
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
 # Conditional execution based on CI environment variable
+CI=0
 EXEC_ENV ?= $(if $(CI),,$(EXEC_PHP_TEST_ENV))
 
 # Variables for environment and commands
@@ -91,7 +93,7 @@ deptrac-debug: ## Find files unassigned for Deptrac
 	$(DEPTRAC) debug:unassigned --config-file=deptrac.yaml
 
 behat: ## A php framework for autotesting business expectations
-	$(EXEC_ENV) ./vendor/bin/behat
+	$(EXEC_ENV) $(BEHAT)
 
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
@@ -100,7 +102,7 @@ tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
 
 e2e-tests: ## Run end-to-end tests
-	$(EXEC_ENV) ./vendor/bin/behat
+	$(EXEC_ENV) $(BEHAT)
 
 setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) c:c
