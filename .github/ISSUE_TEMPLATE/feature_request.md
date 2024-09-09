@@ -39,4 +39,3 @@ Include specific criteria for how to prove that this issue will be done
 
 - **Labels**: Use labels such as `enhancement`, `bug`, or `documentation` to categorize the issue. This helps in filtering and prioritizing tasks.
 - **Milestones**: Assign the issue to a relevant milestone to track its progress within a specific release or sprint.
-This ensures that the feature request is aligned with the project's timeline.

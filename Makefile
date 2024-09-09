@@ -21,8 +21,8 @@ SYMFONY       = $(EXEC_PHP) bin/console
 SYMFONY_TEST_ENV = $(EXEC_PHP_TEST_ENV) bin/console
 
 # Executables: vendors
-PHPUNIT       = ./vendor/bin/phpunit
 BEHAT         = ./vendor/bin/behat
+PHPUNIT       = ./vendor/bin/phpunit
 PSALM         = ./vendor/bin/psalm
 PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
 DEPTRAC       = ./vendor/bin/deptrac
@@ -34,8 +34,10 @@ INFECTION     = ./vendor/bin/infection
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
 # Conditional execution based on CI environment variable
-CI=0
-EXEC_ENV ?= $(if $(CI),,$(EXEC_PHP_TEST_ENV))
+EXEC_ENV ?= $(EXEC_PHP_TEST_ENV)
+ifeq ($(CI),1)
+  EXEC_ENV =
+endif
 
 # Variables for environment and commands
 FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
