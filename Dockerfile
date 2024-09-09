@@ -13,7 +13,7 @@ RUN xcaddy build \
 	--with github.com/dunglas/vulcain/caddy
 
 # Prod image
-FROM php:8.3-fpm-alpine AS app_php
+FROM php:8.3-fpm-alpine3.20 AS app_php
 
 # Allow to use development versions of Symfony
 ARG STABILITY="stable"
@@ -37,9 +37,6 @@ RUN apk add --no-cache \
 		gettext \
 		git \
 	;
-
-RUN set -eux; \
-    apk upgrade --no-cache openssl libssl3
 
 RUN set -eux; \
     install-php-extensions \
