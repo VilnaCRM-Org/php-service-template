@@ -20,16 +20,14 @@ especially in low-light environments. For example, users working late at night c
 ### Tasks
 Include specific tasks in the order they need to be done. Include links to specific lines of code where the job should happen.
 
-#### Example:
-- [ ] Update the `executeCommand` method to handle new input parameters. [See code](https://github.com/VilnaCRM-Org/php-service-template/blob/main/src/Command/CommandHandler.php#L42)
-
-
 - [ ] Task 1
 - [ ] Task 2
 - [ ] Task 3
 
 ### Acceptance Criteria
-Include specific criteria for how to prove that this issue will be done
+Include specific criteria for how to prove that this issue will be done.
+Ensure that each criterion is **measurable** and **testable** to clearly define what constitutes completion.
+
 - [ ] Task 1
 - [ ] Task 2
 - [ ] Task 3
