@@ -1,69 +1,77 @@
 parameters:
-    paths:
-        - './src'
-    exclude_files:
-        - './DataFixtures/.'
-        - './Shared/Kernel.'
-        - '.*test.*'
-    layers:
-        - name: Application
-          collectors:
-              - type: className
-                regex: '.*App\\User\\Application\\(Transformer|Command|CommandHandler|DTO|EventListener|EventSubscriber|Factory|MutationInput|Processor|Resolver|ExceptionMessageHandler|Message).*'
-              - type: className
-                regex: '.*App\\Shared\\Application\\(Validator|Transformer|ErrorProvider|DomainExceptionNormalizer|NotFoundExceptionNormalizer).*'
-              - type: className
-                regex: '.*App\\Shared\\Application\\OpenApi\\(Factory|Builder|OpenApiFactory).*'
-        - name: Domain
-          collectors:
-              - type: className
-                regex: '.*App\\[A-Za-z]+\\Domain\\(Aggregate|Entity|ValueObject|Event|Exception|Factory|Repository|Collection).*'
-              - type: className
-                regex: '.*App\\Shared\\Domain\\Bus\\(Command|Event).*'
-        - name: Infrastructure
-          collectors:
-              - type: className
-                regex: '.*App\\User\\Infrastructure\\(Factory|Repository).*'
-              - type: className
-                regex: '.*App\\Shared\\Infrastructure\\(Bus\\(Command|Event|MessageBusFactory|CallableFirstParameterExtractor)|DoctrineType|RetryStrategy).*'
-        - name: Symfony
-          collectors:
-              - type: className
-                regex: '.*Symfony\\.*'
-        - name: Doctrine
-          collectors:
-              - type: className
-                regex: '.*Doctrine\\.*'
-        - name: ApiPlatform
-          collectors:
-              - type: className
-                regex: '.*ApiPlatform\\.*'
-        - name: Logging
-          collectors:
-              - type: className
-                regex: '.*Psr\\Log\\.*'
-        - name: League
-          collectors:
-              - type: className
-                regex: '.*League\\Bundle\\OAuth2ServerBundle\\.*'
-        - name: GraphQl
-          collectors:
-              - type: className
-                regex: '.*GraphQL\\.*'
-    ruleset:
-        Application:
-            - Domain
-            - Infrastructure
-            - Symfony
-            - ApiPlatform
-            - Logging
-            - League
-            - GraphQl
-        Infrastructure:
-            - Domain
-            - Application
-            - Symfony
-            - Doctrine
-            - Logging
-            - League
-        Domain: ~
+  paths:
+    - './src'
+  exclude_files:
+    - './DataFixtures/.*'
+    - './Shared/Kernel/.*'
+    - '.*test.*'
+  layers:
+    - name: Application
+      collectors:
+        - type: className
+          regex: '.*\\CompanySubdomain\\SomeModule\\Application\\(Transformer|Command|CommandHandler|DTO|EventListener|EventSubscriber|Factory|MutationInput|Processor|Resolver|ExceptionMessageHandler|Message).*'
+        - type: className
+          regex: '.*\\Internal\\HealthCheck\\Application\\(Transformer|Command|CommandHandler|DTO|EventListener|EventSubscriber|Factory|MutationInput|Processor|Resolver|ExceptionMessageHandler|Message).*'
+        - type: className
+          regex: '.*\\Shared\\Application\\(Validator|Transformer|ErrorProvider|DomainExceptionNormalizer|NotFoundExceptionNormalizer).*'
+        - type: className
+          regex: '.*\\Shared\\Application\\OpenApi\\(Factory|Builder|OpenApiFactory).*'
+
+    - name: Domain
+      collectors:
+        - type: className
+          regex: '.*\\CompanySubdomain\\SomeModule\\Domain\\(Aggregate|Entity|ValueObject|Event|Exception|Factory|Repository|Collection).*'
+        - type: className
+          regex: '.*\\Internal\\HealthCheck\\Domain\\(Aggregate|Entity|ValueObject|Event|Exception|Factory|Repository|Collection).*'
+        - type: className
+          regex: '.*\\Shared\\Domain\\Bus\\(Command|Event).*'
+
+    - name: Infrastructure
+      collectors:
+        - type: className
+          regex: '.*\\CompanySubdomain\\SomeModule\\Infrastructure\\(Factory|Repository).*'
+        - type: className
+          regex: '.*\\Internal\\HealthCheck\\Infrastructure\\(Factory|Repository).*'
+        - type: className
+          regex: '.*\\Shared\\Infrastructure\\(Bus\\(Command|Event|MessageBusFactory|CallableFirstParameterExtractor)|DoctrineType|RetryStrategy).*'
+
+    - name: Symfony
+      collectors:
+        - type: className
+          regex: '.*Symfony\\.*'
+
+    - name: Doctrine
+      collectors:
+        - type: className
+          regex: '.*Doctrine\\.*'
+
+    - name: ApiPlatform
+      collectors:
+        - type: className
+          regex: '.*ApiPlatform\\.*'
+
+    - name: Logging
+      collectors:
+        - type: className
+          regex: '.*Psr\\Log\\.*'
+
+    - name: GraphQl
+      collectors:
+        - type: className
+          regex: '.*GraphQL\\.*'
+
+  ruleset:
+    Application:
+      - Domain
+      - Infrastructure
+      - Symfony
+      - ApiPlatform
+      - Logging
+      - GraphQl
+    Infrastructure:
+      - Domain
+      - Application
+      - Symfony
+      - Doctrine
+      - Logging
+    Domain: []

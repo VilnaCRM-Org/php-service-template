@@ -47,7 +47,7 @@ Execute `make` or `make help` to see the full list of project commands.
 The list of the `make` possibilities:
 
 ```
-artillery                    A load testing framework
+bats                         Bats is a TAP-compliant testing framework for Bash
 behat                        A php framework for autotesting business expectations
 build                        Builds the images (PHP, caddy)
 cache-clear                  Clears and warms up the application cache for a given environment and debug mode
@@ -61,8 +61,6 @@ coverage                     Create the code coverage report with PHPUnit
 doctrine-migrations-generate Generates a blank migration class
 doctrine-migrations-migrate  Executes a migration to a specified version or the latest available version
 down                         Stop the docker hub
-first-release                Generate changelog from a project's commit messages for the first release
-fix-perms                    Fix permissions of all var files
 install                      Install vendors according to the current composer.lock file
 update                       update vendors according to the current composer.json file
 load-fixtures                Build the DB, control the schema validity, load fixtures and check the migration status
@@ -74,13 +72,8 @@ phpunit                      The PHP unit testing framework
 psalm                        A static analysis tool for finding errors in PHP applications
 psalm-security               Psalm security analysis
 purge                        Purge cache and logs
-release                      Generate changelogs and release notes from a project's commit messages for the first release
-release-major                Generate changelogs and commit new major tag from a project's commit messages
-release-minor                Generate changelogs and commit new minor tag from a project's commit messages
-release-patch                Generate changelogs and commit new patch tag from a project's commit messages
 sh                           Log to the docker container
 start                        Start docker
-stats                        Commits by the hour for the main author of this project
 stop                         Stop docker and the Symfony binary server
 up                           Start the docker hub (PHP, caddy)
 ```
