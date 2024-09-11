@@ -47,6 +47,7 @@ load 'bats-assert/load'
   run make infection
   assert_success
   assert_output --partial 'Infection - PHP Mutation Testing Framework'
+  assert_output --partial 'Mutation Code Coverage: 100%'
 }
 
 @test "make execute-load-tests-script command executes" {
