@@ -11,11 +11,17 @@
 ![PHPInsights architecture](https://img.shields.io/badge/PHPInsights%20%7C%20Architecture%20-100.0%25-success.svg)
 
 ## Possibilities
+
 - Modern PHP stack for services: [API Platform 3](https://api-platform.com/), PHP 8, [Symfony 7](https://symfony.com/)
+
 - [Hexagonal Architecture, DDD & CQRS in PHP](https://github.com/CodelyTV/php-ddd-example)
+
 - Built-in docker environment and convenient `make` cli command
+
 - A lot of CI checks to ensure the highest code quality that can be ([Psalm](https://psalm.dev/), [PHPInsights](https://phpinsights.com/), Security checks, Code style fixer)
+
 - Configured testing tools: [PHPUnit](https://phpunit.de/), [Behat](https://docs.behat.org/)
+
 - Much more!
 
 ## Why you might need it
