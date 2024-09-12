@@ -52,7 +52,7 @@ ssh -o StrictHostKeyChecking=no -t -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_
   make load-tests
 EOF
 
-scp -o StrictHostKeyChecking=no -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_IP:php-service-template/tests/Load/results/* .
+scp -o StrictHostKeyChecking=no -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_IP:php-service-template/tests/Load/results/* tests/Load/results
 
 aws ec2 terminate-instances --instance-ids $INSTANCE_ID --region $REGION
 aws ec2 wait instance-terminated --instance-ids $INSTANCE_ID --region $REGION

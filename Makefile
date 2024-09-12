@@ -209,3 +209,6 @@ generate-openapi-spec:
 
 generate-graphql-spec:
 		$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec
+
+aws-load-tests:
+	sh tests/Load/aws-execute-load-tests.sh
