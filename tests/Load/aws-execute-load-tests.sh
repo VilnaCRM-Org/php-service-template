@@ -25,6 +25,13 @@ PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --region $REG
 
 sleep 60
 
+BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+if [ -z "$BRANCH_NAME" ]; then
+  BRANCH_NAME="main"
+fi
+
+echo "Current branch is: $BRANCH_NAME"
+
 ssh -o StrictHostKeyChecking=no -t -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_IP << EOF
   sudo growpart /dev/nvme0n1 1
   sudo resize2fs /dev/nvme0n1p1
@@ -38,11 +45,10 @@ ssh -o StrictHostKeyChecking=no -t -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_
   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   newgrp docker
 
-  git clone https://github.com/VilnaCRM-Org/php-service-template.git
+  git clone --branch $BRANCH_NAME https://github.com/VilnaCRM-Org/php-service-template.git
   cd php-service-template
 
   docker-compose up -d
-  make setup-test-db
   make load-tests
 EOF
 
