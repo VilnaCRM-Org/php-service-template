@@ -1,4 +1,13 @@
-# 1.3.0 (2024-09-11)
+## [1.3.1](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.3.0...v1.3.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* **#38:** add correct badges ([#39](https://github.com/VilnaCRM-Org/php-service-template/issues/39)) ([8f70ebc](https://github.com/VilnaCRM-Org/php-service-template/commit/8f70ebcd138b10fe99c189a24c45aee935a7fdd3)), closes [#38](https://github.com/VilnaCRM-Org/php-service-template/issues/38) [#38](https://github.com/VilnaCRM-Org/php-service-template/issues/38) [#38](https://github.com/VilnaCRM-Org/php-service-template/issues/38) [#38](https://github.com/VilnaCRM-Org/php-service-template/issues/38)
+
+
+
+# [1.3.0](https://github.com/VilnaCRM-Org/php-service-template/compare/2925a5558f9940c63fbecd19ae5b37c01049bd5f...v1.3.0) (2024-09-11)
 
 
 ### Bug Fixes
