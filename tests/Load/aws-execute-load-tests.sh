@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AMI_ID="ami-0e86e20dae9224db8"
-INSTANCE_TYPE="t2.xlarge"
+INSTANCE_TYPE="t2.micro"
 KEY_NAME="vilnacrm"
 SECURITY_GROUP="sg-0479b7b8cd5d172e7"
 REGION="us-east-1"
@@ -49,7 +49,7 @@ ssh -o StrictHostKeyChecking=no -t -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_
   cd php-service-template
 
   docker-compose up -d
-  make load-tests
+  make smoke-load-tests
 EOF
 
 scp -o StrictHostKeyChecking=no -i "tests/Load/$KEY_NAME.pem" ubuntu@$PUBLIC_IP:php-service-template/tests/Load/results/* tests/Load/results
