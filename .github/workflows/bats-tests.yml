@@ -1,0 +1,32 @@
+name: CLI testing
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  bats_core_tests:
+    runs-on: ubuntu-latest
+    name: Run Bats Core Tests
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ vars.PHP_VERSION }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Start Application
+        run: make start
+
+      - name: Setup Bats and bats libs
+        uses: bats-core/bats-action@2.0.0
+        with:
+          support-path: ${{ github.workspace }}/tests/CLI/bats/bats-support
+          assert-path: ${{ github.workspace }}/tests/CLI/bats/bats-assert
+
+      - name: Run Bats tests
+        run: make bats

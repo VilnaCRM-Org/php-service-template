@@ -2,8 +2,8 @@
 
 # Microservice template for modern PHP applications
 
-[![CodeScene Code Health](https://codescene.io/projects/39797/status-badges/code-health)](https://codescene.io/projects/39797)
-[![CodeScene System Mastery](https://codescene.io/projects/39797/status-badges/system-mastery)](https://codescene.io/projects/39797)
+[![CodeScene Code Health](https://img.shields.io/badge/CodeScene%20%7C%20Hotspot%20Code%20Health-9.7-brightgreen)](https://codescene.io/projects/39797)
+[![CodeScene System Mastery](https://img.shields.io/badge/CodeScene%20%7C%20Average%20Code%20Health-9.8-brightgreen)](https://codescene.io/projects/39797)
 [![codecov](https://codecov.io/gh/VilnaCRM-Org/php-service-template/branch/main/graph/badge.svg?token=J3SGCHIFD5)](https://codecov.io/gh/VilnaCRM-Org/php-service-template)
 ![PHPInsights code](https://img.shields.io/badge/PHPInsights%20%7C%20Code%20-100.0%25-success.svg)
 ![PHPInsights style](https://img.shields.io/badge/PHPInsights%20%7C%20Style%20-100.0%25-success.svg)
@@ -11,11 +11,17 @@
 ![PHPInsights architecture](https://img.shields.io/badge/PHPInsights%20%7C%20Architecture%20-100.0%25-success.svg)
 
 ## Possibilities
-- Modern PHP stack for services: [API Platform 3](https://api-platform.com/), PHP 8, [Symfony 6](https://symfony.com/)
+
+- Modern PHP stack for services: [API Platform 3](https://api-platform.com/), PHP 8, [Symfony 7](https://symfony.com/)
+
 - [Hexagonal Architecture, DDD & CQRS in PHP](https://github.com/CodelyTV/php-ddd-example)
+
 - Built-in docker environment and convenient `make` cli command
+
 - A lot of CI checks to ensure the highest code quality that can be ([Psalm](https://psalm.dev/), [PHPInsights](https://phpinsights.com/), Security checks, Code style fixer)
+
 - Configured testing tools: [PHPUnit](https://phpunit.de/), [Behat](https://docs.behat.org/)
+
 - Much more!
 
 ## Why you might need it
@@ -47,7 +53,7 @@ Execute `make` or `make help` to see the full list of project commands.
 The list of the `make` possibilities:
 
 ```
-artillery                    A load testing framework
+bats                         Bats is a TAP-compliant testing framework for Bash
 behat                        A php framework for autotesting business expectations
 build                        Builds the images (PHP, caddy)
 cache-clear                  Clears and warms up the application cache for a given environment and debug mode
@@ -61,8 +67,6 @@ coverage                     Create the code coverage report with PHPUnit
 doctrine-migrations-generate Generates a blank migration class
 doctrine-migrations-migrate  Executes a migration to a specified version or the latest available version
 down                         Stop the docker hub
-first-release                Generate changelog from a project's commit messages for the first release
-fix-perms                    Fix permissions of all var files
 install                      Install vendors according to the current composer.lock file
 update                       update vendors according to the current composer.json file
 load-fixtures                Build the DB, control the schema validity, load fixtures and check the migration status
@@ -74,13 +78,8 @@ phpunit                      The PHP unit testing framework
 psalm                        A static analysis tool for finding errors in PHP applications
 psalm-security               Psalm security analysis
 purge                        Purge cache and logs
-release                      Generate changelogs and release notes from a project's commit messages for the first release
-release-major                Generate changelogs and commit new major tag from a project's commit messages
-release-minor                Generate changelogs and commit new minor tag from a project's commit messages
-release-patch                Generate changelogs and commit new patch tag from a project's commit messages
 sh                           Log to the docker container
 start                        Start docker
-stats                        Commits by the hour for the main author of this project
 stop                         Stop docker and the Symfony binary server
 up                           Start the docker hub (PHP, caddy)
 ```

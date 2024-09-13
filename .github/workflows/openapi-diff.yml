@@ -46,7 +46,7 @@ jobs:
         uses: docker://openapitools/openapi-diff:latest
         with:
           args: "/github/workspace/head/.github/openapi-spec/spec.yaml /github/workspace/base/.github/openapi-spec/spec.yaml"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: diff-reports
           path: ./output
