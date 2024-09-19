@@ -4,8 +4,47 @@ services:
     environment:
       APP_SECRET: ${APP_SECRET}
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET}
+    volumes:
+      - ./:/srv/app
+      - ./infrastructure/docker/php/conf.d/app.prod.ini:/usr/local/etc/php/conf.d/app.prod.ini:ro
+    healthcheck:
+      test: ["CMD-SHELL", "/usr/local/bin/docker-healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - database
+      - caddy
+      - localstack
 
   caddy:
     environment:
       MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
+    volumes:
+      - ./public:/srv/app/public:ro
+      - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+    ports:
+      - 80:80
+      - 443:443
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+    depends_on:
+      - php
+      - localstack
+
+  localstack:
+    image: localstack/localstack:3.4.0
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs
+      - DEBUG=0
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - ./infrastructure/docker/php/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
+    restart: unless-stopped
+
+volumes:
+  localstack_data:
+
