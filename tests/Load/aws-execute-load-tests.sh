@@ -12,7 +12,7 @@ VPC_ID=$(aws ec2 describe-vpcs \
   --query "Vpcs[0].VpcId" --output text --region "$REGION")
 
 if [ "$VPC_ID" = "None" ]; then
-    echo "Error: Default VPC not found in region "$REGION"."
+    echo "Error: Default VPC not found in region $REGION."
     exit 1
 fi
 
@@ -69,8 +69,7 @@ EOF
 
 echo "$BUCKET_POLICY" > bucket-policy.json
 
-aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file://bucket-policy.json --region "$REGION"
-if [ $? -ne 0 ]; then
+if ! aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file://bucket-policy.json --region "$REGION"; then
   echo "Error: Failed to apply bucket policy."
   exit 1
 fi
@@ -98,11 +97,18 @@ fi
 aws iam create-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" || echo "Instance profile already exists. Proceeding..."
 aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION"
 
-sleep 15
+echo "Waiting for instance profile to become available..."
+until aws iam get-instance-profile --instance-profile-name $ROLE_NAME --region $REGION >/dev/null 2>&1; do
+  sleep 5
+done
+
+echo "Waiting for role to be associated with the instance profile..."
+until aws iam get-instance-profile --instance-profile-name $ROLE_NAME --region $REGION | grep -q "$ROLE_NAME"; do
+  sleep 5
+done
 
 echo "Checking IAM role permissions..."
-aws sts get-caller-identity
-if [ $? -ne 0 ]; then
+if ! aws sts get-caller-identity; then
   echo "Error: Unable to validate IAM role permissions."
   exit 1
 fi
