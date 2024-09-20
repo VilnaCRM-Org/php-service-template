@@ -18,7 +18,7 @@ fi
 
 echo "Using VPC ID: $VPC_ID"
 
-SECURITY_GROUP_NAME="LoadTestSecurityGroup4"
+SECURITY_GROUP_NAME="LoadTestSecurityGroup8"
 echo "Creating security group: $SECURITY_GROUP_NAME"
 SECURITY_GROUP=$(aws ec2 create-security-group \
   --group-name "$SECURITY_GROUP_NAME" \
@@ -38,8 +38,7 @@ aws ec2 authorize-security-group-ingress \
 
 BUCKET_NAME="loadtest-bucket-$(uuidgen)"
 
-aws s3 mb s3://$BUCKET_NAME --region "$REGION"
-if [ $? -ne 0 ]; then
+if ! aws s3 mb s3://"$BUCKET_NAME" --region "$REGION"; then
   echo "Error: Failed to create S3 bucket."
   exit 1
 fi
@@ -91,8 +90,7 @@ ACCESS_POLICY='{
 
 POLICY_ARN=$(aws iam create-policy --policy-name S3WriteAccessToBucket --policy-document "$ACCESS_POLICY" --query 'Policy.Arn' --output text --region "$REGION" 2>/dev/null) || POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
 
-aws iam attach-role-policy --role-name "$ROLE_NAME" --policy-arn $POLICY_ARN --region "$REGION"
-if [ $? -ne 0 ]; then
+if ! aws iam attach-role-policy --role-name "$ROLE_NAME" --policy-arn "$POLICY_ARN" --region "$REGION"; then
   echo "Error: Failed to attach policy to role."
   exit 1
 fi
@@ -139,7 +137,7 @@ docker-compose -f docker-compose.prod.yml up -d database localstack caddy php
 
 make smoke-load-tests
 
-aws s3 cp tests/Load/results/ s3://$BUCKET_NAME/$(hostname)-results/ --recursive --region $REGION
+aws s3 cp tests/Load/results/ "s3://$BUCKET_NAME/$(hostname)-results/" --recursive --region "$REGION"
 
 sudo shutdown -h now
 
@@ -158,11 +156,6 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="$INSTANCE_TAG"}]" \
   --query "Instances[0].InstanceId" \
   --output text)
-
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to launch EC2 instance."
-  exit 1
-fi
 
 echo "Launched instance: "$INSTANCE_ID""
 
