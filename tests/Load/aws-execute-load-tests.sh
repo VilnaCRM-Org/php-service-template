@@ -5,7 +5,7 @@ REGION="us-east-1"
 AMI_ID="ami-0e86e20dae9224db8"
 INSTANCE_TYPE="t2.micro"
 INSTANCE_TAG="LoadTestInstance"
-BRANCH_NAME=main
+BRANCH_NAME="main"
 
 VPC_ID=$(aws ec2 describe-vpcs \
   --filters "Name=isDefault,Values=true" \
@@ -159,11 +159,11 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --user-data "$USER_DATA" \
   --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30}}]' \
   --instance-initiated-shutdown-behavior terminate \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="$INSTANCE_TAG"}]" \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCE_TAG'}]" \
   --query "Instances[0].InstanceId" \
   --output text)
 
-echo "Launched instance: "$INSTANCE_ID""
+echo "Launched instance: $INSTANCE_ID"
 
 echo "Waiting for instance to complete the tasks... this might take a few minutes."
-echo "Once the instance completes, load test results will be available in S3 bucket: "$BUCKET_NAME""
+echo "Once the instance completes, load test results will be available in S3 bucket: $BUCKET_NAME"
