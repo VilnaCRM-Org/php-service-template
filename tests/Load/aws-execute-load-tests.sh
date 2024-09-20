@@ -89,6 +89,13 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update -y
 sudo apt-get install -y docker.io git make unzip
 
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
@@ -96,11 +103,16 @@ sudo ./aws/install
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-git clone --branch main https://github.com/VilnaCRM-Org/php-service-template.git
+git clone --branch 34-implement-cloud-based-load-testing-with-k6 https://github.com/VilnaCRM-Org/php-service-template.git
 
 cd php-service-template
 
+docker-compose -f docker-compose.prod.yml up -d database localstack caddy php
+
+make smoke-load-tests
+
 aws s3 cp tests/Load/results/ s3://$BUCKET_NAME/$(hostname)-results/ --recursive --region $REGION
+
 EOF
 )
 
