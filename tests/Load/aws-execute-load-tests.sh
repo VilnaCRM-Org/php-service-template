@@ -4,13 +4,41 @@ export AWS_PAGER=""
 REGION="us-east-1"
 AMI_ID="ami-0e86e20dae9224db8"
 INSTANCE_TYPE="t2.micro"
-SECURITY_GROUP="sg-0479b7b8cd5d172e7"
 INSTANCE_TAG="LoadTestInstance"
+BRANCH_NAME=34-implement-cloud-based-load-testing-with-k6
+
+VPC_ID=$(aws ec2 describe-vpcs \
+  --filters "Name=isDefault,Values=true" \
+  --query "Vpcs[0].VpcId" --output text --region "$REGION")
+
+if [ "$VPC_ID" = "None" ]; then
+    echo "Error: Default VPC not found in region "$REGION"."
+    exit 1
+fi
+
+echo "Using VPC ID: $VPC_ID"
+
+SECURITY_GROUP_NAME="LoadTestSecurityGroup4"
+echo "Creating security group: $SECURITY_GROUP_NAME"
+SECURITY_GROUP=$(aws ec2 create-security-group \
+  --group-name "$SECURITY_GROUP_NAME" \
+  --description "Security group for load testing" \
+  --vpc-id "$VPC_ID" \
+  --region "$REGION" \
+  --query 'GroupId' --output text)
+
+echo "Adding SSH access to the security group"
+aws ec2 authorize-security-group-ingress \
+  --group-id "$SECURITY_GROUP" \
+  --protocol tcp \
+  --port 22 \
+  --cidr 0.0.0.0/0 \
+  --region $REGION
+
 
 BUCKET_NAME="loadtest-bucket-$(uuidgen)"
-echo "Using S3 bucket: $BUCKET_NAME"
 
-aws s3 mb s3://$BUCKET_NAME --region $REGION
+aws s3 mb s3://$BUCKET_NAME --region "$REGION"
 if [ $? -ne 0 ]; then
   echo "Error: Failed to create S3 bucket."
   exit 1
@@ -42,7 +70,7 @@ EOF
 
 echo "$BUCKET_POLICY" > bucket-policy.json
 
-aws s3api put-bucket-policy --bucket $BUCKET_NAME --policy file://bucket-policy.json --region $REGION
+aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file://bucket-policy.json --region "$REGION"
 if [ $? -ne 0 ]; then
   echo "Error: Failed to apply bucket policy."
   exit 1
@@ -54,23 +82,23 @@ TRUST_POLICY='{
   "Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]
 }'
 
-aws iam create-role --role-name $ROLE_NAME --assume-role-policy-document "$TRUST_POLICY" --region $REGION || echo "Role already exists. Proceeding..."
+aws iam create-role --role-name $ROLE_NAME --assume-role-policy-document "$TRUST_POLICY" --region "$REGION" || echo "Role already exists. Proceeding..."
 
 ACCESS_POLICY='{
   "Version": "2012-10-17",
   "Statement": [{"Effect": "Allow","Action": ["s3:PutObject","s3:ListBucket"],"Resource": ["arn:aws:s3:::'$BUCKET_NAME'","arn:aws:s3:::'$BUCKET_NAME'/*"]}]
 }'
 
-POLICY_ARN=$(aws iam create-policy --policy-name S3WriteAccessToBucket --policy-document "$ACCESS_POLICY" --query 'Policy.Arn' --output text --region $REGION 2>/dev/null) || POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region $REGION)
+POLICY_ARN=$(aws iam create-policy --policy-name S3WriteAccessToBucket --policy-document "$ACCESS_POLICY" --query 'Policy.Arn' --output text --region "$REGION" 2>/dev/null) || POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
 
-aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn $POLICY_ARN --region $REGION
+aws iam attach-role-policy --role-name "$ROLE_NAME" --policy-arn $POLICY_ARN --region "$REGION"
 if [ $? -ne 0 ]; then
   echo "Error: Failed to attach policy to role."
   exit 1
 fi
 
-aws iam create-instance-profile --instance-profile-name $ROLE_NAME --region $REGION || echo "Instance profile already exists. Proceeding..."
-aws iam add-role-to-instance-profile --instance-profile-name $ROLE_NAME --role-name $ROLE_NAME --region $REGION
+aws iam create-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" || echo "Instance profile already exists. Proceeding..."
+aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION"
 
 sleep 15
 
@@ -103,7 +131,7 @@ sudo ./aws/install
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-git clone --branch 34-implement-cloud-based-load-testing-with-k6 https://github.com/VilnaCRM-Org/php-service-template.git
+git clone --branch "$BRANCH_NAME" https://github.com/VilnaCRM-Org/php-service-template.git
 
 cd php-service-template
 
@@ -113,19 +141,21 @@ make smoke-load-tests
 
 aws s3 cp tests/Load/results/ s3://$BUCKET_NAME/$(hostname)-results/ --recursive --region $REGION
 
+sudo shutdown -h now
+
 EOF
 )
 
 INSTANCE_ID=$(aws ec2 run-instances \
-  --image-id $AMI_ID \
-  --instance-type $INSTANCE_TYPE \
-  --security-group-ids $SECURITY_GROUP \
-  --region $REGION \
-  --iam-instance-profile Name=$ROLE_NAME \
+  --image-id "$AMI_ID" \
+  --instance-type "$INSTANCE_TYPE" \
+  --security-group-ids "$SECURITY_GROUP" \
+  --region "$REGION" \
+  --iam-instance-profile Name="$ROLE_NAME" \
   --user-data "$USER_DATA" \
   --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30}}]' \
   --instance-initiated-shutdown-behavior terminate \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCE_TAG}]" \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="$INSTANCE_TAG"}]" \
   --query "Instances[0].InstanceId" \
   --output text)
 
@@ -134,4 +164,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "Launched instance: $INSTANCE_ID"
+echo "Launched instance: "$INSTANCE_ID""
+
+echo "Waiting for instance to complete the tasks... this might take a few minutes."
+echo "Once the instance completes, load test results will be available in S3 bucket: "$BUCKET_NAME""
