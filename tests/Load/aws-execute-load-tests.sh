@@ -5,7 +5,7 @@ REGION="us-east-1"
 AMI_ID="ami-0e86e20dae9224db8"
 INSTANCE_TYPE="t2.micro"
 INSTANCE_TAG="LoadTestInstance"
-BRANCH_NAME=34-implement-cloud-based-load-testing-with-k6
+BRANCH_NAME=main
 
 VPC_ID=$(aws ec2 describe-vpcs \
   --filters "Name=isDefault,Values=true" \
@@ -18,7 +18,7 @@ fi
 
 echo "Using VPC ID: $VPC_ID"
 
-SECURITY_GROUP_NAME="LoadTestSecurityGroup8"
+SECURITY_GROUP_NAME="LoadTestSecurityGroup"
 echo "Creating security group: $SECURITY_GROUP_NAME"
 SECURITY_GROUP=$(aws ec2 create-security-group \
   --group-name "$SECURITY_GROUP_NAME" \
