@@ -15,6 +15,7 @@ services:
       - php_socket:/var/run/php
       - ./infrastructure/docker/php/conf.d/app.prod.ini:/usr/local/etc/php/conf.d/app.prod.ini:ro
     healthcheck:
+      test: ["CMD-SHELL", "php-fpm -t || exit 1"]
       interval: 10s
       timeout: 3s
       retries: 3
