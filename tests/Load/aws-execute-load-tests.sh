@@ -25,16 +25,9 @@ SECURITY_GROUP=$(aws ec2 create-security-group \
   --description "Security group for load testing" \
   --vpc-id "$VPC_ID" \
   --region "$REGION" \
-  --query 'GroupId' --output text)
-
-echo "Adding SSH access to the security group"
-aws ec2 authorize-security-group-ingress \
-  --group-id "$SECURITY_GROUP" \
-  --protocol tcp \
-  --port 22 \
-  --cidr 0.0.0.0/0 \
-  --region $REGION
-
+  --query 'GroupId' --output text) || SECURITY_GROUP=$(aws ec2 describe-security-groups \
+  --group-names "$SECURITY_GROUP_NAME" \
+  --query 'SecurityGroups[0].GroupId' --output text --region "$REGION")
 
 BUCKET_NAME="loadtest-bucket-$(uuidgen)"
 
@@ -43,6 +36,8 @@ if ! aws s3 mb s3://"$BUCKET_NAME" --region "$REGION"; then
   exit 1
 fi
 
+ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text --region "$REGION")
+
 BUCKET_POLICY=$(cat <<EOF
 {
   "Version": "2012-10-17",
@@ -50,7 +45,7 @@ BUCKET_POLICY=$(cat <<EOF
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::191243910997:role/EC2S3WriteAccessRole"
+        "AWS": "arn:aws:iam::$ACCOUNT_ID:role/EC2S3WriteAccessRole"
       },
       "Action": [
         "s3:PutObject",
@@ -80,7 +75,7 @@ TRUST_POLICY='{
   "Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]
 }'
 
-aws iam create-role --role-name $ROLE_NAME --assume-role-policy-document "$TRUST_POLICY" --region "$REGION" || echo "Role already exists. Proceeding..."
+aws iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document "$TRUST_POLICY" --region "$REGION" || echo "Role already exists. Proceeding..."
 
 ACCESS_POLICY='{
   "Version": "2012-10-17",
@@ -98,12 +93,12 @@ aws iam create-instance-profile --instance-profile-name "$ROLE_NAME" --region "$
 aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION"
 
 echo "Waiting for instance profile to become available..."
-until aws iam get-instance-profile --instance-profile-name $ROLE_NAME --region $REGION >/dev/null 2>&1; do
+until aws iam get-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" >/dev/null 2>&1; do
   sleep 5
 done
 
 echo "Waiting for role to be associated with the instance profile..."
-until aws iam get-instance-profile --instance-profile-name $ROLE_NAME --region $REGION | grep -q "$ROLE_NAME"; do
+until aws iam get-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" | grep -q "$ROLE_NAME"; do
   sleep 5
 done
 
