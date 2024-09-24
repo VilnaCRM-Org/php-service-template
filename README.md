@@ -98,6 +98,14 @@ If the documentation doesn't cover what you need, search the [many questions on 
 
 If this isn't passing, is there something you can do to help?
 
+## Repository Synchronization
+
+This template is automatically synchronized with other repositories in our ecosystem. Whenever changes are made to the template, those changes are propagated to dependent projects, ensuring they stay up to date with the latest improvements and best practices.
+
+We use this synchronization feature, for example, in the [user-service](https://github.com/VilnaCRM-Org/user-service) repository.
+
+The synchronization is powered by the [actions-template-sync](https://github.com/AndreasAugustin/actions-template-sync) GitHub Action, which automates the process of propagating updates from this template to other projects.
+
 ## Security
 Please disclose any vulnerabilities found responsibly – report security issues to the maintainers privately.
 
