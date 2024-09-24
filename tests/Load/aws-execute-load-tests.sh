@@ -5,6 +5,7 @@ REGION="us-east-1"
 AMI_ID="ami-0e86e20dae9224db8"
 INSTANCE_TYPE="t2.micro"
 INSTANCE_TAG="LoadTestInstance"
+ROLE_NAME="EC2S3WriteAccessRole"
 BRANCH_NAME="main"
 
 VPC_ID=$(aws ec2 describe-vpcs \
@@ -45,7 +46,7 @@ BUCKET_POLICY=$(cat <<EOF
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::$ACCOUNT_ID:role/EC2S3WriteAccessRole"
+        "AWS": "arn:aws:iam::$ACCOUNT_ID:role/$ROLE_NAME"
       },
       "Action": [
         "s3:PutObject",
@@ -69,7 +70,6 @@ if ! aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file://bucket-
   exit 1
 fi
 
-ROLE_NAME="EC2S3WriteAccessRole"
 TRUST_POLICY='{
   "Version": "2012-10-17",
   "Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]
@@ -113,22 +113,23 @@ USER_DATA=$(cat <<EOF
 set -e
 export DEBIAN_FRONTEND=noninteractive
 
-sudo apt-get update -y
-sudo apt-get install -y docker.io git make unzip
+apt-get update -y
 
-sudo fallocate -l 2G /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
+apt-get install -y docker.io git make unzip
 
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+
+echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
 
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
-sudo ./aws/install
+./aws/install
 
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 
 git clone --branch "$BRANCH_NAME" https://github.com/VilnaCRM-Org/php-service-template.git
 
@@ -140,7 +141,7 @@ make smoke-load-tests
 
 aws s3 cp tests/Load/results/ "s3://$BUCKET_NAME/$(hostname)-results/" --recursive --region "$REGION"
 
-sudo shutdown -h now
+shutdown -h now
 
 EOF
 )
