@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export AWS_PAGER=""
 REGION="us-east-1"
 AMI_ID="ami-0e86e20dae9224db8"
@@ -90,7 +92,7 @@ if ! aws iam attach-role-policy --role-name "$ROLE_NAME" --policy-arn "$POLICY_A
 fi
 
 aws iam create-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" || echo "Instance profile already exists. Proceeding..."
-aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION"
+aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION" || echo "Role already associated with instance profile. Proceeding..."
 
 echo "Waiting for instance profile to become available..."
 until aws iam get-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" >/dev/null 2>&1; do
@@ -108,43 +110,7 @@ if ! aws sts get-caller-identity; then
   exit 1
 fi
 
-USER_DATA=$(cat <<EOF
-#!/bin/bash
-set -e
-export DEBIAN_FRONTEND=noninteractive
-
-apt-get update -y
-
-apt-get install -y docker.io git make unzip
-
-fallocate -l 2G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-
-echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
-
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-./aws/install
-
-curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-
-git clone --branch "$BRANCH_NAME" https://github.com/VilnaCRM-Org/php-service-template.git
-
-cd php-service-template
-
-docker-compose -f docker-compose.prod.yml up -d database localstack caddy php
-
-make smoke-load-tests
-
-aws s3 cp tests/Load/results/ "s3://$BUCKET_NAME/$(hostname)-results/" --recursive --region "$REGION"
-
-shutdown -h now
-
-EOF
-)
+USER_DATA=$(<tests/Load/user-data.sh)
 
 INSTANCE_ID=$(aws ec2 run-instances \
   --image-id "$AMI_ID" \
