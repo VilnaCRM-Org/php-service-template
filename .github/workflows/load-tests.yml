@@ -21,7 +21,7 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Start application
-        run: docker compose -f docker-compose.prod.yml up -d
+        run: docker compose -f docker-compose.prod.yml -f docker-compose.prod.override.yml up -d
 
       - name: Run load tests
         run: make smoke-load-tests

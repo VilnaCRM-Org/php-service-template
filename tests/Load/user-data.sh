@@ -23,7 +23,7 @@ git clone --branch "$BRANCH_NAME" https://github.com/VilnaCRM-Org/php-service-te
 
 cd php-service-template
 
-docker-compose -f docker-compose.prod.yml up -d database localstack caddy php
+docker compose -f docker-compose.prod.yml -f docker-compose.prod.override.yml up -d database localstack caddy php
 
 make smoke-load-tests
 
