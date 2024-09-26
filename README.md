@@ -98,6 +98,29 @@ If the documentation doesn't cover what you need, search the [many questions on 
 
 If this isn't passing, is there something you can do to help?
 
+## Running Load Tests in AWS
+
+This template supports running load tests on AWS to evaluate the performance of your application under various conditions. You can automate this process using a custom bash script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
+
+### Steps for Running AWS Load Tests
+
+1. **Provisioning EC2 Instance**:
+   The `make aws-load-tests` command provisions a new EC2 instance with the necessary configuration, including security groups and IAM roles, to ensure secure and efficient operation of your load tests.
+
+2. **Executing Load Tests**:
+   Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
+
+3. **Saving Results to S3**:
+   The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
+
+4. **Scaling and Flexibility**:
+   This approach allows you to scale the infrastructure to suit different performance testing needs, giving insights into how your service performs in a cloud-based, production-like environment.
+
+### Cleanup AWS Infrastructure
+
+After the load tests have been completed, it's important to clean up the AWS resources.
+The `make aws-cleanup` command automates the process of tearing down the EC2 instance, security groups, and other related AWS resources.
+
 ## Repository Synchronization
 
 This template is automatically synchronized with other repositories in our ecosystem. Whenever changes are made to the template, those changes are propagated to dependent projects, ensuring they stay up to date with the latest improvements and best practices.

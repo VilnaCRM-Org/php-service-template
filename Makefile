@@ -207,3 +207,6 @@ generate-graphql-spec:
 
 aws-load-tests: ## Run load tests on AWS infrastructure
 	sh tests/Load/aws-execute-load-tests.sh
+
+aws-cleanup: ## Cleanup AWS infrastructure after testing
+	sh tests/Load/cleanup.sh
