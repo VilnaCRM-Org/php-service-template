@@ -2,7 +2,14 @@
 
 set -e
 
-. ./tests/Load/config.sh
+if [ -f "./tests/Load/config.sh" ]; then
+  . ./tests/Load/config.sh
+else
+  echo "Configuration file config.sh not found."
+  exit 1
+fi
+
+export AWS_PAGER=""
 
 VPC_ID=$(aws ec2 describe-vpcs \
   --filters "Name=isDefault,Values=true" \
@@ -21,7 +28,7 @@ SECURITY_GROUP=$(aws ec2 create-security-group \
   --description "Security group for load testing" \
   --vpc-id "$VPC_ID" \
   --region "$REGION" \
-  --query 'GroupId' --output text) || SECURITY_GROUP=$(aws ec2 describe-security-groups \
+  --query 'GroupId' --output text 2>/dev/null) || SECURITY_GROUP=$(aws ec2 describe-security-groups \
   --group-names "$SECURITY_GROUP_NAME" \
   --query 'SecurityGroups[0].GroupId' --output text --region "$REGION")
 
@@ -35,7 +42,7 @@ TRUST_POLICY='{
   "Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]
 }'
 
-aws iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document "$TRUST_POLICY" --region "$REGION" || echo "Role already exists. Proceeding..."
+aws iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document "$TRUST_POLICY" --region "$REGION" 2>/dev/null || echo "Role already exists. Proceeding..."
 
 until aws iam get-role --role-name "$ROLE_NAME" --region "$REGION" >/dev/null 2>&1; do
   echo "Waiting for IAM role to become available..."
@@ -76,10 +83,17 @@ if ! aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file://bucket-
   exit 1
 fi
 
-ACCESS_POLICY='{
+ACCESS_POLICY=$(cat <<EOF
+{
   "Version": "2012-10-17",
-  "Statement": [{"Effect": "Allow","Action": ["s3:PutObject","s3:ListBucket"],"Resource": ["arn:aws:s3:::'$BUCKET_NAME'","arn:aws:s3:::'$BUCKET_NAME'/*"]}]
-}'
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": ["s3:PutObject","s3:ListBucket"],
+    "Resource": ["arn:aws:s3:::$BUCKET_NAME","arn:aws:s3:::$BUCKET_NAME/*"]
+  }]
+}
+EOF
+)
 
 POLICY_ARN=$(aws iam create-policy --policy-name S3WriteAccessToBucket --policy-document "$ACCESS_POLICY" --query 'Policy.Arn' --output text --region "$REGION" 2>/dev/null) || POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
 
@@ -88,16 +102,14 @@ if ! aws iam attach-role-policy --role-name "$ROLE_NAME" --policy-arn "$POLICY_A
   exit 1
 fi
 
-# Create the instance profile
-aws iam create-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" || echo "Instance profile already exists. Proceeding..."
+aws iam create-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" 2>/dev/null || echo "Instance profile already exists. Proceeding..."
 
-# Wait for the instance profile to become available
 echo "Waiting for instance profile to become available..."
 until aws iam get-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" >/dev/null 2>&1; do
   sleep 5
 done
 
-aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION" || echo "Role already associated with instance profile. Proceeding..."
+aws iam add-role-to-instance-profile --instance-profile-name "$ROLE_NAME" --role-name "$ROLE_NAME" --region "$REGION" 2>/dev/null || echo "Role already associated with instance profile. Proceeding..."
 
 echo "Waiting for role to be associated with the instance profile..."
 until aws iam get-instance-profile --instance-profile-name "$ROLE_NAME" --region "$REGION" | grep -q "$ROLE_NAME"; do
@@ -110,7 +122,8 @@ if ! aws sts get-caller-identity; then
   exit 1
 fi
 
-USER_DATA=$(<tests/Load/user-data.sh)
+export BUCKET_NAME REGION BRANCH_NAME
+envsubst < tests/Load/user-data.sh > /tmp/user-data.sh
 
 INSTANCE_ID=$(aws ec2 run-instances \
   --image-id "$AMI_ID" \
@@ -118,7 +131,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --security-group-ids "$SECURITY_GROUP" \
   --region "$REGION" \
   --iam-instance-profile Name="$ROLE_NAME" \
-  --user-data "$USER_DATA" \
+  --user-data file:///tmp/user-data.sh \
   --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30}}]' \
   --instance-initiated-shutdown-behavior terminate \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCE_TAG'}]" \

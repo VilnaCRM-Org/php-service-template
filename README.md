@@ -53,6 +53,8 @@ Execute `make` or `make help` to see the full list of project commands.
 The list of the `make` possibilities:
 
 ```
+aws-load-tests               Execute load tests on AWS
+aws-cleanup                  Clean up AWS resources
 bats                         Bats is a TAP-compliant testing framework for Bash
 behat                        A php framework for autotesting business expectations
 build                        Builds the images (PHP, caddy)
@@ -104,16 +106,19 @@ This template supports running load tests on AWS to evaluate the performance of 
 
 ### Steps for Running AWS Load Tests
 
-1. **Provisioning EC2 Instance**:
+1. **Configure AWS CLI**:
+   Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials. Run the following command and provide your AWS Access Key, Secret Access Key.
+
+2. **Provisioning EC2 Instance**:
    The `make aws-load-tests` command provisions a new EC2 instance with the necessary configuration, including security groups and IAM roles, to ensure secure and efficient operation of your load tests.
 
-2. **Executing Load Tests**:
+3. **Executing Load Tests**:
    Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
 
-3. **Saving Results to S3**:
+4. **Saving Results to S3**:
    The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
 
-4. **Scaling and Flexibility**:
+5. **Scaling and Flexibility**:
    This approach allows you to scale the infrastructure to suit different performance testing needs, giving insights into how your service performs in a cloud-based, production-like environment.
 
 ### Cleanup AWS Infrastructure

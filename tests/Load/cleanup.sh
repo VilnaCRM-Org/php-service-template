@@ -1,7 +1,12 @@
 #!/bin/bash
 set -e
 
-. ./tests/Load/config.sh
+if [ -f "./tests/Load/config.sh" ]; then
+  . ./tests/Load/config.sh
+else
+  echo "Configuration file config.sh not found."
+  exit 1
+fi
 
 echo "Deleting S3 bucket and its contents: $BUCKET_NAME"
 if aws s3 ls "s3://$BUCKET_NAME" --region "$REGION" >/dev/null 2>&1; then
