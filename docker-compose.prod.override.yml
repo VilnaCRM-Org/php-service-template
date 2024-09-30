@@ -20,6 +20,8 @@ services:
       timeout: 3s
       retries: 3
       start_period: 30s
+    env_file:
+      - .env.prod
     environment:
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
       MERCURE_PUBLIC_URL: https://${SERVER_NAME}/.well-known/mercure
