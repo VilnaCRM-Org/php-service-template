@@ -22,6 +22,9 @@ git clone --branch "$BRANCH_NAME" https://github.com/VilnaCRM-Org/php-service-te
 
 cd php-service-template
 
+cp .env .env.local
+sed -i 's/APP_ENV=dev/APP_ENV=prod/g' .env.local
+
 docker-compose -f docker-compose.prod.yml -f docker-compose.prod.override.yml up -d
 
 make smoke-load-tests
