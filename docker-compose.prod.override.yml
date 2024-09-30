@@ -21,10 +21,8 @@ services:
       retries: 3
       start_period: 30s
     environment:
-      APP_SECRET: ${APP_SECRET}
-      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET}
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
-      MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
+      MERCURE_PUBLIC_URL: https://${SERVER_NAME}/.well-known/mercure
       DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:${DB_PORT}/${DB_NAME}?serverVersion=${DB_VERSION}
 
   caddy:
@@ -35,9 +33,7 @@ services:
       php:
         condition: service_healthy
     environment:
-      SERVER_NAME: ${SERVER_NAME:-localhost}
-      MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
-      MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
+      SERVER_NAME: ${SERVER_NAME}
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php
@@ -79,7 +75,7 @@ services:
       - "${LOCALSTACK_PORT}:4566"
     environment:
       - SERVICES=sqs
-      - DEBUG=1
+      - DEBUG=0
     volumes:
       - localstack_data:/var/lib/localstack
       - ./infrastructure/docker/php/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
