@@ -8,6 +8,14 @@ else
   exit 1
 fi
 
+if [ -f "$BUCKET_FILE" ]; then
+    BUCKET_NAME=$(cat "$BUCKET_FILE")
+    echo "Found bucket name: $BUCKET_NAME"
+else
+    echo "Bucket name file not found. Exiting."
+    exit 1
+fi
+
 echo "Deleting S3 bucket and its contents: $BUCKET_NAME"
 if aws s3 ls "s3://$BUCKET_NAME" --region "$REGION" >/dev/null 2>&1; then
     aws s3 rm "s3://$BUCKET_NAME" --recursive --region "$REGION"
@@ -21,8 +29,8 @@ echo "Detaching IAM role policies..."
 POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
 if [ -n "$POLICY_ARN" ]; then
     aws iam detach-role-policy --role-name "$ROLE_NAME" --policy-arn "$POLICY_ARN" --region "$REGION"
-    echo "Deleted policy: $POLICY_ARN"
     aws iam delete-policy --policy-arn "$POLICY_ARN" --region "$REGION"
+    echo "Deleted policy: $POLICY_ARN"
 else
     echo "Policy not found: S3WriteAccessToBucket"
 fi
@@ -44,6 +52,7 @@ echo "Deleting security group: $SECURITY_GROUP_NAME"
 SECURITY_GROUP_ID=$(aws ec2 describe-security-groups \
     --filters "Name=group-name,Values=$SECURITY_GROUP_NAME" \
     --query 'SecurityGroups[0].GroupId' --output text --region "$REGION")
+
 if [ -n "$SECURITY_GROUP_ID" ]; then
     aws ec2 delete-security-group --group-id "$SECURITY_GROUP_ID" --region "$REGION"
     echo "Security group $SECURITY_GROUP_NAME deleted."

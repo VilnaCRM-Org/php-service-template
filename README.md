@@ -119,7 +119,7 @@ This template supports running load tests on AWS to evaluate the performance of 
    The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
 
 5. **Scaling and Flexibility**:
-   This approach allows you to scale the infrastructure to suit different performance testing needs, giving insights into how your service performs in a cloud-based, production-like environment.
+   This approach allows you to scale the infrastructure to suit different performance testing needs, providing insights into how your service performs in a cloud-based, production-like environment.
 
 ### Cleanup AWS Infrastructure
 

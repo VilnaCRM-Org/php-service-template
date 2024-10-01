@@ -37,6 +37,13 @@ if ! aws s3 mb s3://"$BUCKET_NAME" --region "$REGION"; then
   exit 1
 fi
 
+if [ -f "$BUCKET_FILE" ]; then
+    rm "$BUCKET_FILE"
+fi
+
+echo "$BUCKET_NAME" > "$BUCKET_FILE"
+echo "Bucket name saved to $BUCKET_FILE"
+
 TRUST_POLICY='{
   "Version": "2012-10-17",
   "Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]
