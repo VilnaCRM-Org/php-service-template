@@ -113,15 +113,15 @@ This template supports running load tests on AWS to evaluate the performance of 
 #### 2. Configure Environment Variables in config.sh
 You can configure the following environment variables in the [tests/Load/config.sh](https://github.com/VilnaCRM-Org/php-service-template/blob/main/tests/Load/config.sh) file, depending on your project needs:
 
-* **`REGION`**: Defines the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
-* **`AMI_ID`**: Specifies the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
-* **`INSTANCE_TYPE`**: Sets the EC2 instance type (e.g., `t2.micro`)
-* **`INSTANCE_TAG`**: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
-* **`ROLE_NAME`**: Defines the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
-* **`BRANCH_NAME`**: Sets the branch name for the project (e.g., `main`)
-* **`BUCKET_NAME`**: Automatically generates a unique S3 bucket name using `uuidgen` (e.g., `loadtest-bucket-<unique-id>`)
-* **`BUCKET_FILE`**: Specifies the file where the generated S3 bucket name will be stored (e.g., `./tests/Load/bucket_name.txt`)
-* **`SECURITY_GROUP_NAME`**: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
+* `REGION`**: Defines the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
+* `AMI_ID`**: Specifies the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
+* `INSTANCE_TYPE`**: Sets the EC2 instance type (e.g., `t2.micro`)
+* `INSTANCE_TAG`**: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
+* `ROLE_NAME`**: Defines the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
+* `BRANCH_NAME`**: Sets the branch name for the project (e.g., `main`)
+* `BUCKET_NAME`**: Automatically generates a unique S3 bucket name using `uuidgen` (e.g., `loadtest-bucket-<unique-id>`)
+* `BUCKET_FILE`**: Specifies the file where the generated S3 bucket name will be stored (e.g., `./tests/Load/bucket_name.txt`)
+* `SECURITY_GROUP_NAME`**: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
 
 #### 3. **Provisioning EC2 Instance**:
    The `make aws-load-tests` command provisions a new EC2 instance with the necessary configuration, including security groups and IAM roles, to ensure secure and efficient operation of your load tests.

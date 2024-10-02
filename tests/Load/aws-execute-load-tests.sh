@@ -65,7 +65,7 @@ BUCKET_POLICY=$(cat <<EOF
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "AWS": "arn:aws:iam::$ACCOUNT_ID:role/$ROLE_NAME"
       },
       "Action": [
         "s3:PutObject",
@@ -140,7 +140,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --user-data file:///tmp/user-data.sh \
   --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30}}]' \
   --instance-initiated-shutdown-behavior terminate \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=\"$INSTANCE_TAG\"}]" \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCE_TAG}]" \
   --query "Instances[0].InstanceId" \
   --output text)
 
