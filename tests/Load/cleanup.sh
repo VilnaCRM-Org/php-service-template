@@ -8,13 +8,22 @@ else
   exit 1
 fi
 
-if [ -f "$BUCKET_FILE" ]; then
-    BUCKET_NAME=$(cat "$BUCKET_FILE")
-    echo "Found bucket name: $BUCKET_NAME"
-else
-    echo "Bucket name file not found. Exiting."
-    exit 1
+if [ -z "$BUCKET_FILE" ]; then
+  echo "Error: BUCKET_FILE is not set. Exiting."
+  exit 1
+elif [ ! -f "$BUCKET_FILE" ]; then
+  echo "Error: Bucket name file ($BUCKET_FILE) not found. Exiting."
+  exit 1
 fi
+
+BUCKET_NAME=$(cat "$BUCKET_FILE")
+
+if [ -z "$BUCKET_NAME" ]; then
+  echo "Error: BUCKET_FILE is empty. Exiting."
+  exit 1
+fi
+
+echo "Found bucket name: $BUCKET_NAME"
 
 echo "Deleting S3 bucket and its contents: $BUCKET_NAME"
 if aws s3 ls "s3://$BUCKET_NAME" --region "$REGION" >/dev/null 2>&1; then
@@ -26,7 +35,8 @@ else
 fi
 
 echo "Detaching IAM role policies..."
-POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
+POLICY_ARN=$(aws iam list-policies --scope Local --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
+
 if [ -n "$POLICY_ARN" ]; then
     aws iam detach-role-policy --role-name "$ROLE_NAME" --policy-arn "$POLICY_ARN" --region "$REGION"
     aws iam delete-policy --policy-arn "$POLICY_ARN" --region "$REGION"
