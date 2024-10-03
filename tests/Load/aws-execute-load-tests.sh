@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 if [ -f "./tests/Load/config.sh" ]; then

@@ -9,6 +9,7 @@
 ![PHPInsights style](https://img.shields.io/badge/PHPInsights%20%7C%20Style%20-100.0%25-success.svg)
 ![PHPInsights complexity](https://img.shields.io/badge/PHPInsights%20%7C%20Complexity%20-100.0%25-success.svg)
 ![PHPInsights architecture](https://img.shields.io/badge/PHPInsights%20%7C%20Architecture%20-100.0%25-success.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fc1ca51fd0faca36ab82/maintainability)](https://codeclimate.com/github/VilnaCRM-Org/php-service-template/maintainability)
 
 ## Possibilities
 
@@ -54,7 +55,7 @@ The list of the `make` possibilities:
 
 ```
 aws-load-tests               Execute load tests on AWS
-aws-cleanup                  Clean up AWS resources
+aws-load-tests-cleanup       Clean up AWS resources
 bats                         Bats is a TAP-compliant testing framework for Bash
 behat                        A php framework for autotesting business expectations
 build                        Builds the images (PHP, caddy)
@@ -107,11 +108,14 @@ This template supports running load tests on AWS to evaluate the performance of 
 ### Steps for Running AWS Load Tests
 
 #### 1. **Configure AWS CLI**:
-   Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials. 
-   Run the following command and provide your AWS Access Key, Secret Access Key. Also, 
+   Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials.
+   Run the following command and provide your AWS Access Key and Secret Access Key. Ensure that your AWS credentials and region are properly set to avoid any permission or region-based issues.
 
-#### 2. Configure Environment Variables in config.sh
-You can configure the following environment variables in the [tests/Load/config.sh](https://github.com/VilnaCRM-Org/php-service-template/blob/main/tests/Load/config.sh) file, depending on your project needs:
+#### 2. **Run Load Tests**:
+   The `make aws-load-tests` runs the script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
+
+#### 3. **Configure Environment Variables**:
+   After you start the command, you can in CLI config the environment variables, depending on your project needs:
 
 - `REGION`: Defines the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
 - `AMI_ID`: Specifies the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
@@ -119,12 +123,7 @@ You can configure the following environment variables in the [tests/Load/config.
 - `INSTANCE_TAG`: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
 - `ROLE_NAME`: Defines the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
 - `BRANCH_NAME`: Sets the branch name for the project (e.g., `main`)
-- `BUCKET_NAME`: Automatically generates a unique S3 bucket name using `uuidgen` (e.g., `loadtest-bucket-<unique-id>`)
-- `BUCKET_FILE`: Specifies the file where the generated S3 bucket name will be stored (e.g., `./tests/Load/bucket_name.txt`)
 - `SECURITY_GROUP_NAME`: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
-
-#### 3. **Provisioning EC2 Instance**:
-   The `make aws-load-tests` command provisions a new EC2 instance with the necessary configuration, including security groups and IAM roles, to ensure secure and efficient operation of your load tests.
 
 #### 4. **Executing Load Tests**:
    Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
@@ -138,7 +137,7 @@ You can configure the following environment variables in the [tests/Load/config.
 ### Cleanup AWS Infrastructure
 
 After the load tests have been completed, it's important to clean up the AWS resources.
-The `make aws-cleanup` command automates the process of tearing down the EC2 instance, security groups, and other related AWS resources.
+The `make aws-load-tests-cleanup` command automates the process of tearing down the EC2 instance, security groups, and other related AWS resources.
 
 ## Repository Synchronization
 
