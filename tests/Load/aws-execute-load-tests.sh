@@ -143,6 +143,11 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --query "Instances[0].InstanceId" \
   --output text)
 
+if [ -z "$INSTANCE_ID" ]; then
+  echo "Error: Failed to launch EC2 instance."
+  exit 1
+fi
+
 echo "Launched instance: $INSTANCE_ID"
 
 echo "Waiting for instance to complete the tasks... this might take a few minutes."

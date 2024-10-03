@@ -6,7 +6,7 @@ prompt_for_input() {
   local default_value=$2
   local user_input
 
-  read -p "$prompt_message [$default_value]: " user_input
+  read -r -p "$prompt_message [$default_value]: " user_input
   echo "${user_input:-$default_value}"
 }
 
