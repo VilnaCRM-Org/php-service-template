@@ -33,6 +33,14 @@ INFECTION     = ./vendor/bin/infection
 .RECIPEPREFIX +=
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
+REGION ?= us-east-1
+AMI_ID ?= ami-0e86e20dae9224db8
+INSTANCE_TYPE ?= t2.micro
+INSTANCE_TAG ?= LoadTestInstance
+ROLE_NAME ?= EC2S3WriteAccessRole
+BRANCH_NAME ?= main
+SECURITY_GROUP_NAME ?= LoadTestSecurityGroup
+
 # Conditional execution based on CI environment variable
 EXEC_ENV ?= $(EXEC_PHP_TEST_ENV)
 ifeq ($(CI),1)
@@ -206,7 +214,7 @@ generate-graphql-spec:
 	$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec
 
 aws-load-tests: ## Run load tests on AWS infrastructure
-	sh tests/Load/aws-execute-load-tests.sh
+	tests/Load/aws-execute-load-tests.sh -r $(REGION) -a $(AMI_ID) -t $(INSTANCE_TYPE) -i $(INSTANCE_TAG) -o $(ROLE_NAME) -b $(BRANCH_NAME) -s $(SECURITY_GROUP_NAME)
 
 aws-load-tests-cleanup: ## Cleanup AWS infrastructure after testing
-	sh tests/Load/cleanup.sh
+	tests/Load/cleanup.sh

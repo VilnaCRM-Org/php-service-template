@@ -1,25 +1,41 @@
 #!/bin/bash
 set -e
 
-prompt_for_input() {
-  local prompt_message=$1
-  local default_value=$2
-  local user_input
+DEFAULT_REGION="us-east-1"
+DEFAULT_AMI_ID="ami-0e86e20dae9224db8"
+DEFAULT_INSTANCE_TYPE="t2.micro"
+DEFAULT_INSTANCE_TAG="LoadTestInstance"
+DEFAULT_ROLE_NAME="EC2S3WriteAccessRole"
+DEFAULT_BRANCH_NAME="main"
+DEFAULT_SECURITY_GROUP_NAME="LoadTestSecurityGroup"
+BUCKET_FILE='./tests/Load/bucket_name.txt'
+BUCKET_NAME="loadtest-bucket-$(uuidgen)"
 
-  read -r -p "$prompt_message [$default_value]: " user_input
-  echo "${user_input:-$default_value}"
+usage() {
+  echo "Usage: $0 [-r region] [-a ami_id] [-t instance_type] [-i instance_tag] [-o role_name] [-b branch_name] [-s security_group_name]"
+  exit 1
 }
 
-export AWS_PAGER=""
-export REGION=$(prompt_for_input "Enter AWS Region" "us-east-1")
-export AMI_ID=$(prompt_for_input "Enter AMI ID" "ami-0e86e20dae9224db8")
-export INSTANCE_TYPE=$(prompt_for_input "Enter EC2 instance type" "t2.micro")
-export INSTANCE_TAG=$(prompt_for_input "Enter instance tag" "LoadTestInstance")
-export ROLE_NAME=$(prompt_for_input "Enter IAM Role name" "EC2S3WriteAccessRole")
-export BRANCH_NAME=$(prompt_for_input "Enter Git branch name" "main")
-export BUCKET_NAME="loadtest-bucket-$(uuidgen)"
-export BUCKET_FILE='./tests/Load/bucket_name.txt'
-export SECURITY_GROUP_NAME=$(prompt_for_input "Enter security group name" "LoadTestSecurityGroup")
+while getopts "r:a:t:i:o:b:s:" opt; do
+  case ${opt} in
+    r ) REGION=${OPTARG} ;;
+    a ) AMI_ID=${OPTARG} ;;
+    t ) INSTANCE_TYPE=${OPTARG} ;;
+    i ) INSTANCE_TAG=${OPTARG} ;;
+    o ) ROLE_NAME=${OPTARG} ;;
+    b ) BRANCH_NAME=${OPTARG} ;;
+    s ) SECURITY_GROUP_NAME=${OPTARG} ;;
+    * ) usage ;;
+  esac
+done
+
+REGION=${REGION:-$DEFAULT_REGION}
+AMI_ID=${AMI_ID:-$DEFAULT_AMI_ID}
+INSTANCE_TYPE=${INSTANCE_TYPE:-$DEFAULT_INSTANCE_TYPE}
+INSTANCE_TAG=${INSTANCE_TAG:-$DEFAULT_INSTANCE_TAG}
+ROLE_NAME=${ROLE_NAME:-$DEFAULT_ROLE_NAME}
+BRANCH_NAME=${BRANCH_NAME:-$DEFAULT_BRANCH_NAME}
+SECURITY_GROUP_NAME=${SECURITY_GROUP_NAME:-$DEFAULT_SECURITY_GROUP_NAME}
 
 echo "Configuration complete:"
 echo "Region: $REGION"

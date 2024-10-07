@@ -25,7 +25,7 @@ cd php-service-template
 cp .env .env.local
 sed -i 's/APP_ENV=dev/APP_ENV=prod/g' .env.local
 
-docker-compose -f docker-compose.prod.yml -f docker-compose.prod.override.yml up -d
+docker-compose -f docker-compose.prod.yml -f docker-compose.load_test.override.yml up -d
 
 make smoke-load-tests
 
