@@ -1,5 +1,6 @@
 doctrine:
     dbal:
+        driver: 'pdo_pgsql'
         url: '%env(resolve:DB_URL)%'
         server_version: '16'
         # IMPORTANT: You MUST configure your server version,
