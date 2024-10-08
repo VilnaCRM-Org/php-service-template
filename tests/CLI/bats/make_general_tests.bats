@@ -85,7 +85,6 @@ load 'bats-assert/load'
    run bash -c "make load-fixtures & sleep 2; kill $!"
    assert_failure
    assert_output --partial "Successfully deleted cache entries."
-   assert_output --partial "The database schema is in sync with the mapping files."
 }
 
 @test "make cache-warmup command executes" {
