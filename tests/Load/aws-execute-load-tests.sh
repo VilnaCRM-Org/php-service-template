@@ -57,50 +57,18 @@ done
 
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text --region "$REGION")
 
-BUCKET_POLICY=$(cat <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::$ACCOUNT_ID:role/$ROLE_NAME"
-      },
-      "Action": [
-        "s3:PutObject",
-        "s3:GetObject",
-        "s3:ListBucket"
-      ],
-      "Resource": [
-        "arn:aws:s3:::$BUCKET_NAME",
-        "arn:aws:s3:::$BUCKET_NAME/*"
-      ]
-    }
-  ]
-}
-EOF
-)
+export BUCKET_NAME REGION ACCOUNT_ID ROLE_NAME
+envsubst < tests/Load/s3-bucket-policy.json > /tmp/s3-bucket-policy-filled.json
 
-echo "$BUCKET_POLICY" > bucket-policy.json
 
-if ! aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file://bucket-policy.json --region "$REGION"; then
+if ! aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file:///tmp/s3-bucket-policy-filled.json --region "$REGION"; then
   echo "Error: Failed to apply bucket policy."
   exit 1
 fi
 
-ACCESS_POLICY=$(cat <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [{
-    "Effect": "Allow",
-    "Action": ["s3:PutObject","s3:ListBucket"],
-    "Resource": ["arn:aws:s3:::$BUCKET_NAME","arn:aws:s3:::$BUCKET_NAME/*"]
-  }]
-}
-EOF
-)
+ACCESS_POLICY_FILE="tests/Load/s3-access-policy.json"
 
-POLICY_ARN=$(aws iam create-policy --policy-name S3WriteAccessToBucket --policy-document "$ACCESS_POLICY" --query 'Policy.Arn' --output text --region "$REGION" 2>/dev/null) || POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
+POLICY_ARN=$(aws iam create-policy --policy-name S3WriteAccessToBucket --policy-document file://"$ACCESS_POLICY_FILE" --query 'Policy.Arn' --output text --region "$REGION" 2>/dev/null) || POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='S3WriteAccessToBucket'].Arn" --output text --region "$REGION")
 
 if ! aws iam attach-role-policy --role-name "$ROLE_NAME" --policy-arn "$POLICY_ARN" --region "$REGION"; then
   echo "Error: Failed to attach policy to role."
@@ -149,6 +117,9 @@ if [ -z "$INSTANCE_ID" ]; then
 fi
 
 echo "Launched instance: $INSTANCE_ID"
+
+S3_URL="https://$REGION.console.aws.amazon.com/s3/object/$BUCKET_NAME?region=$REGION&bucketType=general"
+echo "You can access the S3 bucket here: $S3_URL"
 
 echo "Waiting for instance to complete the tasks... this might take a few minutes."
 echo "Once the instance completes, load test results will be available in S3 bucket: $BUCKET_NAME"
