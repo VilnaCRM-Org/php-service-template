@@ -9,7 +9,7 @@
             "smoke": {
                 "threshold":9000,
                 "rps": 10,
-                "vus": 10,
+                "vus": 5,
                 "duration": 10
             },
             "average": {
