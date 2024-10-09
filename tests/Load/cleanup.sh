@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-if [ -f "./tests/Load/config.sh" ]; then
-  . ./tests/Load/config.sh
+CONFIG_FILE="./tests/Load/config.sh"
+if [ -f "$CONFIG_FILE" ]; then
+  . "$CONFIG_FILE"
 else
   echo "Configuration file config.sh not found."
   exit 1
@@ -32,6 +33,21 @@ if aws s3 ls "s3://$BUCKET_NAME" --region "$REGION" >/dev/null 2>&1; then
     echo "S3 bucket $BUCKET_NAME deleted."
 else
     echo "S3 bucket $BUCKET_NAME not found."
+fi
+
+echo "Terminating EC2 instances with tag: $INSTANCE_TAG"
+INSTANCE_IDS=$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=$INSTANCE_TAG" "Name=instance-state-name,Values=running" \
+  --query "Reservations[*].Instances[*].InstanceId" --output text --region "$REGION")
+
+if [ -n "$INSTANCE_IDS" ]; then
+    aws ec2 terminate-instances --instance-ids $INSTANCE_IDS --region "$REGION"
+    echo "Instances with IDs $INSTANCE_IDS are being terminated."
+
+    aws ec2 wait instance-terminated --instance-ids $INSTANCE_IDS --region "$REGION"
+    echo "Instances terminated."
+else
+    echo "No running instances found with tag: $INSTANCE_TAG"
 fi
 
 echo "Detaching IAM role policies..."

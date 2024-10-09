@@ -60,10 +60,28 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text --regio
 export BUCKET_NAME REGION ACCOUNT_ID ROLE_NAME
 envsubst < tests/Load/s3-bucket-policy.json > /tmp/s3-bucket-policy-filled.json
 
+MAX_RETRIES=53
+RETRY_COUNT=0
+SUCCESS=0
 
-if ! aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file:///tmp/s3-bucket-policy-filled.json --region "$REGION"; then
-  echo "Error: Failed to apply bucket policy."
+echo "Applying bucket policy to $BUCKET_NAME..."
+
+while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+  if aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy file:///tmp/s3-bucket-policy-filled.json --region "$REGION"; then
+    SUCCESS=1
+    break
+  else
+    echo "Failed to apply bucket policy. Retrying in 5 seconds... (Attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
+    sleep 5
+    RETRY_COUNT=$((RETRY_COUNT+1))
+  fi
+done
+
+if [ $SUCCESS -ne 1 ]; then
+  echo "Error: Failed to apply bucket policy after $MAX_RETRIES attempts."
   exit 1
+else
+  echo "Bucket policy applied successfully."
 fi
 
 ACCESS_POLICY_FILE="tests/Load/s3-access-policy.json"
@@ -118,7 +136,7 @@ fi
 
 echo "Launched instance: $INSTANCE_ID"
 
-S3_URL="https://$REGION.console.aws.amazon.com/s3/object/$BUCKET_NAME?region=$REGION&bucketType=general"
+S3_URL="https://$REGION.console.aws.amazon.com/s3/buckets/$BUCKET_NAME?region=$REGION&bucketType=general"
 echo "You can access the S3 bucket here: $S3_URL"
 
 echo "Waiting for instance to complete the tasks... this might take a few minutes."
