@@ -9,6 +9,7 @@
 ![PHPInsights style](https://img.shields.io/badge/PHPInsights%20%7C%20Style%20-100.0%25-success.svg)
 ![PHPInsights complexity](https://img.shields.io/badge/PHPInsights%20%7C%20Complexity%20-100.0%25-success.svg)
 ![PHPInsights architecture](https://img.shields.io/badge/PHPInsights%20%7C%20Architecture%20-100.0%25-success.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fc1ca51fd0faca36ab82/maintainability)](https://codeclimate.com/github/VilnaCRM-Org/php-service-template/maintainability)
 
 ## Possibilities
 
@@ -53,6 +54,8 @@ Execute `make` or `make help` to see the full list of project commands.
 The list of the `make` possibilities:
 
 ```
+aws-load-tests               Execute load tests on AWS
+aws-load-tests-cleanup       Clean up AWS resources
 bats                         Bats is a TAP-compliant testing framework for Bash
 behat                        A php framework for autotesting business expectations
 build                        Builds the images (PHP, caddy)
@@ -97,6 +100,52 @@ If the documentation doesn't cover what you need, search the [many questions on 
 [![Test status](https://github.com/VilnaCRM-Org/php-service-template/workflows/Tests/badge.svg)](https://github.com/VilnaCRM-Org/php-service-template/actions)
 
 If this isn't passing, is there something you can do to help?
+
+## Running Load Tests in AWS
+
+This template supports running load tests on AWS to evaluate the performance of your application under various conditions. You can automate this process using a custom bash script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
+
+### Steps for Running AWS Load Tests
+
+#### 1. **Configure AWS CLI**:
+   Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials.
+   Run the following command and provide your AWS Access Key and Secret Access Key. Ensure that your AWS credentials and region are properly set to avoid any permission or region-based issues.
+
+#### 2. **Run Load Tests**:
+   The `make aws-load-tests` runs the script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
+
+#### 3. **Configure Environment Variables**:
+   After you start the command, you can in CLI config the environment variables, depending on your project needs:
+
+- `REGION`: Defines the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
+- `AMI_ID`: Specifies the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
+- `INSTANCE_TYPE`: Sets the EC2 instance type (e.g., `t2.micro`)
+- `INSTANCE_TAG`: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
+- `ROLE_NAME`: Defines the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
+- `BRANCH_NAME`: Sets the branch name for the project (e.g., `main`)
+- `SECURITY_GROUP_NAME`: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
+
+#### 4. **Executing Load Tests**:
+   Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
+
+#### 5. **Saving Results to S3**:
+   The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
+
+#### 6. **Scaling and Flexibility**:
+   This approach allows you to scale the infrastructure to suit different performance testing needs, providing insights into how your service performs in a cloud-based, production-like environment.
+
+### Cleanup AWS Infrastructure
+
+After the load tests have been completed, it's important to clean up the AWS resources.
+The `make aws-load-tests-cleanup` command automates the process of tearing down the EC2 instance, security groups, and other related AWS resources.
+
+## Repository Synchronization
+
+This template is automatically synchronized with other repositories in our ecosystem. Whenever changes are made to the template, those changes are propagated to dependent projects, ensuring they stay up to date with the latest improvements and best practices.
+
+We use this synchronization feature, for example, in the [user-service](https://github.com/VilnaCRM-Org/user-service) repository.
+
+The synchronization is powered by the [actions-template-sync](https://github.com/AndreasAugustin/actions-template-sync) GitHub Action, which automates the process of propagating updates from this template to other projects.
 
 ## Security
 Please disclose any vulnerabilities found responsibly – report security issues to the maintainers privately.

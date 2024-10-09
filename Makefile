@@ -204,3 +204,9 @@ generate-openapi-spec:
 
 generate-graphql-spec:
 	$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec
+
+aws-load-tests: ## Run load tests on AWS infrastructure
+	tests/Load/aws-execute-load-tests.sh
+
+aws-load-tests-cleanup: ## Cleanup AWS infrastructure after testing
+	tests/Load/cleanup.sh

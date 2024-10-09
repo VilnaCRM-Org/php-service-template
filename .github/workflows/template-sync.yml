@@ -1,0 +1,24 @@
+name: Template Sync
+
+on:
+  schedule:
+    - cron: "0 9 * * MON"
+  workflow_dispatch:
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: actions-template-sync
+        uses: AndreasAugustin/actions-template-sync@v2.2.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_repo_path: VilnaCRM-Org/php-service-template
+          upstream_branch: main
+          pr_labels: template_sync
