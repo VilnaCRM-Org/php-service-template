@@ -6963,7 +6963,7 @@
         },
         {
             "name": "webonyx/graphql-php",
-            "version": "v15.14.1",
+            "version": "v15.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
