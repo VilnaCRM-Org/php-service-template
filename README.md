@@ -114,16 +114,16 @@ This template supports running load tests on AWS to evaluate the performance of 
 #### 2. **Run Load Tests**:
    The `make aws-load-tests` runs the script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
 
-#### 3. **Configure Environment Variables**:
-   After you start the command, you can in CLI config the environment variables, depending on your project needs:
+#### 3. **Configure CLI Options**:
+To configure the AWS load testing, pass options through the CLI command to define the AWS environment settings, as needed for your project:
 
-- `REGION`: Defines the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
-- `AMI_ID`: Specifies the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
-- `INSTANCE_TYPE`: Sets the EC2 instance type (e.g., `t2.micro`)
-- `INSTANCE_TAG`: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
-- `ROLE_NAME`: Defines the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
-- `BRANCH_NAME`: Sets the branch name for the project (e.g., `main`)
-- `SECURITY_GROUP_NAME`: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
+- `-r REGION`: Specifies the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
+- `-a AMI_ID`: Defines the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
+- `-t INSTANCE_TYPE`: Sets the EC2 instance type (e.g., `t2.micro`)
+- `-i INSTANCE_TAG`: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
+- `-o ROLE_NAME`: Specifies the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
+- `-b BRANCH_NAME`: Sets the branch name for the project (e.g., `main`)
+- `-s SECURITY_GROUP_NAME`: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
 
 #### 4. **Executing Load Tests**:
    Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
