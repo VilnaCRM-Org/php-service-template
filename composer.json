@@ -18,7 +18,7 @@
     "cfpinto/graphql": "^2.0",
     "doctrine/doctrine-bundle": "^2.12",
     "doctrine/doctrine-migrations-bundle": "^3.3",
-    "doctrine/orm": "^2.13",
+    "doctrine/orm": "^3.2",
     "dpauli/graphql-request-builder": "^1.8",
     "phpmailer/phpmailer": "^6.6",
     "sebastian/phpcpd": "^6.0",
@@ -36,7 +36,7 @@
     "symfony/uid": "7.1.*",
     "symfony/validator": "7.1.*",
     "symfony/yaml": "7.1.*",
-    "webonyx/graphql-php": "^14.11"
+    "webonyx/graphql-php": "^15.14"
   },
   "config": {
     "allow-plugins": {
@@ -51,7 +51,10 @@
     "preferred-install": {
       "*": "dist"
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.3.12"
+    }
   },
   "autoload": {
     "psr-4": {
