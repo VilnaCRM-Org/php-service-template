@@ -13,7 +13,6 @@ DEFAULT_SECURITY_GROUP_NAME="LoadTestSecurityGroup"
 DEFAULT_LOCAL_MODE="false"
 BUCKET_FILE='./tests/Load/bucket_name.txt'
 BUCKET_NAME="loadtest-bucket-$(uuidgen)"
-STS_COMMAND="sts get-caller-identity"
 
 usage() {
   echo "Usage: $0 [-r region] [-a ami_id] [-t instance_type] [-i instance_tag] [-o role_name] [-b branch_name] [-s security_group_name] [-l local_mode]"
@@ -48,7 +47,6 @@ if [[ "$LOCAL_MODE" == "true" ]]; then
     export AWS_ACCESS_KEY_ID=$AWS_SQS_KEY
     export AWS_SECRET_ACCESS_KEY=$AWS_SQS_SECRET
     AWS_CLI="aws --endpoint-url=${ENDPOINT_URL}"
-    STS_COMMAND="configure list"
 else
     AWS_CLI="aws"
 fi
