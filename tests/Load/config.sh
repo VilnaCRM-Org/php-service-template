@@ -14,13 +14,11 @@ DEFAULT_LOCAL_MODE="false"
 BUCKET_FILE='./tests/Load/bucket_name.txt'
 BUCKET_NAME="loadtest-bucket-$(uuidgen)"
 
-# Usage function
 usage() {
   echo "Usage: $0 [-r region] [-a ami_id] [-t instance_type] [-i instance_tag] [-o role_name] [-b branch_name] [-s security_group_name] [-l local_mode]"
   exit 1
 }
 
-# Process CLI options
 while getopts "r:a:t:i:o:b:s:l:" opt; do
     case ${opt} in
         r) REGION=${OPTARG} ;;
@@ -35,7 +33,6 @@ while getopts "r:a:t:i:o:b:s:l:" opt; do
     esac
 done
 
-# Set default values if not provided
 REGION=${REGION:-$DEFAULT_REGION}
 AMI_ID=${AMI_ID:-$DEFAULT_AMI_ID}
 INSTANCE_TYPE=${INSTANCE_TYPE:-$DEFAULT_INSTANCE_TYPE}
