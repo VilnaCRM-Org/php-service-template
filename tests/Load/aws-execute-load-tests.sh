@@ -107,26 +107,10 @@ until $AWS_CLI iam get-instance-profile --instance-profile-name "$ROLE_NAME" --r
   sleep 5
 done
 
-MAX_RETRIES=3
-RETRY_COUNT=0
-SUCCESS=0
-
-while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-  if $AWS_CLI sts get-caller-identity >/dev/null 2>&1; then
-    SUCCESS=1
-    break
-  else
-    echo "Failed to validate IAM role permissions. Retrying in 10 seconds... (Attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
-    sleep 10
-    RETRY_COUNT=$((RETRY_COUNT+1))
-  fi
-done
-
-if [ $SUCCESS -ne 1 ]; then
-  echo "Error: Unable to validate IAM role permissions after $MAX_RETRIES attempts."
+echo "Checking IAM role permissions..."
+if ! $AWS_CLI $STS_COMMAND; then
+  echo "Error: Unable to validate IAM role permissions."
   exit 1
-else
-  echo "IAM role permissions validated successfully."
 fi
 
 export BUCKET_NAME REGION BRANCH_NAME
