@@ -48,7 +48,7 @@ if [[ "$LOCAL_MODE" == "true" ]]; then
     export AWS_ACCESS_KEY_ID=$AWS_SQS_KEY
     export AWS_SECRET_ACCESS_KEY=$AWS_SQS_SECRET
     AWS_CLI="aws --endpoint-url=${ENDPOINT_URL}"
-    STS_COMMAND="sts get-caller-identity --no-sign-request"
+    STS_COMMAND="s3api list-buckets --max-items 0"
 else
     AWS_CLI="aws"
 fi
