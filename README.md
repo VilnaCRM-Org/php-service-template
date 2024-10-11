@@ -103,7 +103,7 @@ If this isn't passing, is there something you can do to help?
 
 ## Running Load Tests in AWS
 
-This template supports running load tests on AWS to evaluate the performance of your application under various conditions. You can automate this process using a custom bash script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
+This template supports running load tests on AWS using k6, a modern load testing tool, to evaluate the performance of your application under various conditions. You can automate this process using a custom bash script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the k6 load tests.
 
 ### Steps for Running AWS Load Tests
 
@@ -139,6 +139,8 @@ To configure the AWS load testing, pass options through the CLI command to defin
 After the load tests have been completed, it's important to clean up the AWS resources.
 The `make aws-load-tests-cleanup` command automates the process of tearing down the EC2 instance, security groups, and other related AWS resources.
 
+**Note:** This project utilizes AWS free tier services (EC2 micro instances, free security groups, free images, and volumes up to 30 GB), which minimizes cost concerns during AWS operations. However, it's still important to clean up resources to avoid any potential charges beyond the free tier limits.
+
 ## Repository Synchronization
 
 This template is automatically synchronized with other repositories in our ecosystem. Whenever changes are made to the template, those changes are propagated to dependent projects, ensuring they stay up to date with the latest improvements and best practices.
@@ -148,6 +150,8 @@ We use this synchronization feature, for example, in the [user-service](https://
 The synchronization is powered by the [actions-template-sync](https://github.com/AndreasAugustin/actions-template-sync) GitHub Action, which automates the process of propagating updates from this template to other projects.
 
 ### Handling Workflow Permissions Error
+
+When setting up the repository synchronization, you may encounter permission-related issues. Follow these steps to resolve common workflow permissions errors
 
 Currently, the `GITHUB_TOKEN` cannot be granted workflow permissions by default. You can grant the workflow permissions using a Personal Access Token (PAT) by following these steps:
 

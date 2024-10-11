@@ -43,12 +43,9 @@ fi
 echo "$BUCKET_NAME" > "$BUCKET_FILE"
 echo "Bucket name saved to $BUCKET_FILE"
 
-TRUST_POLICY='{
-  "Version": "2012-10-17",
-  "Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]
-}'
-
-$AWS_CLI iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document "$TRUST_POLICY" --region "$REGION" 2>/dev/null || echo "Role already exists. Proceeding..."
+if ! $AWS_CLI iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document file://tests/Load/trust-policy.json --region "$REGION" 2>/dev/null; then
+    echo "Role already exists. Proceeding..."
+fi
 
 until $AWS_CLI iam get-role --role-name "$ROLE_NAME" --region "$REGION" >/dev/null 2>&1; do
   echo "Waiting for IAM role to become available..."
