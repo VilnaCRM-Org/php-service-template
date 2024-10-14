@@ -135,6 +135,4 @@ echo "Launched instance: $INSTANCE_ID"
 
 S3_URL="https://$REGION.console.aws.amazon.com/s3/buckets/$BUCKET_NAME?region=$REGION&bucketType=general"
 echo "You can access the S3 bucket here: $S3_URL"
-
 echo "Waiting for instance to complete the tasks... this might take a few minutes."
-echo "Once the instance completes, load test results will be available in S3 bucket: $BUCKET_NAME"
