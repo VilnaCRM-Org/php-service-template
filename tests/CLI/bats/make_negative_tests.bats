@@ -111,3 +111,8 @@ load 'bats-assert/load'
   assert_failure
   assert_output --partial "does not contain valid JSON"
 }
+
+@test "make aws-lod-tests without config should fail" {
+  run make aws-load-tests
+  assert_failure
+}
