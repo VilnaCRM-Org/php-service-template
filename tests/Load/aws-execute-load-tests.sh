@@ -104,14 +104,10 @@ until $AWS_CLI iam get-instance-profile --instance-profile-name "$ROLE_NAME" --r
   sleep 5
 done
 
-if [[ "$LOCAL_MODE" != "true" ]]; then
-    echo "Checking IAM role permissions..."
-    if ! $AWS_CLI sts get-caller-identity; then
-      echo "Error: Unable to validate IAM role permissions."
-      exit 1
-    fi
-else
-    echo "Skipping IAM role permissions check in Local Mode."
+echo "Checking IAM role permissions..."
+if ! $AWS_CLI sts get-caller-identity --query "Account" --output text --region "$REGION"; then
+  echo "Error: Unable to validate IAM role permissions."
+  exit 1
 fi
 
 export BUCKET_NAME REGION BRANCH_NAME
