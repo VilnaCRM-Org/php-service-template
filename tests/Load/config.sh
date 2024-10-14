@@ -19,7 +19,7 @@ usage() {
   exit 1
 }
 
-while getopts "r:a:t:i:o:b:s:l:" opt; do
+while getopts "r:a:t:i:o:b:s:" opt; do
     case ${opt} in
         r) REGION=${OPTARG} ;;
         a) AMI_ID=${OPTARG} ;;
@@ -28,7 +28,6 @@ while getopts "r:a:t:i:o:b:s:l:" opt; do
         o) ROLE_NAME=${OPTARG} ;;
         b) BRANCH_NAME=${OPTARG} ;;
         s) SECURITY_GROUP_NAME=${OPTARG} ;;
-        l) LOCAL_MODE=${OPTARG} ;;
         *) usage ;;
     esac
 done
@@ -40,7 +39,8 @@ INSTANCE_TAG=${INSTANCE_TAG:-$DEFAULT_INSTANCE_TAG}
 ROLE_NAME=${ROLE_NAME:-$DEFAULT_ROLE_NAME}
 BRANCH_NAME=${BRANCH_NAME:-$DEFAULT_BRANCH_NAME}
 SECURITY_GROUP_NAME=${SECURITY_GROUP_NAME:-$DEFAULT_SECURITY_GROUP_NAME}
-LOCAL_MODE=${LOCAL_MODE:-$DEFAULT_LOCAL_MODE}
+
+LOCAL_MODE=${LOCAL_MODE_ENV:-$DEFAULT_LOCAL_MODE}
 
 if [[ "$LOCAL_MODE" == "true" ]]; then
     export ENDPOINT_URL=http://localhost:$LOCALSTACK_PORT
