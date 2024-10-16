@@ -32,14 +32,14 @@ paths:
       tags:
         - HealthCheck
       responses:
-        '200':
-          description: 'HealthCheck resource'
+        '204':
+          description: 'Health check passed with no content to return.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthCheck'
-        '404':
-          description: 'Resource not found'
+        '500':
+          description: 'Health check failed.'
       summary: 'Retrieves a HealthCheck resource.'
       description: 'Retrieves a HealthCheck resource.'
       parameters: []
