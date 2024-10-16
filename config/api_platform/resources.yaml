@@ -9,7 +9,7 @@ resources:
       ApiPlatform\Metadata\Get:
         uriTemplate: '/health'
         controller: 'App\Internal\HealthCheck\Application\Controller\HealthCheckController'
-        openapiContext:
+        openapi:
           responses:
             '204':
               description: 'Health check passed with no content to return.'
