@@ -5,6 +5,9 @@ api_platform:
 
     use_symfony_listeners: false
 
+    openapi:
+        overrideResponses: false
+
     defaults:
         extra_properties:
             rfc_7807_compliant_errors: true
