@@ -35,7 +35,7 @@ services:
     ports:
       - "${LOCALSTACK_PORT}:4566"
     environment:
-      - SERVICES=sqs
+      - SERVICES=sqs,ec2,s3,iam,sts
       - DEBUG=1
     volumes:
       - localstack_data:/var/lib/localstack
