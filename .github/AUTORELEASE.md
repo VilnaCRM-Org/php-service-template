@@ -41,7 +41,7 @@ Speed: Automation speeds up the process of releasing and deploying software, whi
 
 ##### Installing the App
 
-Follow GitHub's guide on installing your apps to repositories you own.
+Follow [GitHub's guide](https://docs.github.com/en/apps/using-github-apps/installing-your-own-github-app) on installing your apps to repositories you own.
 
 ##### Generating Private Key
 
