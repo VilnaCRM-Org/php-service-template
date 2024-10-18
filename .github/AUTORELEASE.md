@@ -22,33 +22,48 @@ Speed: Automation speeds up the process of releasing and deploying software, whi
 
 ## Setting Up an Auto-Release Workflow
 
-### Step-by-Step Guide
-
 #### 1) The GitHub App configuration
 
-Let's start by creating and configuring a GitHub App. Go to Settings > Developer Settings > GitHub Apps (Developer Settings is at the bottom of the Settings page). Click on New GitHub App.
+##### Creating the GitHub App
 
-Once you are creating a new GitHub app, make sure to configure the following:
+1. Go to Settings > Developer Settings > GitHub Apps (Developer Settings is at the bottom of the Settings page).
+2. Click on New GitHub App.
+3. Configure the following:
+    - Complete the necessary details for the application.
+    - Uncheck the active webhook.
+    - Set the following Repository Permissions:
+        - Administration: Read and Write
+        - Contents: Read and Write
+        - Issues: Read and Write
+        - Metadata: Read Only
+        - Pull Requests: Read and Write
+    - Check "Install Only on this account"
 
-    Complete the necessary details for the application.
-    Uncheck the active webhook.
-    From the Repository Permissions, set the following:
-        Administration to Read and Write.
-        Contents to Read and Write.
-        Issues to Read and Write.
-        Metadata to Read Only.
-        Pull Requests to Read and Write.
-    Check Install Only on this account.
+##### Installing the App
 
-Once you have created the app, you need to install it on the repository you want to use it. Follow GitHub's guide on installing your apps to repositories you own.
-One more thing you need to do from the app's settings. Go to the app's settings and generate a new private key. Copy that private key to a safe place and then copy the app ID. You will need both values as repository secrets.
-You can easily find ID here(Settings > Application > configure your github APP > app settings > you can see app id)
+Follow GitHub's guide on installing your apps to repositories you own.
+
+##### Generating Private Key
+
+1. Go to the app's settings and generate a new private key.
+2. Copy the private key to a safe place.
+3. Copy the app ID (found in Settings > Application > configure your GitHub App > app settings).
+
+You will need both the private key and app ID as repository secrets.
 
 #### 2) The GitHub repository configuration
 
-Go to Settings > Secrets and Variables > Actions to create new secrets. Add one secret for the private key(VILNACRM_APP_PRIVATE_KEY) and another for the app ID(VILNACRM_APP_ID).
+1. Go to Settings > Secrets and Variables > Actions.
+2. Create two new secrets:
+- `VILNACRM_APP_PRIVATE_KEY`: Add the private key you generated earlier.
+- `VILNACRM_APP_ID`: Add the app ID you copied.
 
 #### 3) Allow force push
 
-To configure the repository branch protection rules, go to Settings > Branches.
-Check the option to Allow force pushes and specify that the only allowed actor is the GitHub app you already installed.
+To ensure the GitHub App can perform necessary actions:
+
+1. Go to Settings > Branches.
+2. In the branch protection rules, check the option to "Allow force pushes".
+3. Specify that the only allowed actor is the GitHub app you installed.
+
+Note: Force pushing allows overwriting the Git history. It's restricted to the GitHub App to maintain security while allowing necessary operations for the auto-release workflow.
