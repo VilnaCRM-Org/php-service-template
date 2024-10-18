@@ -217,9 +217,11 @@ Alternatively, you can configure a GitHub App to handle workflow permissions. Th
 For a detailed guide on how to set up a GitHub App and configure the necessary permissions, refer to the **[Autorelease action documentation](https://github.com/VilnaCRM-Org/php-service-template/blob/main/.github/AUTORELEASE.md)**.
 
 ##### Overview
+
 By configuring a GitHub App, you can automate repository synchronization while ensuring secure handling of repository permissions without manual token management.
 
 ##### Steps Overview
+
 1. **GitHub App Configuration**:
    -  Create and configure the GitHub App with the required permissions (`Administration`, `Contents`, `Issues`, `Metadata`, and `Pull Requests`).
 
