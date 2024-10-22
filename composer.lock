@@ -273,7 +273,7 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.324.3",
+            "version": "3.324.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
