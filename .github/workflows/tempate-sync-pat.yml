@@ -1,0 +1,33 @@
+name: Template Sync with PAT
+
+on:
+  schedule:
+    - cron: "0 9 * * MON"
+  workflow_dispatch:
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate token to read from source repo # see: https://github.com/tibdex/github-app-token
+        id: generate_token
+        # https://github.com/tibdex/github-app-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Checkout
+        # https://github.com/actions/checkout#usage
+        uses: actions/checkout@v4
+        with:
+          # submodules: true
+          token: ${{ steps.generate_token.outputs.token }}
+
+      - name: actions-template-sync
+        uses: AndreasAugustin/actions-template-sync@v2
+        with:
+          github_token: ${{ steps.generate_token.outputs.token }}
+          source_repo_path: VilnaCRM-Org/php-service-template
+          upstream_branch: main
+          pr_labels: template_sync
