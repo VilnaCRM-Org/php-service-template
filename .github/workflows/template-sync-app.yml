@@ -1,0 +1,30 @@
+name: Template Sync with App
+
+on:
+  schedule:
+    - cron: "0 9 * * MON"
+  workflow_dispatch:
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate token to read from source repo
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.VILNACRM_APP_ID }}
+          private_key: ${{ secrets.VILNACRM_APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+
+      - name: actions-template-sync
+        uses: AndreasAugustin/actions-template-sync@v2
+        with:
+          github_token: ${{ steps.generate_token.outputs.token }}
+          source_repo_path: VilnaCRM-Org/php-service-template
+          upstream_branch: main
+          pr_labels: template_sync
