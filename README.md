@@ -97,7 +97,7 @@ If the documentation doesn't cover what you need, search the [many questions on 
 ## Tests
 [Tests](https://github.com/VilnaCRM-Org/php-service-template/tree/main/tests/) use PHPUnit 9 and [Behat](https://github.com/Behat/Behat).
 
-[![Test status](https://github.com/VilnaCRM-Org/php-service-template/workflows/Tests/badge.svg)](https://github.com/VilnaCRM-Org/php-service-template/actions)
+[Test status](https://github.com/VilnaCRM-Org/php-service-template/actions)
 
 If this isn't passing, is there something you can do to help?
 
