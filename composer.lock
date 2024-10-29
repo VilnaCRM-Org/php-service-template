@@ -3907,7 +3907,7 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v7.1.5",
+            "version": "v7.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
@@ -4748,7 +4748,7 @@
         },
         {
             "name": "symfony/messenger",
-            "version": "v7.1.5",
+            "version": "v7.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/messenger.git",
@@ -6467,7 +6467,7 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v7.1.5",
+            "version": "v7.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
@@ -13786,7 +13786,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v7.1.1",
+            "version": "v7.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
