@@ -26,8 +26,8 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v5
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
-          output-file: "CHANGELOG.md"
-          version-file: "composer.json"
+          output-file: 'CHANGELOG.md'
+          version-file: 'composer.json'
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}

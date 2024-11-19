@@ -1,12 +1,12 @@
 framework:
-    messenger:
-        transports:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+  messenger:
+    transports:
+      dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
-        routing:
+    routing:
 
 when@test:
-    framework:
-        messenger:
-            transports:
-                - in-memory
+  framework:
+    messenger:
+      transports:
+        - in-memory

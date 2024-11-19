@@ -2,7 +2,7 @@ name: Unit and Integration testing
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   tests:

@@ -26,27 +26,33 @@
 - Much more!
 
 ## Why you might need it
-Many PHP developers need to create new projects from scratch and spend a lot of time. 
+
+Many PHP developers need to create new projects from scratch and spend a lot of time.
 
 We decided to simplify this exhausting process and create a public template for modern PHP applications. This template is used for all our microservices in VilnaCRM.
 
 ## License
+
 This software is distributed under the [Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed) license. Please read [LICENSE](https://github.com/VilnaCRM-Org/php-service-template/blob/main/LICENSE) for information on the software availability and distribution.
 
 ### Minimal installation
+
 You can clone this repository locally or use Github functionality "Use this template"
 
 Install the latest [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/)
 
 Use `make` command to set up project and automatically install all needed dependencies
+
 > make start
 
 Go to browser and open the link below
+
 > https://localhost/api/docs
 
 That's it. You should now be ready to use PHP service template!
 
 ## Using
+
 You can use `make` command to easily control and work with project locally.
 
 Execute `make` or `make help` to see the full list of project commands.
@@ -88,6 +94,7 @@ up                           Start the docker hub (PHP, caddy)
 ```
 
 ## Documentation
+
 Start reading at the [GitHub wiki](https://github.com/VilnaCRM-Org/php-service-template/wiki). If you're having trouble, head for [the troubleshooting guide](https://github.com/VilnaCRM-Org/php-service-template/wiki/Troubleshooting) as it's frequently updated.
 
 You can generate complete API-level documentation by running `phpdoc` in the top-level folder, and documentation will appear in the `docs` folder, though you'll need to have [PHPDocumentor](http://www.phpdoc.org) installed.
@@ -95,6 +102,7 @@ You can generate complete API-level documentation by running `phpdoc` in the top
 If the documentation doesn't cover what you need, search the [many questions on Stack Overflow](http://stackoverflow.com/questions/tagged/vilnacrm), and before you ask a question, [read the troubleshooting guide](https://github.com/VilnaCRM-Org/php-service-template/wiki/Troubleshooting).
 
 ## Tests
+
 [Tests](https://github.com/VilnaCRM-Org/php-service-template/tree/main/tests/) use PHPUnit 9 and [Behat](https://github.com/Behat/Behat).
 
 [Test status](https://github.com/VilnaCRM-Org/php-service-template/actions)
@@ -108,13 +116,16 @@ This template supports running load tests on AWS using k6, a modern load testing
 ### Steps for Running AWS Load Tests
 
 #### 1. **Configure AWS CLI**:
-   Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials.
-   Run the following command and provide your AWS Access Key and Secret Access Key. Ensure that your AWS credentials and region are properly set to avoid any permission or region-based issues.
+
+Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials.
+Run the following command and provide your AWS Access Key and Secret Access Key. Ensure that your AWS credentials and region are properly set to avoid any permission or region-based issues.
 
 #### 2. **Run Load Tests**:
-   The `make aws-load-tests` runs the script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
+
+The `make aws-load-tests` runs the script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
 
 #### 3. **Configure CLI Options**:
+
 To configure the AWS load testing, pass options through the CLI command to define the AWS environment settings, as needed for your project:
 
 - `-r REGION`: Specifies the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
@@ -126,13 +137,16 @@ To configure the AWS load testing, pass options through the CLI command to defin
 - `-s SECURITY_GROUP_NAME`: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
 
 #### 4. **Executing Load Tests**:
-   Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
+
+Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
 
 #### 5. **Saving Results to S3**:
-   The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
+
+The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
 
 #### 6. **Scaling and Flexibility**:
-   This approach allows you to scale the infrastructure to suit different performance testing needs, providing insights into how your service performs in a cloud-based, production-like environment.
+
+This approach allows you to scale the infrastructure to suit different performance testing needs, providing insights into how your service performs in a cloud-based, production-like environment.
 
 ### Cleanup AWS Infrastructure
 
@@ -162,11 +176,13 @@ Details on how to configure and use a PAT for repository synchronization can be 
 For projects that prefer GitHub App authentication, please refer to the [TEMPLATE_SYNC_APP.md](.github/TEMPLATE_SYNC_APP.md) file in the `.github` directory for setup instructions and examples.
 
 ## Security
+
 Please disclose any vulnerabilities found responsibly – report security issues to the maintainers privately.
 
 See [SECURITY](https://github.com/VilnaCRM-Org/php-service-template/tree/main/SECURITY.md) and [Security advisories on GitHub](https://github.com/VilnaCRM-Org/php-service-template/security).
 
 ## Contributing
+
 Please submit bug reports, suggestions, and pull requests to the [GitHub issue tracker](https://github.com/VilnaCRM-Org/php-service-template/issues).
 
 We're particularly interested in fixing edge cases, expanding test coverage, and updating translations.
@@ -174,9 +190,11 @@ We're particularly interested in fixing edge cases, expanding test coverage, and
 If you found a mistake in the docs, or want to add something, go ahead and amend the wiki – anyone can edit it.
 
 ## Sponsorship
+
 Development time and resources for this repository are provided by [VilnaCRM](https://vilnacrm.com/), the free and opensource CRM system.
 
 Donations are very welcome, whether in beer 🍺, T-shirts 👕, or cold, hard cash 💰. Sponsorship through GitHub is a simple and convenient way to say "thank you" to maintainers and contributors – just click the "Sponsor" button [on the project page](https://github.com/VilnaCRM-Org/php-service-template). If your company uses this template, consider taking part in the VilnaCRM's enterprise support program.
 
 ## Changelog
+
 See [changelog](CHANGELOG.md).

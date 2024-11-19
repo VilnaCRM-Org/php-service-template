@@ -2,7 +2,7 @@ name: code quality
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   phpinsights:

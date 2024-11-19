@@ -2,7 +2,7 @@ name: test coverage
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   codecov:

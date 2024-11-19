@@ -1,22 +1,22 @@
 api_platform:
-    title: 'PHP Service Template API'
-    description: 'This API provides endpoints to manage php service template data within a VilnaCRM.'
-    version: '1.0.0'
+  title: 'PHP Service Template API'
+  description: 'This API provides endpoints to manage php service template data within a VilnaCRM.'
+  version: '1.0.0'
 
-    use_symfony_listeners: false
+  use_symfony_listeners: false
 
-    openapi:
-        overrideResponses: false
+  openapi:
+    overrideResponses: false
 
-    defaults:
-        extra_properties:
-            rfc_7807_compliant_errors: true
+  defaults:
+    extra_properties:
+      rfc_7807_compliant_errors: true
 
-    formats:
-        json: ['application/json']
+  formats:
+    json: ['application/json']
 
-    error_formats:
-        jsonproblem: ['application/problem+json']
+  error_formats:
+    jsonproblem: ['application/problem+json']
 
-    resource_class_directories:
-        - '%kernel.project_dir%/src/Internal/HealthCheck/Domain/ValueObject'
+  resource_class_directories:
+    - '%kernel.project_dir%/src/Internal/HealthCheck/Domain/ValueObject'
