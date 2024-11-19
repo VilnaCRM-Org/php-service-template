@@ -32,3 +32,9 @@
 ###> qossmic/deptrac-shim ###
 /.deptrac.cache
 ###< qossmic/deptrac-shim ###
+
+###> super-linter/super-linter ###
+super-linter-output
+super-linter.log
+venv
+###< super-linter/super-linter ###

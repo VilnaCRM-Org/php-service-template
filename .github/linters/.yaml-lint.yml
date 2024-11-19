@@ -1,0 +1,34 @@
+extends: default
+
+rules:
+  document-start: disable
+
+  indentation:
+    spaces: 2
+    level: error # Enforce strict indentation
+
+  line-length:
+    max: 120
+    level: warning # Consider changing this to 100 for better readability
+
+  new-line-at-end-of-file:
+    level: warning
+
+  trailing-spaces:
+    level: error # Enforce no trailing spaces
+
+  brackets:
+    level: error # Enforce proper bracket usage
+
+  commas:
+    level: error # Enforce proper comma usage
+
+  braces:
+    level: error # Enforce proper brace usage
+
+  empty-lines:
+    max: 1 # Allow at least one empty line for readability
+    level: warning
+
+  colons:
+    level: error # Enforce proper colon usage
