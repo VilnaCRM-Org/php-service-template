@@ -2,7 +2,7 @@ name: Architecture static analysis tool
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   deptrac:

@@ -2,7 +2,7 @@ name: Template Sync with App
 
 on:
   schedule:
-    - cron: "0 9 * * MON"
+    - cron: '0 9 * * MON'
   workflow_dispatch:
 jobs:
   repo-sync:
@@ -28,3 +28,4 @@ jobs:
           source_repo_path: VilnaCRM-Org/php-service-template
           upstream_branch: main
           pr_labels: template_sync
+          is_force_push_pr: true

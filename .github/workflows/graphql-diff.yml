@@ -2,7 +2,7 @@ name: GraphQL spec backward comparability
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   graphql-diff:
