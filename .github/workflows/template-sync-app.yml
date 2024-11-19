@@ -2,7 +2,7 @@ name: Template Sync with App
 
 on:
   schedule:
-    - cron: "0 9 * * MON"
+    - cron: '0 9 * * MON'
   workflow_dispatch:
 jobs:
   repo-sync:
