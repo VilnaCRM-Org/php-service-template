@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d2f3b86d0a85d2dee1f323b14333a92",
+    "content-hash": "aef73c1b6bd01e441f18a8c70ebb9de9",
     "packages": [
         {
             "name": "api-platform/core",
@@ -7451,16 +7451,16 @@
         },
         {
             "name": "captainhook/captainhook",
-            "version": "5.23.6",
+            "version": "5.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/captainhookphp/captainhook.git",
-                "reference": "6c9a60f5771581f3788f98d7b4aa9a61156cfebb"
+                "reference": "fd2c03c96b9f56441aa05fb781328eb1163a0343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/captainhookphp/captainhook/zipball/6c9a60f5771581f3788f98d7b4aa9a61156cfebb",
-                "reference": "6c9a60f5771581f3788f98d7b4aa9a61156cfebb",
+                "url": "https://api.github.com/repos/captainhookphp/captainhook/zipball/fd2c03c96b9f56441aa05fb781328eb1163a0343",
+                "reference": "fd2c03c96b9f56441aa05fb781328eb1163a0343",
                 "shasum": ""
             },
             "require": {
@@ -7523,7 +7523,7 @@
             ],
             "support": {
                 "issues": "https://github.com/captainhookphp/captainhook/issues",
-                "source": "https://github.com/captainhookphp/captainhook/tree/5.23.6"
+                "source": "https://github.com/captainhookphp/captainhook/tree/5.24.0"
             },
             "funding": [
                 {
@@ -7531,7 +7531,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-30T14:15:58+00:00"
+            "time": "2024-11-23T20:36:15+00:00"
         },
         {
             "name": "captainhook/plugin-composer",
@@ -14834,7 +14834,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -14846,7 +14846,7 @@
         "ext-simplexml": "*",
         "ext-xml": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.12"
     },
