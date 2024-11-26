@@ -11,8 +11,8 @@
             {
                 "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Regex",
                 "options": {
-                    "regex": "/^(feat|fix|refactor|build|chore|ci|doc|style|perf|test)\\(\\#\\d+\\):.*$/i",
-                    "error": "The commit message should be in the format: feat|fix|refactor|build|chore|ci|doc|style|perf|test(#1):"
+                    "regex": "/^(feat|fix|refactor|build|chore|ci|docs|style|perf|test)\\(\\#\\d+\\): .*/i",
+                    "error": "The commit message should be in the format: feat|fix|refactor|build|chore|ci|docs|style|perf|test(#1):"
                 }
             }
         ]

@@ -47,7 +47,9 @@ Scan through our [existing issues](https://github.com/VilnaCRM-Org/php-service-t
 
 ### Commit your update
 
-Commit the changes once you are happy with them. Don't forget to self-review to speed up the review process:zap:.
+Commit the changes once you are happy with them. Don't forget to self-review to speed up the review process :zap:
+
+**Note:** This project uses an auto-release workflow based on Conventional Commits. Please refer to the [Auto-Release Documentation](https://github.com/VilnaCRM-Org/php-service-template/blob/main/.github/AUTORELEASE.md#updating-versions) for guidance on writing commit messages that follow the required format.
 
 ### Pull Request
 
