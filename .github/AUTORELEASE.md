@@ -28,25 +28,25 @@ The auto-release process uses [Conventional Commits](https://www.conventionalcom
 
 1. **PATCH**: Incremented for bug fixes.
 
-    - Example: `fix(#3): resolve null pointer exception`
-    - Result: `1.0.0` → `1.0.1`
+   - Example: `fix(#3): resolve null pointer exception`
+   - Result: `1.0.0` → `1.0.1`
 
 2. **MINOR**: Incremented for new features without breaking existing functionality.
 
-    - Example: `feat(#3): add user profile page`
-    - Result: `1.0.1` → `1.1.0`
+   - Example: `feat(#3): add user profile page`
+   - Result: `1.0.1` → `1.1.0`
 
 3. **MAJOR**: Incremented for breaking changes or significant alterations to APIs.
 
-    - Example:
+   - Example:
 
-      ```
-      feat(#3): overhaul authentication system
- 
-      BREAKING CHANGE: authentication now requires OAuth2
-      ```
+     ```
+     feat(#3): overhaul authentication system
 
-    - Result: `1.1.0` → `2.0.0`
+     BREAKING CHANGE: authentication now requires OAuth2
+     ```
+
+   - Result: `1.1.0` → `2.0.0`
 
 ---
 
