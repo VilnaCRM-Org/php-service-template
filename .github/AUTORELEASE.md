@@ -20,6 +20,36 @@ Speed: Automation speeds up the process of releasing and deploying software, whi
 
 ---
 
+## Updating Versions
+
+The auto-release process uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) to determine semantic versioning updates automatically. The type of commit message defines whether the version will be updated as a **PATCH**, **MINOR**, or **MAJOR** release.
+
+### Version Update Rules
+
+1. **PATCH**: Incremented for bug fixes.
+
+    - Example: `fix(#3): resolve null pointer exception`
+    - Result: `1.0.0` → `1.0.1`
+
+2. **MINOR**: Incremented for new features without breaking existing functionality.
+
+    - Example: `feat(#3): add user profile page`
+    - Result: `1.0.1` → `1.1.0`
+
+3. **MAJOR**: Incremented for breaking changes or significant alterations to APIs.
+
+    - Example:
+
+      ```
+      feat(#3): overhaul authentication system
+ 
+      BREAKING CHANGE: authentication now requires OAuth2
+      ```
+
+    - Result: `1.1.0` → `2.0.0`
+
+---
+
 ## Setting Up an Auto-Release Workflow
 
 #### 1) The GitHub App configuration
