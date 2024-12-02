@@ -32,7 +32,7 @@
     "symfony/proxy-manager-bridge": "^6.4",
     "symfony/runtime": "7.1.*",
     "symfony/translation": "7.1.*",
-    "symfony/twig-bundle": "7.1.*",
+    "symfony/twig-bundle": "7.2.*",
     "symfony/uid": "7.1.*",
     "symfony/validator": "7.1.*",
     "symfony/yaml": "7.1.*",
