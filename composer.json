@@ -33,7 +33,7 @@
     "symfony/runtime": "7.1.*",
     "symfony/translation": "7.1.*",
     "symfony/twig-bundle": "7.1.*",
-    "symfony/uid": "7.1.*",
+    "symfony/uid": "7.2.*",
     "symfony/validator": "7.1.*",
     "symfony/yaml": "7.1.*",
     "webonyx/graphql-php": "^15.14"
