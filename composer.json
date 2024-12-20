@@ -25,7 +25,7 @@
     "symfony/asset": "7.2.*",
     "symfony/cache": "7.1.*",
     "symfony/console": "7.1.*",
-    "symfony/dotenv": "7.1.*",
+    "symfony/dotenv": "7.2.*",
     "symfony/flex": "^2.2",
     "symfony/framework-bundle": "7.1.*",
     "symfony/messenger": "7.1.*",
