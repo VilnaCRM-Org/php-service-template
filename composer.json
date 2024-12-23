@@ -118,7 +118,7 @@
     "symfony/browser-kit": "7.1.*",
     "symfony/css-selector": "7.2.*",
     "symfony/maker-bundle": "^1.47",
-    "symfony/phpunit-bridge": "7.1.*",
+    "symfony/phpunit-bridge": "7.2.*",
     "vimeo/psalm": "*",
     "weirdan/doctrine-psalm-plugin": "^2.5"
   },
