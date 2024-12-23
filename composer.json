@@ -27,7 +27,7 @@
     "symfony/console": "7.1.*",
     "symfony/dotenv": "7.2.*",
     "symfony/flex": "^2.2",
-    "symfony/framework-bundle": "7.1.*",
+    "symfony/framework-bundle": "7.2.*",
     "symfony/messenger": "7.1.*",
     "symfony/proxy-manager-bridge": "^6.4",
     "symfony/runtime": "7.2.*",
