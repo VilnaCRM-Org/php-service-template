@@ -31,7 +31,7 @@
     "symfony/messenger": "7.1.*",
     "symfony/proxy-manager-bridge": "^6.4",
     "symfony/runtime": "7.2.*",
-    "symfony/translation": "7.1.*",
+    "symfony/translation": "7.2.*",
     "symfony/twig-bundle": "7.2.*",
     "symfony/uid": "7.2.*",
     "symfony/validator": "7.1.*",
