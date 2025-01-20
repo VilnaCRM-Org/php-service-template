@@ -31,7 +31,7 @@
     "symfony/messenger": "7.1.*",
     "symfony/proxy-manager-bridge": "^6.4",
     "symfony/runtime": "7.2.*",
-    "symfony/translation": "7.1.*",
+    "symfony/translation": "7.2.*",
     "symfony/twig-bundle": "7.2.*",
     "symfony/uid": "7.2.*",
     "symfony/validator": "7.1.*",
@@ -118,7 +118,7 @@
     "symfony/browser-kit": "7.1.*",
     "symfony/css-selector": "7.2.*",
     "symfony/maker-bundle": "^1.47",
-    "symfony/phpunit-bridge": "7.1.*",
+    "symfony/phpunit-bridge": "7.2.*",
     "vimeo/psalm": "*",
     "weirdan/doctrine-psalm-plugin": "^2.5"
   },
