@@ -15,7 +15,7 @@ services:
       - php_socket:/var/run/php
       - ./infrastructure/docker/php/conf.d/app.prod.ini:/usr/local/etc/php/conf.d/app.prod.ini:ro
     healthcheck:
-      test: ["CMD-SHELL", "php-fpm -t || exit 1"]
+      test: ['CMD-SHELL', 'php-fpm -t || exit 1']
       interval: 10s
       timeout: 3s
       retries: 3
@@ -66,13 +66,13 @@ services:
     healthcheck:
       interval: 10s
       retries: 10
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}']
 
   localstack:
     image: localstack/localstack:3.4.0
     container_name: localstack
     ports:
-      - "${LOCALSTACK_PORT}:4566"
+      - '${LOCALSTACK_PORT}:4566'
     environment:
       - SERVICES=sqs
       - DEBUG=0

@@ -10,14 +10,15 @@ services:
       #  from the bind-mount for better performance by enabling the next line:
       #- /srv/app/vendor
     environment:
-      # See https://xdebug.org/docs/all_settings#mode 
-      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+      # See https://xdebug.org/docs/all_settings#mode
+      XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
 
   caddy:
-    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile", "--watch"]
+    command:
+      ['caddy', 'run', '--config', '/etc/caddy/Caddyfile', '--adapter', 'caddyfile', '--watch']
     volumes:
       - ./public:/srv/app/public:ro
       - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
@@ -25,7 +26,7 @@ services:
   structurizr:
     image: structurizr/lite:2024.07.02
     ports:
-      - "${STRUCTURIZR_PORT}:8080"
+      - '${STRUCTURIZR_PORT}:8080'
     volumes:
       - ./:/usr/local/structurizr
 
@@ -33,7 +34,7 @@ services:
     image: localstack/localstack:3.4.0
     container_name: localstack
     ports:
-      - "${LOCALSTACK_PORT}:4566"
+      - '${LOCALSTACK_PORT}:4566'
     environment:
       - SERVICES=sqs,ec2,s3,iam,sts
       - DEBUG=1

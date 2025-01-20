@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared\Application\Transformer;
+namespace App\Tests\Unit\Shared\Infrastructure\Transformer;
 
 use App\Shared\Domain\Factory\UuidFactoryInterface;
 use App\Shared\Domain\ValueObject\Uuid;

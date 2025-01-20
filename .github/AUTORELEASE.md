@@ -20,6 +20,36 @@ Speed: Automation speeds up the process of releasing and deploying software, whi
 
 ---
 
+## Updating Versions
+
+The auto-release process uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) to determine semantic versioning updates automatically. The type of commit message defines whether the version will be updated as a **PATCH**, **MINOR**, or **MAJOR** release.
+
+### Version Update Rules
+
+1. **PATCH**: Incremented for bug fixes.
+
+   - Example: `fix(#3): resolve null pointer exception`
+   - Result: `1.0.0` → `1.0.1`
+
+2. **MINOR**: Incremented for new features without breaking existing functionality.
+
+   - Example: `feat(#3): add user profile page`
+   - Result: `1.0.1` → `1.1.0`
+
+3. **MAJOR**: Incremented for breaking changes or significant alterations to APIs.
+
+   - Example:
+
+     ```
+     feat(#3): overhaul authentication system
+
+     BREAKING CHANGE: authentication now requires OAuth2
+     ```
+
+   - Result: `1.1.0` → `2.0.0`
+
+---
+
 ## Setting Up an Auto-Release Workflow
 
 #### 1) The GitHub App configuration
@@ -29,15 +59,15 @@ Speed: Automation speeds up the process of releasing and deploying software, whi
 1. Go to Settings > Developer Settings > GitHub Apps (Developer Settings is at the bottom of the Settings page).
 2. Click on New GitHub App.
 3. Configure the following:
-    - Complete the necessary details for the application.
-    - Uncheck the active webhook.
-    - Set the following Repository Permissions:
-        - Administration: Read and Write
-        - Contents: Read and Write
-        - Issues: Read and Write
-        - Metadata: Read Only
-        - Pull Requests: Read and Write
-    - Check "Install Only on this account"
+   - Complete the necessary details for the application.
+   - Uncheck the active webhook.
+   - Set the following Repository Permissions:
+     - Administration: Read and Write
+     - Contents: Read and Write
+     - Issues: Read and Write
+     - Metadata: Read Only
+     - Pull Requests: Read and Write
+   - Check "Install Only on this account"
 
 ##### Installing the App
 
@@ -55,6 +85,7 @@ You will need both the private key and app ID as repository secrets.
 
 1. Go to Settings > Secrets and Variables > Actions.
 2. Create two new secrets:
+
 - `VILNACRM_APP_PRIVATE_KEY`: Add the private key you generated earlier.
 - `VILNACRM_APP_ID`: Add the app ID you copied.
 
