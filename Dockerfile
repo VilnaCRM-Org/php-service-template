@@ -13,7 +13,7 @@ RUN xcaddy build \
 	--with github.com/dunglas/vulcain/caddy
 
 # Prod image
-FROM php:8.3-fpm-alpine3.20 AS app_php
+FROM php:8.3.17-fpm-alpine3.20 AS app_php
 
 # Allow to use development versions of Symfony
 ARG STABILITY="stable"
