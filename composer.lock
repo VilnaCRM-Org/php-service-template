@@ -11534,16 +11534,16 @@
         },
         {
             "name": "ramsey/conventional-commits",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/conventional-commits.git",
-                "reference": "b995ee3e1592757c01551b30f6e90176d7f81ec2"
+                "reference": "3eb46b9046d91f5b35462ff770a9d0326601783d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/conventional-commits/zipball/b995ee3e1592757c01551b30f6e90176d7f81ec2",
-                "reference": "b995ee3e1592757c01551b30f6e90176d7f81ec2",
+                "url": "https://api.github.com/repos/ramsey/conventional-commits/zipball/3eb46b9046d91f5b35462ff770a9d0326601783d",
+                "reference": "3eb46b9046d91f5b35462ff770a9d0326601783d",
                 "shasum": ""
             },
             "require": {
@@ -11569,7 +11569,7 @@
                 "phpstan/phpstan-mockery": "^1.1",
                 "phpstan/phpstan-phpunit": "^1.3",
                 "phpunit/phpunit": "^10.1",
-                "ramsey/coding-standard": "^2.2",
+                "ramsey/coding-standard": "^2.3",
                 "ramsey/composer-repl": "^1.4",
                 "roave/security-advisories": "dev-latest",
                 "sebastianfeldmann/cli": "^3.4",
@@ -11625,7 +11625,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/conventional-commits/issues",
-                "source": "https://github.com/ramsey/conventional-commits/tree/1.5.1"
+                "source": "https://github.com/ramsey/conventional-commits/tree/1.6.0"
             },
             "funding": [
                 {
@@ -11633,7 +11633,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-17T04:53:18+00:00"
+            "time": "2025-03-01T19:18:27+00:00"
         },
         {
             "name": "react/cache",
@@ -14823,7 +14823,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -14835,9 +14835,9 @@
         "ext-simplexml": "*",
         "ext-xml": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.12"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
