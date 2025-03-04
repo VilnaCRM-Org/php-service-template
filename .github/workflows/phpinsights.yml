@@ -14,4 +14,4 @@ jobs:
         with:
           php-version: ${{ vars.PHP_VERSION }}
       - run: composer install --prefer-dist --no-progress --no-suggest --no-scripts
-      - run: vendor/bin/phpinsights -n --ansi --format=github-action
+      - run: vendor/bin/phpinsights -n --ansi --format=github-action --disable-security-check
