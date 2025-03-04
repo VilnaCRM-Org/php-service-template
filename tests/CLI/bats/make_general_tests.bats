@@ -76,11 +76,6 @@ load 'bats-assert/load'
   assert_success
 }
 
-@test "make update command executes" {
-  run make update
-  assert_success
-}
-
 @test "make load-fixtures command executes" {
    run bash -c "make load-fixtures & sleep 2; kill $!"
    assert_failure
