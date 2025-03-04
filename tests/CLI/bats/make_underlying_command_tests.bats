@@ -3,6 +3,11 @@
 load 'bats-support/load'
 load 'bats-assert/load'
 
+@test "make update command executes" {
+  run make update
+  assert_success
+}
+
 @test "make sh attempts to open a shell in the PHP container" {
   run bash -c "make sh & sleep 2; kill $!"
   assert_failure
