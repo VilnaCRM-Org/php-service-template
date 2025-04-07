@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v4.1.4",
+            "version": "v4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "c636d980a70de9fd274fafcbfe9ea3cfbb8d4e9a"
+                "reference": "747186020faf9506ea5a50e4b7ab09429a7d92ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/c636d980a70de9fd274fafcbfe9ea3cfbb8d4e9a",
-                "reference": "c636d980a70de9fd274fafcbfe9ea3cfbb8d4e9a",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/747186020faf9506ea5a50e4b7ab09429a7d92ee",
+                "reference": "747186020faf9506ea5a50e4b7ab09429a7d92ee",
                 "shasum": ""
             },
             "require": {
@@ -216,9 +216,9 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v4.1.4"
+                "source": "https://github.com/api-platform/core/tree/v4.1.6"
             },
-            "time": "2025-03-28T15:08:19+00:00"
+            "time": "2025-04-07T08:48:08+00:00"
         },
         {
             "name": "aws/aws-crt-php",
@@ -14814,7 +14814,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -14826,9 +14826,9 @@
         "ext-simplexml": "*",
         "ext-xml": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.12"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
