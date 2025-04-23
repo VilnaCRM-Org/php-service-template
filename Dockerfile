@@ -8,8 +8,10 @@ FROM caddy:2.10-builder-alpine AS app_caddy_builder
 
 # Install Go 1.24+ manually (replacing the old Go)
 ENV GO_VERSION=1.24.0
+ENV SHA_256=dea9ca38a0b852a74e81c26134671af7c0fbe65d81b0dc1c5bfe22cf7d4c8858
 RUN apk add --no-cache curl tar && \
     curl -OL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+    echo "${SHA_256}  go${GO_VERSION}.linux-amd64.tar.gz" | sha256sum -c - && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm go${GO_VERSION}.linux-amd64.tar.gz
