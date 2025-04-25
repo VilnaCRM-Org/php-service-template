@@ -127,8 +127,17 @@ RUN rm -f .env.local.php
 # Caddy image
 FROM caddy:2.10-alpine AS app_caddy
 
+# Adding new non-root user to pass CI warn/check for reaching caddy as root.
+RUN addgroup -S caddygroup && adduser -S caddyuser -G caddygroup
+
 WORKDIR /srv/app
 
 COPY --from=app_caddy_builder --link /usr/bin/caddy /usr/bin/caddy
 COPY --from=app_php --link /srv/app/public public/
 COPY --link infrastructure/docker/caddy/Caddyfile /etc/caddy/Caddyfile
+
+# permissions for non-root user
+RUN chown -R caddyuser:caddygroup /srv/app /etc/caddy
+
+# Sign in as user
+USER caddyuser
