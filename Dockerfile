@@ -6,14 +6,6 @@ FROM mlocati/php-extension-installer:2.2 AS php_extension_installer
 # Build Caddy with the Mercure and Vulcain modules
 FROM caddy:2.10-builder-alpine AS app_caddy_builder
 
-# Install Go 1.24+ manually (replacing the old Go)
-ENV GO_VERSION=1.24.0
-RUN apk add --no-cache curl tar && \
-    curl --proto "=https" -OL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm -rf /usr/local/go && \
-    tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm go${GO_VERSION}.linux-amd64.tar.gz
-
 ENV PATH="/usr/local/go/bin:$PATH"
 
 RUN xcaddy build \
