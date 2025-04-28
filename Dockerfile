@@ -123,7 +123,7 @@ RUN git config --global --add safe.directory /srv/app
 RUN rm -f .env.local.php
 
 # Caddy image
-FROM caddy:2.9-alpine AS app_caddy
+FROM caddy:2.10-alpine AS app_caddy
 
 WORKDIR /srv/app
 
