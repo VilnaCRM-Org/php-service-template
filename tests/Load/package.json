@@ -20,5 +20,8 @@
     "eslint-plugin-jest-dom": "^5.4.0",
     "eslint-plugin-storybook": "^0.8.0",
     "globals": "^15.0.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.27.1"
   }
 }
