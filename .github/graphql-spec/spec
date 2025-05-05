@@ -1,5 +1,6 @@
 type Query {
   node(id: ID!): Node
+  exampleApiResource(id: ID!): ExampleApiResource
   exampleApiResources(
     "Returns the first n elements from the list."
     first: Int
@@ -13,7 +14,7 @@ type Query {
     "Returns the elements in the list that come after the specified cursor."
     after: String
   ): ExampleApiResourceCursorConnection
-  exampleApiResource(id: ID!): ExampleApiResource
+  healthCheck(id: ID!): HealthCheck
   healthChecks(
     "Returns the first n elements from the list."
     first: Int
@@ -27,12 +28,15 @@ type Query {
     "Returns the elements in the list that come after the specified cursor."
     after: String
   ): HealthCheckCursorConnection
-  healthCheck(id: ID!): HealthCheck
 }
 
 "A node, according to the Relay specification."
 interface Node {
   "The id of this node."
+  id: ID!
+}
+
+type ExampleApiResource implements Node {
   id: ID!
 }
 
@@ -49,16 +53,16 @@ type ExampleApiResourceEdge {
   cursor: String!
 }
 
-type ExampleApiResource implements Node {
-  id: ID!
-}
-
 "Information about the current page."
 type ExampleApiResourcePageInfo {
   endCursor: String
   startCursor: String
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
+}
+
+type HealthCheck implements Node {
+  id: ID!
 }
 
 "Cursor connection for HealthCheck."
@@ -72,10 +76,6 @@ type HealthCheckCursorConnection {
 type HealthCheckEdge {
   node: HealthCheck
   cursor: String!
-}
-
-type HealthCheck implements Node {
-  id: ID!
 }
 
 "Information about the current page."

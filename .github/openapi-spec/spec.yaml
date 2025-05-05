@@ -55,5 +55,9 @@ components:
   headers: {  }
   securitySchemes: {  }
 security: []
-tags: []
+tags:
+  -
+    name: ExampleApiResource
+  -
+    name: HealthCheck
 webhooks: {  }
