@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Rector
         run: |
-          vendor/bin/rector process
+          vendor/bin/rector process --dry-run --no-progress-bar --output-format=md
