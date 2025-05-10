@@ -31,9 +31,6 @@ return RectorConfig::configure()
         RemoveGetClassGetParentClassNoArgsRector::class,
         StringFormTypeToClassRector::class,
     ])
-    ->withSymfonyContainerXml(
-        __DIR__ . '/var/cache/dev/App_Shared_KernelDevDebugContainer.xml'
-    )
     ->withPhpSets()
     ->withPreparedSets(
         deadCode: true,
