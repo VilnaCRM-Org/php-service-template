@@ -1,0 +1,30 @@
+name: Rector Code Refactoring
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  rector:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+
+      - name: Run Rector
+        run: |
+          vendor/bin/rector process
