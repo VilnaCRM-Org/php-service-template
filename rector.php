@@ -60,4 +60,5 @@ return RectorConfig::configure()
         true, // doctrine
         true, // phpunit
         true // symfony
-    );
+    )
+    ->withoutParallel();

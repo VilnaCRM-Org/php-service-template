@@ -33,5 +33,4 @@ jobs:
         run: make setup-test-db
 
       - name: Run Rector
-        run: |
-          vendor/bin/rector process --dry-run --no-parallel --output-format=md
+        run: vendor/bin/rector process --dry-run --output-format=md --config=rector.php --ansi
