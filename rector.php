@@ -13,7 +13,6 @@ use Rector\Symfony\Symfony30\Rector\MethodCall\StringFormTypeToClassRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
 
-
 return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
@@ -39,23 +38,26 @@ return RectorConfig::configure()
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
+        codingStyle: true,
         typeDeclarations: true,
         privatization: true,
+        naming: true,
         instanceOf: true,
         strictBooleans: true,
+        phpunitCodeQuality: true,
         doctrineCodeQuality: true,
         symfonyCodeQuality: true,
-        symfonyConfigs: true
+        symfonyConfigs: true,
     )
     ->withImportNames(
-        true,
-        true,
-        true,
-        true
+        true, //import names
+        true, // import doc block names
+        true, // import short classes
+        true // remove unused imports
     )
     ->withComposerBased(
-        true,
-        true,
-        true,
-        true
+        true, // twig
+        true, // doctrine
+        true, // phpunit
+        true // symfony
     );
