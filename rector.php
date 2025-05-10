@@ -3,16 +3,16 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\Php84\Rector\MethodCall\NewMethodCallWithoutParenthesesRector;
-use Rector\Php84\Rector\Param\ExplicitNullableParamTypeRector;
-use Rector\Php83\Rector\FuncCall\RemoveGetClassGetParentClassNoArgsRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\Php83\Rector\FuncCall\RemoveGetClassGetParentClassNoArgsRector;
+use Rector\Php84\Rector\MethodCall\NewMethodCallWithoutParenthesesRector;
+use Rector\Php84\Rector\Param\ExplicitNullableParamTypeRector;
+use Rector\Symfony\CodeQuality\Rector\ClassMethod\ResponseReturnTypeControllerActionRector;
+use Rector\Symfony\Symfony28\Rector\MethodCall\GetToConstructorInjectionRector;
 use Rector\Symfony\Symfony30\Rector\MethodCall\StringFormTypeToClassRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
-use Rector\Symfony\Symfony28\Rector\MethodCall\GetToConstructorInjectionRector;
-use Rector\Symfony\CodeQuality\Rector\ClassMethod\ResponseReturnTypeControllerActionRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -22,16 +22,16 @@ return RectorConfig::configure()
         __DIR__ . '/config',
     ])
     ->withRules([
-        NewMethodCallWithoutParenthesesRector::class,
-        ExplicitNullableParamTypeRector::class,
-        RemoveGetClassGetParentClassNoArgsRector::class,
-        AddTypeToConstRector::class,
         AddOverrideAttributeToOverriddenMethodsRector::class,
-        StringFormTypeToClassRector::class,
         AddParamTypeDeclarationRector::class,
         AddReturnTypeDeclarationRector::class,
+        AddTypeToConstRector::class,
+        ExplicitNullableParamTypeRector::class,
         GetToConstructorInjectionRector::class,
+        NewMethodCallWithoutParenthesesRector::class,
+        RemoveGetClassGetParentClassNoArgsRector::class,
         ResponseReturnTypeControllerActionRector::class,
+        StringFormTypeToClassRector::class,
     ])
     ->withSymfonyContainerXml(
         __DIR__ . '/var/cache/dev/App_Shared_KernelDevDebugContainer.xml'
@@ -48,5 +48,15 @@ return RectorConfig::configure()
         symfonyCodeQuality: true,
         symfonyConfigs: true
     )
-    ->withImportNames(true, true, true, true)
-    ->withComposerBased(true, true, true, true);
+    ->withImportNames(
+        true,
+        true,
+        true,
+        true
+    )
+    ->withComposerBased(
+        true,
+        true,
+        true,
+        true
+    );
