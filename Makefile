@@ -109,9 +109,6 @@ integration-tests: ## Run integration tests
 tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
 
-behat: ## Run end-to-end tests
-	$(EXEC_ENV) $(BEHAT)
-
 setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) c:c
 	$(SYMFONY_TEST_ENV) doctrine:database:drop --force --if-exists

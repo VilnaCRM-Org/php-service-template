@@ -31,5 +31,6 @@ jobs:
           vendor/bin/rector process \
             --dry-run \
             --ansi \
-            --no-progress \
+            --no-progress-bar \
+            --no-diffs \
             --config=rector.php

@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php80\Rector\ClassMethod\AddParamBasedOnParentClassMethodRector;
+use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Php83\Rector\FuncCall\RemoveGetClassGetParentClassNoArgsRector;
@@ -12,6 +15,8 @@ use Rector\Symfony\Symfony28\Rector\MethodCall\GetToConstructorInjectionRector;
 use Rector\Symfony\Symfony30\Rector\MethodCall\StringFormTypeToClassRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
+use Rector\TypeDeclaration\Rector\FunctionLike\AddClosureParamTypeFromIterableMethodCallRector;
+use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -30,6 +35,11 @@ return RectorConfig::configure()
         NewMethodCallWithoutParenthesesRector::class,
         RemoveGetClassGetParentClassNoArgsRector::class,
         StringFormTypeToClassRector::class,
+        AddParamBasedOnParentClassMethodRector::class,
+        AddClosureParamTypeFromIterableMethodCallRector::class,
+        NewInInitializerRector::class,
+        ReadOnlyPropertyRector::class,
+        TypedPropertyFromAssignsRector::class,
     ])
     ->withPhpSets()
     ->withPreparedSets(
