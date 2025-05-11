@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\Php80\Rector\ClassMethod\AddParamBasedOnParentClassMethodRector;
+use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
@@ -35,10 +35,8 @@ return RectorConfig::configure()
         NewMethodCallWithoutParenthesesRector::class,
         RemoveGetClassGetParentClassNoArgsRector::class,
         StringFormTypeToClassRector::class,
-        AddParamBasedOnParentClassMethodRector::class,
         AddClosureParamTypeFromIterableMethodCallRector::class,
         NewInInitializerRector::class,
-        ReadOnlyPropertyRector::class,
         TypedPropertyFromAssignsRector::class,
     ])
     ->withPhpSets()
@@ -68,4 +66,8 @@ return RectorConfig::configure()
         true, // phpunit
         true // symfony
     )
+    ->withSkip([
+        ReadOnlyPropertyRector::class,
+        RenamePropertyToMatchTypeRector::class,
+    ])
     ->withoutParallel();
