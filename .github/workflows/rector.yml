@@ -24,13 +24,12 @@ jobs:
           php-version: ${{ vars.PHP_VERSION }}
           
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install --no-interaction --no-progress --prefer-dist
 
-      - name: Start application
-        run: make start
-
-      - name: Setup test db
-        run: make setup-test-db
-
-      - name: Run Rector
-        run: vendor/bin/rector process --dry-run --output-format=json --config=rector.php --ansi
+      - name: Run Rector (Dry Run with Exit on Diff)
+        run: |
+          vendor/bin/rector process \
+            --dry-run \
+            --ansi \
+            --no-progress \
+            --config=rector.php
