@@ -98,13 +98,13 @@ behat: ## A php framework for autotesting business expectations
 	$(EXEC_ENV) $(BEHAT)
 
 rector-apply: ## apply rector
-	$(EXEC_ENV) ./vendor/bin/rector process --ansi --config=rector.php
+	$(EXEC_ENV) RECTOR_MODE=dev ./vendor/bin/rector process --ansi --config=rector.php
 
 rector-dry-run: ## show diffs
-	$(EXEC_ENV) ./vendor/bin/rector process --dry-run --ansi --config=rector.php
+	$(EXEC_ENV) RECTOR_MODE=dev ./vendor/bin/rector process --dry-run --ansi --config=rector.php
 
 rector-ci: ## launch rector for CI check (no container required)
-	$(EXEC_ENV) ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
+	$(EXEC_ENV) RECTOR_MODE=ci ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
 
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
