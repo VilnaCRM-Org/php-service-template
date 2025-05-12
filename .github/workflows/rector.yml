@@ -25,6 +25,6 @@ jobs:
 
       - name: Start Application
         run: make start
-        
+
       - name: Run Rector (Dry Run with Exit on Diff)
-        run: make rector-ci
+        run: CI=1 make rector-ci

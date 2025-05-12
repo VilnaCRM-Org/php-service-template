@@ -67,7 +67,9 @@ return RectorConfig::configure()
         true // symfony
     )
     ->withSkip([
+        // Skip ReadOnlyPropertyRector to maintain backward compatibility
         ReadOnlyPropertyRector::class,
+        // Skip RenamePropertyToMatchTypeRector to prevent breaking existing code references
         RenamePropertyToMatchTypeRector::class,
     ])
-    ->withoutParallel();
+    ->withParallel();
