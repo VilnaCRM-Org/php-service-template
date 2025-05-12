@@ -7,7 +7,9 @@ use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
-return RectorConfig::configure()
+$isCi = getenv('RECTOR_MODE') === 'ci';
+
+$rectorConfig = RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
         __DIR__ . '/tests',
@@ -33,22 +35,31 @@ return RectorConfig::configure()
         symfonyConfigs: true,
     )
     ->withImportNames(
-        true, //import names
-        true, // import doc block names
-        true, // import short classes
-        true // remove unused imports
+        true,
+        true,
+        true,
+        true
     )
     ->withComposerBased(
-        true, // twig
-        true, // doctrine
-        true, // phpunit
-        true // symfony
+        true,
+        true,
+        true,
+        true
     )
     ->withSkip([
         ReadOnlyPropertyRector::class,
         RenamePropertyToMatchTypeRector::class,
-    ])
-    ->withSymfonyContainerXml(
-        __DIR__ . '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml'
-    )
-    ->withoutParallel();
+    ]);
+
+if ($isCi) {
+    $rectorConfig
+        ->withoutParallel();
+} else {
+    $rectorConfig
+        ->withSymfonyContainerXml(
+            __DIR__ . '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml'
+        )
+        ->withParallel();
+}
+
+return $rectorConfig;
