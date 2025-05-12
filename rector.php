@@ -50,4 +50,5 @@ return RectorConfig::configure()
     ])
     ->withSymfonyContainerXml(
         __DIR__ . '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml'
-    );
+    )
+    ->withoutParallel();
