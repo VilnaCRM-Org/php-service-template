@@ -1,9 +1,6 @@
 name: Rector Code Refactoring
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -27,10 +24,4 @@ jobs:
         run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Run Rector (Dry Run with Exit on Diff)
-        run: |
-          vendor/bin/rector process \
-            --dry-run \
-            --ansi \
-            --no-progress-bar \
-            --no-diffs \
-            --config=rector.php
+        run: make rector-ci
