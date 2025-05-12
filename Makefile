@@ -97,13 +97,13 @@ deptrac-debug: ## Find files unassigned for Deptrac
 behat: ## A php framework for autotesting business expectations
 	$(EXEC_ENV) $(BEHAT)
 
-rector-apply: ## apply rector
+rector-apply: ## Apply Rector transformations to the codebase
 	$(EXEC_ENV) RECTOR_MODE=dev ./vendor/bin/rector process --ansi --config=rector.php
 
 rector-dry-run: ## Show Rector diffs without applying changes
 	$(EXEC_ENV) RECTOR_MODE=dev ./vendor/bin/rector process --dry-run --ansi --config=rector.php
 
-rector-ci: ## Run Rector in CI (dry-run, no diffs, host environment)
+rector-ci: ## Run Rector in CI mode (dry-run, no diffs)
 	$(EXEC_ENV) RECTOR_MODE=ci ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
 
 integration-tests: ## Run integration tests
