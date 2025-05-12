@@ -104,7 +104,8 @@ rector-dry-run: ## show diffs
 	$(EXEC_ENV) ./vendor/bin/rector process --dry-run --ansi --config=rector.php
 
 rector-ci: ## launch rector for CI check (no container required)
-	./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector-ci.php
+	$(EXEC_ENV) ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector-ci.php
+
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
 

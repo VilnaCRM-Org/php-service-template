@@ -15,8 +15,6 @@
     "ext-xml": "*",
     "api-platform/core": "^4.0",
     "aws/aws-sdk-php": "^3.317.1",
-    "behat/behat": "^3.6",
-    "behat/gherkin": "4.9.0",
     "cfpinto/graphql": "^2.0",
     "doctrine/doctrine-bundle": "^2.12",
     "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -101,6 +99,8 @@
     }
   },
   "require-dev": {
+    "behat/behat": "^3.6",
+    "behat/gherkin": "4.9.0",
     "captainhook/captainhook": "^5.22",
     "captainhook/plugin-composer": "^5.3",
     "friendsofphp/php-cs-fixer": "^3.14",
