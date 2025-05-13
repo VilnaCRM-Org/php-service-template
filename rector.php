@@ -57,7 +57,8 @@ if ($isCi) {
 } else {
     $rectorConfig
         ->withSymfonyContainerXml(
-            __DIR__ . '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml'
+            __DIR__ .
+            '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml'
         )
         ->withParallel();
 }
