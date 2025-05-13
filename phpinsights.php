@@ -39,7 +39,7 @@ return [
                 'phpinsights',
             ],
             'ignoreComments' => true,
-            'lineLimit' => 150,
+            'lineLimit' => 100,
         ],
         ForbiddenNormalClasses::class => [
             'exclude' => [
