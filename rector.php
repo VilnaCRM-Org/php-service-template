@@ -35,16 +35,13 @@ $rectorConfig = RectorConfig::configure()
         symfonyConfigs: true,
     )
     ->withImportNames(
-        true,
-        true,
-        true,
-        true
+        removeUnusedImports: true
     )
     ->withComposerBased(
-        true,
-        true,
-        true,
-        true
+        twig: true,
+        doctrine: true,
+        phpunit: true,
+        symfony: true
     )
     ->withSkip([
         ReadOnlyPropertyRector::class,
