@@ -73,6 +73,11 @@
                 "action": "CI=1 make behat",
                 "options": [],
                 "conditions": []
+            },
+            {
+                "action": "CI=1 make rector-ci",
+                "options": [],
+                "conditions": []
             }
         ]
     },
