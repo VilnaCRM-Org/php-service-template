@@ -27,6 +27,7 @@ PSALM         = ./vendor/bin/psalm
 PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
 DEPTRAC       = ./vendor/bin/deptrac
 INFECTION     = ./vendor/bin/infection
+RECTOR        = ./vendor/bin/rector
 
 # Misc
 .DEFAULT_GOAL = help
@@ -98,10 +99,10 @@ behat: ## A php framework for autotesting business expectations
 	$(EXEC_ENV) $(BEHAT)
 
 rector-apply: ## Apply Rector transformations to the codebase
-	$(EXEC_ENV) env RECTOR_MODE=dev ./vendor/bin/rector process --ansi --config=rector.php
+	$(EXEC_ENV) env RECTOR_MODE=dev $(RECTOR) process --ansi --config=rector.php
 
 rector-ci: ## Run Rector in CI mode (dry-run, no diffs)
-	$(EXEC_ENV) ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
+	$(EXEC_ENV) $(RECTOR) process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
 
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
