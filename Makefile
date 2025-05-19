@@ -101,7 +101,7 @@ rector-apply: ## Apply Rector transformations to the codebase
 	$(EXEC_ENV) env RECTOR_MODE=dev ./vendor/bin/rector process --ansi --config=rector.php
 
 rector-ci: ## Run Rector in CI mode (dry-run, no diffs)
-	$(EXEC_ENV) env RECTOR_MODE=ci ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
+	$(EXEC_ENV) ./vendor/bin/rector process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
 
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
