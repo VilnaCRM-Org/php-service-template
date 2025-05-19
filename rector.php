@@ -53,11 +53,18 @@ if ($isCi) {
     $rectorConfig
         ->withoutParallel();
 } else {
+    $containerXmlPath =
+        __DIR__ .
+        '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml';
+    if (!file_exists($containerXmlPath)) {
+        throw new \RuntimeException(sprintf(
+            'Symfony container XML not found at "%s". 
+            Please warm up the dev cache: bin/console cache:clear --env=dev.',
+            $containerXmlPath
+        ));
+    }
     $rectorConfig
-        ->withSymfonyContainerXml(
-            __DIR__ .
-            '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml'
-        )
+        ->withSymfonyContainerXml($containerXmlPath)
         ->withParallel();
 }
 
