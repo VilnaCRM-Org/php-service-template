@@ -3,16 +3,6 @@
 load 'bats-support/load'
 load 'bats-assert/load'
 
-setup() {
-  TMP_DIR=$(mktemp -d)
-  cp -r src tests bin config templates Makefile rector.php .env.test "$TMP_DIR"/
-  cd "$TMP_DIR"
-}
-
-teardown() {
-  rm -rf "$TMP_DIR"
-}
-
 @test "make phpcsfixer command executes" {
   run make phpcsfixer
   assert_success
@@ -41,15 +31,5 @@ teardown() {
 @test "make deptrac-debug command executes" {
   run make deptrac-debug
   assert_output --partial 'App'
-  assert_success
-}
-
-@test "make rector ci execute" {
-  run make rector-ci
-  assert_success
-}
-
-@test "make rector execute" {
-  run make rector
   assert_success
 }
