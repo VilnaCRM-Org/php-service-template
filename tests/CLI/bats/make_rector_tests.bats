@@ -9,6 +9,6 @@ load 'bats-assert/load'
 }
 
 @test "make rector execute" {
-  run make rector-apply
+  run make rector
   assert_success
 }
