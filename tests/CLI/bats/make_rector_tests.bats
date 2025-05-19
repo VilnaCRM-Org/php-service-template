@@ -10,7 +10,7 @@ load 'bats-assert/load'
 }
 
 @test "make rector-apply execute" {
-  run ./vendor/bin/rector process --dry-run
+  RECTOR_MODE=ci run ./vendor/bin/rector process --dry-run
   assert_success
   assert_output --partial 'files would have been changed (dry-run) by Rector'
 }
