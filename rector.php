@@ -15,6 +15,7 @@ $rectorConfig = RectorConfig::configure()
         __DIR__ . '/tests',
         __DIR__ . '/bin',
         __DIR__ . '/config',
+        __DIR__ . '/templates',
     ])
     ->withRules([
         TypedPropertyFromAssignsRector::class,
