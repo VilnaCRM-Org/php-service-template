@@ -55,7 +55,7 @@ if ($isCi) {
 } else {
     $containerXmlPath =
         __DIR__ .
-        '/var/cache/dev/Shared_Infrastructure_KernelDevDebugContainer.xml';
+        '/var/cache/dev/App_Shared_KernelDevDebugContainer.xml';
     if (!file_exists($containerXmlPath)) {
         throw new \RuntimeException(sprintf(
             'Symfony container XML not found at "%s". 
