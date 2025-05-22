@@ -87,8 +87,8 @@ phpunit                      The PHP unit testing framework
 psalm                        A static analysis tool for finding errors in PHP applications
 psalm-security               Psalm security analysis
 purge                        Purge cache and logs
-rector-apply                 Rector transformations
-rector-ci                    Wrong code check
+rector-apply                 Apply Rector transformations to the codebase
+rector-ci                    Run Rector in CI mode to detect refactoring issues
 sh                           Log to the docker container
 start                        Start docker
 stop                         Stop docker and the Symfony binary server
