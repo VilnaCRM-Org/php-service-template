@@ -27,6 +27,7 @@ PSALM         = ./vendor/bin/psalm
 PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
 DEPTRAC       = ./vendor/bin/deptrac
 INFECTION     = ./vendor/bin/infection
+RECTOR        = ./vendor/bin/rector
 
 # Misc
 .DEFAULT_GOAL = help
@@ -97,14 +98,17 @@ deptrac-debug: ## Find files unassigned for Deptrac
 behat: ## A php framework for autotesting business expectations
 	$(EXEC_ENV) $(BEHAT)
 
+rector-apply: ## Apply Rector transformations to the codebase
+	$(EXEC_ENV) env RECTOR_MODE=dev $(RECTOR) process --ansi --config=rector.php
+
+rector-ci: ## Run Rector in CI mode (dry-run, no diffs)
+	$(EXEC_ENV) $(RECTOR) process --dry-run --ansi --no-progress-bar --no-diffs --config=rector.php
+
 integration-tests: ## Run integration tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Integration
 
 tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
-
-e2e-tests: ## Run end-to-end tests
-	$(EXEC_ENV) $(BEHAT)
 
 setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) c:c
@@ -112,7 +116,7 @@ setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) doctrine:database:create
 	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
 
-all-tests: unit-tests integration-tests e2e-tests ## Run unit, integration and e2e tests
+all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e tests
 
 smoke-load-tests: build-k6-docker ## Run load tests with minimal load
 	tests/Load/run-smoke-load-tests.sh
