@@ -3,6 +3,8 @@ updates:
   - package-ecosystem: 'composer'
     directory: '/'
     schedule:
+<<<<<<< HEAD
+<<<<<<< HEAD
       interval: 'weekly'
     reviewers:
       - 'Kravalg'
@@ -29,3 +31,37 @@ updates:
       prefix: 'feat'
       prefix-development: 'chore'
       include: 'scope'
+<<<<<<< HEAD
+=======
+      interval: "weekly"
+=======
+      interval: 'weekly'
+>>>>>>> e58e3cc (hotfix: dependabot.yml)
+    reviewers:
+      - 'Kravalg'
+    groups:
+      all-deps:
+        patterns:
+<<<<<<< HEAD
+          - "*"
+>>>>>>> 1bb2a55 (hotfix: dependabot.yml)
+=======
+
+  - package-ecosystem: 'npm'
+    directory: '/tests/Load'
+    schedule:
+      interval: 'weekly'
+    reviewers:
+      - 'Kravalg'
+    groups:
+      all-deps:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: 'feat'
+      prefix-development: 'chore'
+      include: 'scope'
+>>>>>>> main
+=======
+          - '*'
+>>>>>>> e58e3cc (hotfix: dependabot.yml)
