@@ -6,6 +6,7 @@ use Rector\Config\RectorConfig;
 use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
+use Symfony\Component\DependencyInjection\Exception\ContainerNotFoundException;
 
 $isCi = getenv('RECTOR_MODE') === 'ci';
 
@@ -57,9 +58,8 @@ if ($isCi) {
         __DIR__ .
         '/var/cache/dev/App_Shared_KernelDevDebugContainer.xml';
     if (!file_exists($containerXmlPath)) {
-        throw new \RuntimeException(sprintf(
-            'Symfony container XML not found at "%s". 
-            Please warm up the dev cache: bin/console cache:clear --env=dev.',
+        throw new ContainerNotFoundException(sprintf(
+            'Symfony container XML not found at "%s". Please warm up the dev cache: bin/console cache:clear --env=dev.',
             $containerXmlPath
         ));
     }
