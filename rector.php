@@ -59,7 +59,8 @@ if ($isCi) {
         '/var/cache/dev/App_Shared_KernelDevDebugContainer.xml';
     if (!file_exists($containerXmlPath)) {
         throw new ContainerNotFoundException(sprintf(
-            'Symfony container XML not found at "%s". Please warm up the dev cache: bin/console cache:clear --env=dev.',
+            'Symfony container XML not found at "%s".
+            Please warm up the dev cache: bin/console cache:clear --env=dev.',
             $containerXmlPath
         ));
     }
