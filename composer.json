@@ -14,7 +14,7 @@
     "ext-simplexml": "*",
     "ext-xml": "*",
     "api-platform/core": "^4.0",
-    "aws/aws-sdk-php": "^3.317.1",
+    "aws/aws-sdk-php": "^3.343",
     "cfpinto/graphql": "^2.0",
     "doctrine/doctrine-bundle": "^2.12",
     "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -98,14 +98,14 @@
     }
   },
   "require-dev": {
-    "behat/behat": "^3.6",
+    "behat/behat": "^3.12",
     "behat/gherkin": "4.12.0",
     "captainhook/captainhook": "^5.22",
     "captainhook/plugin-composer": "^5.3",
     "dg/bypass-finals": "^1.5",
     "doctrine/doctrine-fixtures-bundle": "^4.0",
     "fakerphp/faker": "^1.23.0",
-    "friends-of-behat/symfony-extension": "^2.0",
+    "friends-of-behat/symfony-extension": "^2.4",
     "friendsofphp/php-cs-fixer": "^3.14",
     "infection/infection": "^0.27.10",
     "marcocesarato/php-conventional-changelog": "^1.16",
@@ -124,5 +124,5 @@
     "vimeo/psalm": "*",
     "weirdan/doctrine-psalm-plugin": "^2.5"
   },
-  "version": "1.6.1"
+  "version": "1.7.0"
 }
