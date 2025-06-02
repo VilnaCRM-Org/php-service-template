@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Tests\Behat;
 
 use Behat\Behat\Context\Context;
-use Symfony\Component\HttpFoundation\Request;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use TwentytwoLabs\BehatOpenApiExtension\Context\RestContext;
 
 final class DemoContext implements Context
 {
+    private RestContext $restContext;
+
     public function __construct(
         private readonly KernelInterface $kernel,
         private ?Response $response
@@ -18,11 +21,20 @@ final class DemoContext implements Context
     }
 
     /**
+     * @BeforeScenario
+     */
+    public function gatherContexts(BeforeScenarioScope $scope): void
+    {
+        $environment = $scope->getEnvironment();
+        $this->restContext = $environment->getContext(RestContext::class);
+    }
+
+    /**
      * @When a demo scenario sends a request to :path
      */
     public function aDemoScenarioSendsARequestTo(string $path): void
     {
-        $this->response = $this->kernel->handle(Request::create($path, 'GET'));
+        $this->restContext->iSendARequestTo('GET', $path);
     }
 
     /**
@@ -30,11 +42,19 @@ final class DemoContext implements Context
      */
     public function theResponseShouldBeReceived(): void
     {
-        if ($this->response === null) {
+        if (
+            $this->restContext
+                ->getSession()
+                ->getPage()
+                ->getContent() === null
+        ) {
             throw new \RuntimeException('No response received');
         }
 
-        if ($this->response->getStatusCode() !== Response::HTTP_OK) {
+        if (
+            $this->restContext->getSession()->getStatusCode()
+            !== Response::HTTP_OK
+        ) {
             throw new \RuntimeException('Response status code is not 200');
         }
     }

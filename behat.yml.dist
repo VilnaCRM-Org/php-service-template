@@ -2,12 +2,24 @@ default:
     suites:
         default:
             contexts:
-                - App\Tests\Behat\DemoContext
+              - App\Tests\Behat\DemoContext
+              - TwentytwoLabs\BehatOpenApiExtension\Context\DebugContext: ~
+              - TwentytwoLabs\BehatOpenApiExtension\Context\RestContext: ~
+              - TwentytwoLabs\BehatOpenApiExtension\Context\JsonContext: ~
+              - TwentytwoLabs\BehatOpenApiExtension\Context\OpenApiContext: ~
         health_check:
             contexts:
-                - App\Tests\Behat\HealthCheckContext\HealthCheckContext
+              - App\Tests\Behat\HealthCheckContext\HealthCheckContext
+              - TwentytwoLabs\BehatOpenApiExtension\Context\RestContext: ~
     extensions:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: 'tests/bootstrap.php'
             kernel:
                 class: App\Shared\Kernel
+        TwentytwoLabs\BehatOpenApiExtension:
+            schemaFile: "file:///srv/app/.github/openapi-spec/spec.yaml"
+        Behat\MinkExtension:
+            base_url: "http://caddy"
+            sessions:
+              default:
+                browserkit_http: ~

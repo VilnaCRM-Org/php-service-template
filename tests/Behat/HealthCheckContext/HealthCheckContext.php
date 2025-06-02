@@ -6,6 +6,7 @@ namespace App\Tests\Behat\HealthCheckContext;
 
 use Aws\Sqs\SqsClient;
 use Behat\Behat\Context\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -14,15 +15,15 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Cache\Exception\CacheException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use TwentytwoLabs\BehatOpenApiExtension\Context\RestContext;
 
 final class HealthCheckContext extends KernelTestCase implements Context
 {
     private KernelInterface $kernelInterface;
-    private Response $response;
+
+    private RestContext $restContext;
 
     public function __construct(
         KernelInterface $kernel
@@ -32,14 +33,20 @@ final class HealthCheckContext extends KernelTestCase implements Context
     }
 
     /**
+     * @BeforeScenario
+     */
+    public function gatherContexts(BeforeScenarioScope $scope): void
+    {
+        $environment = $scope->getEnvironment();
+        $this->restContext = $environment->getContext(RestContext::class);
+    }
+
+    /**
      * @When :method request is sent to :path
      */
     public function sendRequestTo(string $method, string $path): void
     {
-        $this->response = $this->kernelInterface->handle(Request::create(
-            $path,
-            $method,
-        ));
+        $this->restContext->iSendARequestTo($method, $path);
     }
 
     /**
@@ -47,7 +54,10 @@ final class HealthCheckContext extends KernelTestCase implements Context
      */
     public function theResponseStatusCodeShouldBe(string $statusCode): void
     {
-        Assert::assertEquals($statusCode, $this->response->getStatusCode());
+        Assert::assertEquals(
+            $statusCode,
+            $this->restContext->getSession()->getStatusCode()
+        );
     }
 
     /**
@@ -55,7 +65,8 @@ final class HealthCheckContext extends KernelTestCase implements Context
      */
     public function theResponseBodyShouldContain(string $text): void
     {
-        $responseContent = $this->response->getContent();
+        $responseContent = $this->restContext
+            ->getSession()->getPage()->getContent();
         Assert::assertStringContainsString(
             $text,
             $responseContent,

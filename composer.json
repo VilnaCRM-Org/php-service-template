@@ -100,6 +100,9 @@
   "require-dev": {
     "behat/behat": "^3.12",
     "behat/gherkin": "4.12.0",
+    "behat/mink": "^1.12",
+    "behat/mink-browserkit-driver": "^2.2",
+    "behat/mink-extension": "*",
     "captainhook/captainhook": "^5.22",
     "captainhook/plugin-composer": "^5.3",
     "dg/bypass-finals": "^1.5",
@@ -120,6 +123,7 @@
     "symfony/css-selector": "7.2.*",
     "symfony/maker-bundle": "^1.47",
     "symfony/phpunit-bridge": "7.2.*",
+    "twentytwo-labs/behat-open-api": "^1.0",
     "vimeo/psalm": "*",
     "weirdan/doctrine-psalm-plugin": "^2.5"
   },

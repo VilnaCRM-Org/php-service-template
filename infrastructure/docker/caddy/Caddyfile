@@ -1,9 +1,11 @@
 {
     # Debug
     {$CADDY_DEBUG}
+    # Disable HTTPS redirects
+    auto_https disable_redirects
 }
 
-{$SERVER_NAME}
+{$SERVER_NAME} :80 :443
 
 {$CADDY_EXTRA_CONFIG}
 
