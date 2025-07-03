@@ -123,6 +123,5 @@
     "symfony/phpunit-bridge": "7.2.*",
     "vimeo/psalm": "*",
     "weirdan/doctrine-psalm-plugin": "^2.5"
-  },
-  "version": "1.7.0"
+  }
 }
