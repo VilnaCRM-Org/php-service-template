@@ -25,5 +25,3 @@
 # [1.5.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.4.0...v1.5.0) (2024-11-19)
 
 ### Features
-
-- **#75:** move features from user-service ([#76](https://github.com/VilnaCRM-Org/php-service-template/issues/76)) ([39e871a](https://github.com/VilnaCRM-Org/php-service-template/commit/39e871a0d22fbde803319a3d3b97ee8d230e9744)), closes [#75](https://github.com/VilnaCRM-Org/php-service-template/issues/75) [#75](https://github.com/VilnaCRM-Org/php-service-template/issues/75) [#75](https://github.com/VilnaCRM-Org/php-service-template/issues/75) [#75](https://github.com/VilnaCRM-Org/php-service-template/issues/75) [#75](https://github.com/VilnaCRM-Org/php-service-template/issues/75)
