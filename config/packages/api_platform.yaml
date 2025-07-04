@@ -8,6 +8,11 @@ api_platform:
   openapi:
     overrideResponses: false
 
+  graphql:
+    enabled: true
+    graphiql:
+      enabled: false
+
   defaults:
     extra_properties:
       rfc_7807_compliant_errors: true
