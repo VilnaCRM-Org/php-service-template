@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}  # default; safe to omit
 
       - name: Import GPG key
-        if: github.event_name == 'push' && secrets.GPG_PRIVATE_KEY != ''
+        if: ${{ github.event_name == 'push' && secrets.GPG_PRIVATE_KEY != '' }}
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -45,7 +45,9 @@ jobs:
       - name: Cache Composer packages
         uses: actions/cache@v4
         with:
-          path: ~/.composer/cache/files
+          path: |
+              ~/.composer/cache/files
+              vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: composer-${{ runner.os }}-
 
@@ -59,7 +61,7 @@ jobs:
         run: CI=1 make rector-apply
 
       - name: Commit changes
-        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        if: ${{ github.actor != 'github-actions[bot]' }}
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             git add -u
