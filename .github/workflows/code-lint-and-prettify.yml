@@ -68,7 +68,7 @@ jobs:
         run: CI=1 make rector-apply
 
       - name: Commit changes
-        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        if: ${{ github.event_name == 'push' && github.actor != 'github-actions[bot]' }}
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             git add -u
