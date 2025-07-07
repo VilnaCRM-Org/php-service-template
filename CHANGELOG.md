@@ -5,7 +5,7 @@
 ### Features
 
 * **#135:** add rector php ([#135](https://github.com/VilnaCRM-Org/php-service-template/issues/135)) ([10c34b4](https://github.com/VilnaCRM-Org/php-service-template/commit/10c34b4be0c8cda8cf3c4eadf84c172bfa5abc21)), closes [#126](https://github.com/VilnaCRM-Org/php-service-template/issues/126)
-* **#146:** fix coderabbitai feedback and improve project structure ([#146](https://github.com/VilnaCRM-Org/php-service-template/issues/146)) ([abc123](https://github.com/VilnaCRM-Org/php-service-template/commit/abc123))
+* **#146:** fix coderabbitai feedback and improve project structure ([#146](...)) ([a1b2c3d4](...))  # real hash
 
 ## [1.7.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.6.1...v1.7.0) (2025-05-26)
 

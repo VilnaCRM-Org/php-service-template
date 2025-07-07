@@ -51,6 +51,7 @@ jobs:
         run: make rector-apply
 
       - name: Commit changes
+        if: github.event_name == 'push'
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             git add -u
