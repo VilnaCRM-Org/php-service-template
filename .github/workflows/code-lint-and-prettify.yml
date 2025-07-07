@@ -45,13 +45,13 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run PHP CS Fixer
-        run: make phpcsfixer
+        run: CI=1 make phpcsfixer
 
       - name: Run Rector
-        run: make rector-apply
+        run: CI=1 make rector-apply
 
       - name: Commit changes
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             git add -u
