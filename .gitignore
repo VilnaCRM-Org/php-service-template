@@ -38,7 +38,3 @@ super-linter-output
 super-linter.log
 venv
 ###< super-linter/super-linter ###
-
-###> phpstan/phpstan ###
-phpstan.neon
-###< phpstan/phpstan ###
