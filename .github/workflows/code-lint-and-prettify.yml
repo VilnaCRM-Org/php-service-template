@@ -20,8 +20,15 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}  # default; safe to omit
 
+      - name: Detect GPG key availability
+        id: gpg-check
+        run: |
+          if [ -n "${{ secrets.GPG_PRIVATE_KEY }}" ]; then
+            echo "HAS_GPG_KEY=true" >> "$GITHUB_ENV"
+          fi
+
       - name: Import GPG key
-        if: ${{ github.event_name == 'push' && secrets.GPG_PRIVATE_KEY != '' }}
+        if: ${{ github.event_name == 'push' && env.HAS_GPG_KEY == 'true' }}
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -29,7 +36,6 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
           git_tag_gpgsign: true
-
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"
