@@ -1,53 +1,79 @@
-name: Static analysis and fixers
+name: Code Lint and Prettify
 
 on:
+  push:
+    branches: [main]
   pull_request:
-    branches: ['main']
+    branches: [main]
 
 jobs:
-  lint:
+  lint-and-prettify:
     runs-on: ubuntu-latest
-    steps:
-      - name: Generate token with necessary permissions
-        id: generate_token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.VILNACRM_APP_ID }}
-          private_key: ${{ secrets.VILNACRM_APP_PRIVATE_KEY }}
+    permissions:
+      contents: write
+      pull-requests: write
 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ steps.generate_token.outputs.token }}
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}  # default; safe to omit
 
-      - name: Run Super-Linter
-        continue-on-error: true
-        uses: super-linter/super-linter@v7.1.0
-        env:
-          FILTER_REGEX_EXCLUDE: '^\.github/openapi-spec/'
-          VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_MARKDOWN_PRETTIER: true
-          FIX_MARKDOWN_PRETTIER: true
-          VALIDATE_YAML: true
-          FIX_YAML_PRETTIER: true
-          VALIDATE_YAML_PRETTIER: true
-          VALIDATE_ENV: true
-          VALIDATE_JAVASCRIPT_PRETTIER: true
-          FIX_JAVASCRIPT_PRETTIER: true
-          VALIDATE_ALL_CODEBASE: true
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+      - name: Detect GPG key availability
+        id: gpg-check
+        run: |
+          if [ -n "${{ secrets.GPG_PRIVATE_KEY }}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Commit and push linting fixes
-        if: >
-          github.event_name == 'pull_request' && github.ref_name !=
-          github.event.repository.default_branch
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Import GPG key
+        if: ${{ github.event_name == 'push' && steps.gpg-check.outputs.available == 'true' }}
+        uses: crazy-max/ghaction-import-gpg@v6
         with:
-          branch: ${{ github.event.pull_request.head.ref || github.head_ref ||
-            github.ref }}
-          commit_message: 'chore(#${{ toJSON(github.event.number) }}): fix linting issues'
-          commit_user_name: super-linter
-          commit_user_email: super-linter@super-linter.dev
-          token: ${{ steps.generate_token.outputs.token }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_tag_gpgsign: true
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: |
+              ~/.composer/cache/files
+              vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run PHP CS Fixer
+        run: CI=1 make phpcsfixer
+
+      - name: Run Rector
+        run: CI=1 make rector-apply
+
+      - name: Commit changes
+        if: ${{ github.event_name == 'push' && github.actor != 'github-actions[bot]' }}
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git add -u
+            git commit -m "style: auto-fix code style and apply rector transformations"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No changes to commit"
+          fi
