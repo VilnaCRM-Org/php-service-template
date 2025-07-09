@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6adba561b485116b2b966082f8035e40",
+    "content-hash": "21ad1cab942399cc1c0231b77f6c22fb",
     "packages": [
         {
             "name": "api-platform/core",
@@ -6937,16 +6937,16 @@
         },
         {
             "name": "webonyx/graphql-php",
-            "version": "v15.20.1",
+            "version": "v15.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
-                "reference": "10fc7f1b4a87a39f68579f6dee55ccd8e39a75e4"
+                "reference": "68549e75a6f113f08c91d12ed6d0ec3fd971087b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/10fc7f1b4a87a39f68579f6dee55ccd8e39a75e4",
-                "reference": "10fc7f1b4a87a39f68579f6dee55ccd8e39a75e4",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/68549e75a6f113f08c91d12ed6d0ec3fd971087b",
+                "reference": "68549e75a6f113f08c91d12ed6d0ec3fd971087b",
                 "shasum": ""
             },
             "require": {
@@ -6959,7 +6959,7 @@
                 "amphp/http-server": "^2.1",
                 "dms/phpunit-arraysubset-asserts": "dev-master",
                 "ergebnis/composer-normalize": "^2.28",
-                "friendsofphp/php-cs-fixer": "3.76.0",
+                "friendsofphp/php-cs-fixer": "3.82.0",
                 "mll-lab/php-cs-fixer-config": "5.11.0",
                 "nyholm/psr7": "^1.5",
                 "phpbench/phpbench": "^1.2",
@@ -6999,7 +6999,7 @@
             ],
             "support": {
                 "issues": "https://github.com/webonyx/graphql-php/issues",
-                "source": "https://github.com/webonyx/graphql-php/tree/v15.20.1"
+                "source": "https://github.com/webonyx/graphql-php/tree/v15.21.0"
             },
             "funding": [
                 {
@@ -7007,7 +7007,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-07-04T07:47:56+00:00"
+            "time": "2025-07-08T08:22:01+00:00"
         },
         {
             "name": "willdurand/negotiation",
@@ -9261,16 +9261,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.80.0",
+            "version": "v3.82.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "e49ed46b8f7adcc451d4cd2ed34eaae33372bc60"
+                "reference": "db2a44dc899d40f20609f0ea53e952c64c028968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/e49ed46b8f7adcc451d4cd2ed34eaae33372bc60",
-                "reference": "e49ed46b8f7adcc451d4cd2ed34eaae33372bc60",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/db2a44dc899d40f20609f0ea53e952c64c028968",
+                "reference": "db2a44dc899d40f20609f0ea53e952c64c028968",
                 "shasum": ""
             },
             "require": {
@@ -9354,7 +9354,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.80.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.82.0"
             },
             "funding": [
                 {
@@ -9362,7 +9362,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-06T21:00:51+00:00"
+            "time": "2025-07-07T22:38:13+00:00"
         },
         {
             "name": "infection/abstract-testframework-adapter",

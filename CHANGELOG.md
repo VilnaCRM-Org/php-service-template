@@ -1,3 +1,12 @@
+# [1.9.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.8.1...v1.9.0) (2025-07-08)
+
+
+### Features
+
+* **deps:** bump brace-expansion from 1.1.11 to 1.1.12 in /tests/Load in the npm_and_yarn group ([#143](https://github.com/VilnaCRM-Org/php-service-template/issues/143)) ([39338b8](https://github.com/VilnaCRM-Org/php-service-template/commit/39338b889b5a638eecb0df7dac6abf42e8b2cfd2))
+
+
+
 ## [1.8.1](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.8.0...v1.8.1) (2025-07-07)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * dependabot.yml ([be0056b](https://github.com/VilnaCRM-Org/php-service-template/commit/be0056bf3f16bb79826d51b6aadf42aa3d729437))
-
-
-
-# [1.6.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.5.0...v1.6.0) (2025-05-05)
-
-
-### Features
-
-* improve dependabot updates ([253b194](https://github.com/VilnaCRM-Org/php-service-template/commit/253b19476e38bb5be219488eb54f5d33f78da2b3))
 
 
 
