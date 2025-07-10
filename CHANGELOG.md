@@ -1,3 +1,12 @@
+# [1.10.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.9.0...v1.10.0) (2025-07-10)
+
+
+### Features
+
+* **deps:** bump the all-deps group across 1 directory with 15 updates ([#149](https://github.com/VilnaCRM-Org/php-service-template/issues/149)) ([3cb2b30](https://github.com/VilnaCRM-Org/php-service-template/commit/3cb2b306cf307fb80dbb1557aa337949d5629212))
+
+
+
 # [1.9.0](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.8.1...v1.9.0) (2025-07-08)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **deps:** bump the all-deps group across 1 directory with 11 updates ([#136](https://github.com/VilnaCRM-Org/php-service-template/issues/136)) ([9e631ee](https://github.com/VilnaCRM-Org/php-service-template/commit/9e631ee0732cfd6cfe9cccc5d546fe3d929b10aa))
-
-
-
-## [1.6.1](https://github.com/VilnaCRM-Org/php-service-template/compare/v1.6.0...v1.6.1) (2025-05-05)
-
-
-### Bug Fixes
-
-* dependabot.yml ([be0056b](https://github.com/VilnaCRM-Org/php-service-template/commit/be0056bf3f16bb79826d51b6aadf42aa3d729437))
 
 
 
