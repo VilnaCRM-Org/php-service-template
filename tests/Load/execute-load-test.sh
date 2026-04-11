@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e -x
 
-if [ -z "$1" ]; then
-    echo "Error: scenario not provided."
+if [[ -z "${1:-}" ]]; then
+    echo "Error: scenario not provided." >&2
     exit 1
 fi
 
