@@ -15,9 +15,9 @@ jobs:
     name: Run Bats Core Tests
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19 # v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
@@ -28,7 +28,7 @@ jobs:
         run: make start
 
       - name: Setup Bats and bats libs
-        uses: bats-core/bats-action@2.0.0
+        uses: bats-core/bats-action@e424f8b8f722bf06a64acb1e10d8c437cd4170e6 # 2.0.0
         with:
           support-path: ${{ github.workspace }}/tests/CLI/bats/bats-support
           assert-path: ${{ github.workspace }}/tests/CLI/bats/bats-assert
