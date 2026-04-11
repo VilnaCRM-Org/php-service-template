@@ -7,6 +7,7 @@ OPENAPI_DIR="$REPO_ROOT/.github/openapi-spec"
 HEAD_SPEC="$OPENAPI_DIR/spec.yaml"
 TMP_DIR="$(mktemp -d)"
 BASE_SPEC="$TMP_DIR/openapi-base-spec.yaml"
+OPENAPI_DIFF_IMAGE="${OPENAPI_DIFF_IMAGE:-openapitools/openapi-diff:2.1.2}"
 
 trap 'rm -rf "$TMP_DIR"' EXIT
 
@@ -23,6 +24,6 @@ fi
 docker run --rm \
   -v "$HEAD_SPEC:/workspace/head.yaml" \
   -v "$BASE_SPEC:/workspace/base.yaml" \
-  openapitools/openapi-diff:latest \
+  "$OPENAPI_DIFF_IMAGE" \
   /workspace/base.yaml \
   /workspace/head.yaml
