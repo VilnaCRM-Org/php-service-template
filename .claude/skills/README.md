@@ -7,7 +7,7 @@ This directory contains the template-safe Claude skills baseline for this reposi
 1. Read [AI-AGENT-GUIDE.md](AI-AGENT-GUIDE.md).
 2. Use [SKILL-DECISION-GUIDE.md](SKILL-DECISION-GUIDE.md) to choose a skill.
 3. Open the selected `SKILL.md`.
-4. Run the commands listed there with `make` or `docker compose exec php ...`.
+4. Run the commands listed there with `make` first; if no matching target exists, use `docker compose exec php ...`.
 
 ## Available Skills
 

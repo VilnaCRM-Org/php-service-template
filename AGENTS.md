@@ -2,6 +2,8 @@
 
 `php-service-template` is a Symfony and API Platform microservice template for VilnaCRM services. It targets PHP 8.2+, uses Doctrine ORM migrations, ships OpenAPI and GraphQL snapshots under `.github/`, and keeps architecture aligned with Hexagonal, DDD, and CQRS patterns.
 
+This file is documentation-only guidance for coding assistants. It does not add runtime AI agent features to the template.
+
 ## Mandatory Workflow For AI Agents
 
 Before making non-trivial changes:

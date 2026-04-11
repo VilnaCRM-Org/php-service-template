@@ -19,7 +19,7 @@ make deptrac
 
 - Domain classes must stay framework-free.
 - Symfony validation belongs in YAML configuration, DTOs, or Application validators.
-- Doctrine metadata belongs in XML mapping files, not in Domain PHP classes.
+- Doctrine-backed entities are limited to the repository mapping configured in `config/packages/doctrine.yaml` under `src/Shared/Domain/Entity`; keep ORM metadata consistent there instead of scattering persistence details across unrelated Domain PHP classes.
 - API Platform metadata belongs in YAML resource configuration, DTOs, processors, or Application code.
 - Infrastructure may depend on Domain and Application. Domain must not depend on Symfony, Doctrine, or API Platform.
 
@@ -32,8 +32,8 @@ make deptrac
 
 ### Domain imports Doctrine attributes
 
-- Remove Doctrine attributes from the entity.
-- Add or update XML mapping under `config/doctrine/`.
+- If the class is not meant to be a Doctrine entity, remove the Doctrine attributes from the Domain class.
+- If the class is meant to be persisted, keep it inside the configured entity mapping area and align the Doctrine mapping strategy with `config/packages/doctrine.yaml` instead of introducing ad hoc persistence rules elsewhere in the Domain layer.
 
 ### Domain imports API Platform attributes
 
