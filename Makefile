@@ -255,7 +255,9 @@ openapi-diff: generate-openapi-spec ## Compare the generated OpenAPI spec agains
 	./scripts/openapi-diff.sh $(or $(base_ref),origin/main)
 
 schemathesis-validate: generate-openapi-spec ## Validate the running API against the OpenAPI spec with Schemathesis
-	$(MAKE) setup-test-db
+	@if echo "$(SCHEMATHESIS_URL)" | grep -Eq '^http://(localhost|127\\.0\\.0\\.1)(:[0-9]+)?(/.*)?$$'; then \
+		$(MAKE) setup-test-db; \
+	fi
 	$(DOCKER) run --rm --network=host -v $(CURDIR)/.github/openapi-spec:/data $(SCHEMATHESIS_IMAGE) run --checks all /data/spec.yaml --url $(SCHEMATHESIS_URL) --phases=examples,coverage
 
 generate-graphql-spec:
