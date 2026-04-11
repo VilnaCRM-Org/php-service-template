@@ -2,6 +2,13 @@ openapi: 3.1.0
 info:
   title: 'PHP Service Template API'
   description: 'This API provides endpoints to manage php service template data within a VilnaCRM.'
+  contact:
+    name: 'VilnaCRM Support'
+    url: 'https://github.com/VilnaCRM-Org/php-service-template'
+    email: support@vilnacrm.com
+  license:
+    name: CC0-1.0
+    url: 'https://creativecommons.org/publicdomain/zero/1.0/'
   version: 1.0.0
 servers:
   -
@@ -20,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExampleApiResource'
+        default:
+          description: 'Problem response.'
       summary: 'Retrieves a ExampleApiResource resource.'
       description: 'Retrieves a ExampleApiResource resource.'
       parameters: []
@@ -34,6 +43,8 @@ paths:
           description: 'Health check passed with no content to return.'
         '500':
           description: 'Health check failed.'
+        default:
+          description: 'Problem response.'
       summary: 'Retrieves a HealthCheck resource.'
       description: 'Retrieves a HealthCheck resource.'
       parameters: []
@@ -58,6 +69,8 @@ security: []
 tags:
   -
     name: ExampleApiResource
+    description: 'Template example resource endpoints.'
   -
     name: HealthCheck
+    description: 'Runtime health-check endpoints.'
 webhooks: {  }
