@@ -8,45 +8,23 @@ jobs:
   openapi-diff:
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@v2
+      - name: Checkout Repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19 # v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Copy .env.test.local
-        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
+
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Generate openapi spec
-        run: php bin/console --env=test api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '.github/openapi-spec/spec.yaml'
-          message: 'feat(#${{ toJSON(github.event.number) }}): generate openapi spec'
-      - name: Check out head branch
-        uses: actions/checkout@v2
-        with:
-          path: head
-      - name: Check out master branch
-        uses: actions/checkout@v2
-        with:
-          ref: main
-          path: base
-      - name: Run OpenAPI Diff (from HEAD revision)
-        uses: docker://openapitools/openapi-diff:latest
-        with:
-          args: '/github/workspace/head/.github/openapi-spec/spec.yaml /github/workspace/base/.github/openapi-spec/spec.yaml'
-      - uses: actions/upload-artifact@v4
-        with:
-          name: diff-reports
-          path: ./output
+
+      - name: Start Application
+        run: make start
+
+      - name: Generate OpenAPI spec
+        run: make generate-openapi-spec
+
+      - name: Run OpenAPI Diff
+        run: make openapi-diff base_ref=origin/main

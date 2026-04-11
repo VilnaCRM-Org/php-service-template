@@ -9,6 +9,7 @@ GIT_AUTHOR    = Kravalg
 SYMFONY_BIN   = symfony
 DOCKER        = docker
 DOCKER_COMPOSE = docker compose
+DOCKER_COMPOSE_LOAD_TEST = $(DOCKER_COMPOSE) -f docker-compose.prod.yml -f docker-compose.load_test.override.yml
 
 # Executables
 EXEC_PHP      = $(DOCKER_COMPOSE) exec php
@@ -25,6 +26,7 @@ BEHAT         = ./vendor/bin/behat
 PHPUNIT       = ./vendor/bin/phpunit
 PSALM         = ./vendor/bin/psalm
 PHP_CS_FIXER  = ./vendor/bin/php-cs-fixer
+PHPMD         = ./vendor/bin/phpmd
 DEPTRAC       = ./vendor/bin/deptrac
 INFECTION     = ./vendor/bin/infection
 RECTOR        = ./vendor/bin/rector
@@ -33,6 +35,11 @@ RECTOR        = ./vendor/bin/rector
 .DEFAULT_GOAL = help
 .RECIPEPREFIX +=
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
+.PHONY: all clean test
+
+all: ci
+clean: purge
+test: all-tests
 
 # Conditional execution based on CI environment variable
 EXEC_ENV ?= $(EXEC_PHP_TEST_ENV)
@@ -44,6 +51,8 @@ endif
 FIXER_ENV = PHP_CS_FIXER_IGNORE_ENV=1
 PHP_CS_FIXER_CMD = php ./vendor/bin/php-cs-fixer fix $(git ls-files -om --exclude-standard) --allow-risky=yes --config .php-cs-fixer.dist.php
 COVERAGE_CMD = php -d memory_limit=-1 ./vendor/bin/phpunit --coverage-clover /coverage/coverage.xml
+GITHUB_HOST ?= github.com
+FORMAT ?= markdown
 
 define DOCKER_EXEC_WITH_ENV
 $(DOCKER_COMPOSE) exec -e $(1) php $(2)
@@ -60,7 +69,7 @@ endif
 
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
-	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
+	@grep -h -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 bats: ## Run tests for bash commands
 	bats tests/CLI/bats/
@@ -83,17 +92,22 @@ psalm: ## A static analysis tool for finding errors in PHP applications
 psalm-security: ## Psalm security analysis
 	$(EXEC_ENV) $(PSALM) --taint-analysis
 
+phpmd: ## Instant PHP MD quality checks for source and test code
+	$(EXEC_ENV) $(PHPMD) src ansi codesize,design,cleancode --exclude vendor
+	$(EXEC_ENV) $(PHPMD) tests ansi phpmd.tests.xml --exclude vendor,tests/CLI/bats/php
+
 phpinsights: ## Instant PHP quality checks and static analysis tool
-	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction --ansi --format=github-action --disable-security-check && ./vendor/bin/phpinsights analyse tests --no-interaction
+	$(EXEC_ENV) ./vendor/bin/phpinsights --no-interaction --ansi --format=github-action --disable-security-check
+	$(EXEC_ENV) ./vendor/bin/phpinsights analyse tests --no-interaction
 
 unit-tests: ## Run unit tests
 	$(EXEC_ENV) $(PHPUNIT) --testsuite=Unit
 
 deptrac: ## Check directory structure
-	$(DEPTRAC) analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered
+	$(EXEC_ENV) $(DEPTRAC) analyse --config-file=deptrac.yaml --report-uncovered --fail-on-uncovered
 
 deptrac-debug: ## Find files unassigned for Deptrac
-	$(DEPTRAC) debug:unassigned --config-file=deptrac.yaml
+	$(EXEC_ENV) $(DEPTRAC) debug:unassigned --config-file=deptrac.yaml
 
 behat: ## A php framework for autotesting business expectations
 	$(EXEC_ENV) $(BEHAT)
@@ -118,23 +132,33 @@ setup-test-db: ## Create database for testing purposes
 
 all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e tests
 
+define RUN_LOAD_TEST
+	@set -e; \
+	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack; \
+	trap '$(DOCKER_COMPOSE_LOAD_TEST) down --remove-orphans' EXIT; \
+	$(1)
+endef
+
 smoke-load-tests: build-k6-docker ## Run load tests with minimal load
-	tests/Load/run-smoke-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-smoke-load-tests.sh)
 
 average-load-tests: build-k6-docker ## Run load tests with average load
-	tests/Load/run-average-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-average-load-tests.sh)
 
 stress-load-tests: build-k6-docker ## Run load tests with high load
-	tests/Load/run-stress-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-stress-load-tests.sh)
 
 spike-load-tests: build-k6-docker ## Run load tests with a spike of extreme load
-	tests/Load/run-spike-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-spike-load-tests.sh)
 
 load-tests: build-k6-docker ## Run load tests
-	tests/Load/run-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-load-tests.sh)
 
 build-k6-docker:
 	$(DOCKER) build -t k6 -f ./tests/Load/Dockerfile .
+
+build-spectral-docker:
+	$(DOCKER) build -t php-service-template-spectral -f ./docker/spectral/Dockerfile .
 
 infection: ## Run mutations test.
 	$(EXEC_ENV) php -d memory_limit=-1 $(INFECTION) --test-framework-options="--testsuite=Unit" --show-mutations -j8
@@ -206,8 +230,54 @@ coverage-xml: ## Create the code coverage report with PHPUnit
 generate-openapi-spec:
 	$(EXEC_PHP) php bin/console api:openapi:export --yaml --output=.github/openapi-spec/spec.yaml
 
+validate-openapi-spec: generate-openapi-spec build-spectral-docker ## Generate and lint the OpenAPI spec with Spectral
+	./scripts/validate-openapi-spec.sh
+
+validate-configuration: ## Validate directory structure and locked configuration files
+	./scripts/validate-configuration.sh
+
+openapi-diff: generate-openapi-spec ## Compare the generated OpenAPI spec against a base reference
+	./scripts/openapi-diff.sh $(or $(base_ref),origin/main)
+
 generate-graphql-spec:
 	$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec
+
+ci: ci-preflight ## Run the main local CI verification stack
+	@$(MAKE) ci-static-analysis
+	@$(MAKE) ci-deptrac
+	@$(MAKE) ci-tests-and-openapi
+	@$(MAKE) ci-mutation
+	@echo "CI checks successfully passed!"
+
+ci-preflight: ## Run mutating quality steps before the rest of the stack
+	@$(MAKE) phpcsfixer
+	@$(MAKE) phpmd
+	@$(MAKE) phpinsights
+
+ci-static-analysis:
+	@$(MAKE) composer-validate
+	@$(MAKE) check-requirements
+	@$(MAKE) check-security
+	@$(MAKE) validate-configuration
+	@$(MAKE) psalm
+	@$(MAKE) psalm-security
+
+ci-deptrac:
+	@$(MAKE) deptrac
+
+ci-tests-and-openapi:
+	@$(MAKE) setup-test-db
+	@$(MAKE) unit-tests
+	@$(MAKE) integration-tests
+	@$(MAKE) behat
+	@$(MAKE) generate-graphql-spec
+	@$(MAKE) openapi-diff
+	@$(MAKE) validate-openapi-spec
+
+ci-mutation:
+	@$(MAKE) infection
+
+ci-sequential: ci ## Alias for the local CI verification stack
 
 aws-load-tests: ## Run load tests on AWS infrastructure
 	tests/Load/aws-execute-load-tests.sh

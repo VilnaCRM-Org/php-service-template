@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e -x
 
-if [ -z "$1" ]; then
-    echo "Error: scenario not provided."
+if [[ -z "${1:-}" ]]; then
+    echo "Error: scenario not provided." >&2
     exit 1
 fi
 
@@ -18,6 +18,6 @@ echo "Options - Smoke: $runSmoke, Average: $runAverage, Stress: $runStress, Spik
 K6="docker run -v ./tests/Load:/loadTests --net=host --rm \
     --user $(id -u) \
     k6 run --summary-trend-stats='avg,min,med,max,p(95),p(99)' \
-    --out 'web-dashboard=period=1s&export=/loadTests/results/${htmlPrefix}${scenario}.html'"
+    --out 'dashboard=port=-1&period=1s&export=/loadTests/results/${htmlPrefix}${scenario}.html'"
 
 eval "$K6" "/loadTests/scripts/${scenario}.js" -e run_smoke="${runSmoke}" -e run_average="${runAverage}" -e run_stress="${runStress}" -e run_spike="${runSpike}"

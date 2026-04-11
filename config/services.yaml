@@ -42,3 +42,8 @@ services:
         credentials:
           key: '%env(AWS_SQS_KEY)%'
           secret: '%env(AWS_SQS_SECRET)%'
+
+  App\Shared\Application\OpenApi\OpenApiFactory:
+    decorates: 'api_platform.openapi.factory'
+    arguments:
+      - '@App\Shared\Application\OpenApi\OpenApiFactory.inner'

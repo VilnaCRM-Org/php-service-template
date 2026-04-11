@@ -7,6 +7,13 @@ api_platform:
 
   openapi:
     overrideResponses: false
+    contact:
+      name: 'VilnaCRM Support'
+      url: 'https://github.com/VilnaCRM-Org/php-service-template'
+      email: 'support@vilnacrm.com'
+    license:
+      name: 'CC0-1.0'
+      url: 'https://creativecommons.org/publicdomain/zero/1.0/'
 
   graphql:
     enabled: true

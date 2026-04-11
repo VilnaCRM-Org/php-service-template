@@ -1,4 +1,5 @@
 import http from 'k6/http';
+
 import ScenarioUtils from '../utils/scenarioUtils.js';
 import Utils from '../utils/utils.js';
 

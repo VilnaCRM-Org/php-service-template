@@ -8,14 +8,18 @@ jobs:
   graphql-diff:
     name: Openapi-diff
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
 
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19 # v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
 
       - name: Checkout Repository
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
@@ -31,16 +35,18 @@ jobs:
       - name: Generate GraphQL spec
         run: make generate-graphql-spec
 
-      - name: Copy openapi spec to host
+      - name: Copy GraphQL spec to host
         run: docker cp php-service-template-php-1:/srv/app/.github/graphql-spec/spec .github/graphql-spec/spec
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9
         with:
           add: '.github/graphql-spec/spec'
           message: 'feat(#${{ toJSON(github.event.number) }}): generate graphql spec'
 
       - name: GraphQL Inspector
-        uses: kamilkisiela/graphql-inspector@release-1701263349990
+        uses: kamilkisiela/graphql-inspector@91cefc9d934ccac1b4be9f26f44b6f533c300247 # release-1701263349990
         with:
-          schema: 'master:.github/graphql-spec/spec'
+          schema: '${{ github.base_ref }}:.github/graphql-spec/spec'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
