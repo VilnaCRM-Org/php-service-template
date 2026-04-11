@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -10,13 +10,13 @@ BASE_SPEC="$TMP_DIR/openapi-base-spec.yaml"
 
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-if [ ! -f "$HEAD_SPEC" ]; then
-  echo "Error: $HEAD_SPEC not found. Generate the OpenAPI spec before running the diff."
+if [[ ! -f "$HEAD_SPEC" ]]; then
+  echo "Error: $HEAD_SPEC not found. Generate the OpenAPI spec before running the diff." >&2
   exit 1
 fi
 
 if ! git -C "$REPO_ROOT" show "$BASE_REF:.github/openapi-spec/spec.yaml" >"$BASE_SPEC" 2>/dev/null; then
-  echo "Error: Unable to read .github/openapi-spec/spec.yaml from $BASE_REF."
+  echo "Error: Unable to read .github/openapi-spec/spec.yaml from $BASE_REF." >&2
   exit 1
 fi
 

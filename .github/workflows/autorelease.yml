@@ -17,7 +17,7 @@ jobs:
           app_id: ${{ secrets.VILNACRM_APP_ID }}
           private_key: ${{ secrets.VILNACRM_APP_PRIVATE_KEY }}
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           token: ${{ steps.generate_token.outputs.token }}
 

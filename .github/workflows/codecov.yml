@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: run codecov
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ vars.PHP_VERSION }}

@@ -15,7 +15,7 @@ jobs:
     name: Run Bats Core Tests
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: shivammathur/setup-php@v2
         with:

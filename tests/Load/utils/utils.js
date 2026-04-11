@@ -13,11 +13,13 @@ export default class Utils {
   getConfig() {
     try {
       return JSON.parse(open('../config.json'));
-    } catch (error) {
+    } catch (configError) {
       try {
         return JSON.parse(open('../config.json.dist'));
-      } catch (error) {
-        console.error('Failed to load configuration from config.json and config.json.dist:', error);
+      } catch (fallbackError) {
+        throw new Error(
+          `Failed to load configuration from config.json and config.json.dist: ${configError.message}; ${fallbackError.message}`,
+        );
       }
     }
   }
