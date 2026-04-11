@@ -3,11 +3,6 @@ name: CLI testing
 on:
   pull_request:
     branches: ['main']
-    paths:
-      - 'Makefile'
-      - 'scripts/**'
-      - 'tests/CLI/bats/**'
-      - '.github/workflows/bats-tests.yml'
 
 jobs:
   bats_core_tests:

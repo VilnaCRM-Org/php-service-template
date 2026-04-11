@@ -21,7 +21,7 @@ final class OpenApiFactory implements OpenApiFactoryInterface
     }
 
     /**
-     * @param array<string, mixed> $context
+     * @param array<string, array|bool|float|int|object|string|null> $context
      */
     public function __invoke(array $context = []): OpenApi
     {
@@ -37,17 +37,16 @@ final class OpenApiFactory implements OpenApiFactoryInterface
      */
     private function describeTags(array $tags): array
     {
-        $describedTags = [];
+        return array_map($this->describeTag(...), $tags);
+    }
 
-        foreach ($tags as $tag) {
-            $description = self::TAG_DESCRIPTIONS[$tag->getName()]
-                ?? $tag->getDescription();
+    private function describeTag(Tag $tag): Tag
+    {
+        $description = self::TAG_DESCRIPTIONS[$tag->getName()]
+            ?? $tag->getDescription();
 
-            $describedTags[] = $description === null
-                ? $tag
-                : $tag->withDescription($description);
-        }
-
-        return $describedTags;
+        return $description === null
+            ? $tag
+            : $tag->withDescription($description);
     }
 }

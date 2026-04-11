@@ -132,25 +132,27 @@ setup-test-db: ## Create database for testing purposes
 
 all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e tests
 
+define RUN_LOAD_TEST
+	@set -e; \
+	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack; \
+	trap '$(DOCKER_COMPOSE_LOAD_TEST) down --remove-orphans' EXIT; \
+	$(1)
+endef
+
 smoke-load-tests: build-k6-docker ## Run load tests with minimal load
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack
-	tests/Load/run-smoke-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-smoke-load-tests.sh)
 
 average-load-tests: build-k6-docker ## Run load tests with average load
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack
-	tests/Load/run-average-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-average-load-tests.sh)
 
 stress-load-tests: build-k6-docker ## Run load tests with high load
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack
-	tests/Load/run-stress-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-stress-load-tests.sh)
 
 spike-load-tests: build-k6-docker ## Run load tests with a spike of extreme load
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack
-	tests/Load/run-spike-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-spike-load-tests.sh)
 
 load-tests: build-k6-docker ## Run load tests
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack
-	tests/Load/run-load-tests.sh
+	$(call RUN_LOAD_TEST,tests/Load/run-load-tests.sh)
 
 build-k6-docker:
 	$(DOCKER) build -t k6 -f ./tests/Load/Dockerfile .
@@ -268,7 +270,6 @@ ci-tests-and-openapi:
 	@$(MAKE) unit-tests
 	@$(MAKE) integration-tests
 	@$(MAKE) behat
-	@$(MAKE) generate-openapi-spec
 	@$(MAKE) generate-graphql-spec
 	@$(MAKE) openapi-diff
 	@$(MAKE) validate-openapi-spec

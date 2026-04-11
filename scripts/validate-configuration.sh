@@ -59,6 +59,14 @@ if git -C "$PROJECT_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   while IFS= read -r line; do
     [[ -n "$line" ]] && modified_files+=("$line")
   done < <(git -C "$PROJECT_ROOT" diff --cached --name-only 2>/dev/null || true)
+
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && modified_files+=("$line")
+  done < <(git -C "$PROJECT_ROOT" diff --name-only origin/HEAD HEAD 2>/dev/null || true)
+
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && modified_files+=("$line")
+  done < <(git -C "$PROJECT_ROOT" diff --name-only HEAD^..HEAD 2>/dev/null || true)
 fi
 
 if [[ "${#modified_files[@]}" -gt 0 ]]; then

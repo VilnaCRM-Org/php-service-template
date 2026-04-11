@@ -8,6 +8,10 @@ jobs:
   graphql-diff:
     name: Openapi-diff
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
 
     steps:
       - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19 # v2
