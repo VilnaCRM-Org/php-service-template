@@ -29,7 +29,7 @@ export default class Utils {
   }
 
   getEnv(variable) {
-    const value = typeof __ENV !== 'undefined' ? __ENV[variable] : undefined;
+    const value = typeof __ENV === 'undefined' ? undefined : __ENV[variable];
 
     if (value === undefined || value === null || value === '' || value === 'undefined') {
       return undefined;

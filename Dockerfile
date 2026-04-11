@@ -52,9 +52,8 @@ RUN set -eux; \
     fi
 
 COPY --link . ./
-RUN rm -Rf infrastructure/docker/
-
 RUN set -eux; \
+    rm -Rf infrastructure/docker/; \
     mkdir -p var/cache var/log; \
     if [ -f composer.json ]; then \
         composer dump-autoload --classmap-authoritative --no-dev; \
