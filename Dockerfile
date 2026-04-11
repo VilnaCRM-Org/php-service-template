@@ -88,10 +88,13 @@ COPY --link infrastructure/docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 RUN git config --global --add safe.directory /srv/app
 RUN rm -f .env.local.php
 
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch"]
-
 FROM frankenphp_base AS frankenphp_prod
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY --link infrastructure/docker/php/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
+
+RUN mkdir -p /data /config /srv/app/var \
+ && chown -R www-data:www-data /data /config /srv/app
+
+USER www-data

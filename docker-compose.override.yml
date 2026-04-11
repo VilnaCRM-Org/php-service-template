@@ -3,6 +3,8 @@ services:
   php:
     build:
       target: frankenphp_dev
+    command:
+      ['frankenphp', 'run', '--config', '/etc/caddy/Caddyfile', '--watch']
     volumes:
       - ./:/srv/app
       - ./infrastructure/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
