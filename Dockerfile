@@ -67,8 +67,7 @@ CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
 
 FROM frankenphp_base AS frankenphp_dev
 
-ENV APP_ENV=dev \
-    XDEBUG_MODE=off
+ENV XDEBUG_MODE=off
 
 RUN apk add --no-cache \
     bash \

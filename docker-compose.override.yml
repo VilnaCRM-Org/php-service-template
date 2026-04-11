@@ -13,6 +13,7 @@ services:
       # from the bind-mount for better performance by enabling the next line:
       #- /srv/app/vendor
     environment:
+      APP_ENV: dev
       XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
       - host.docker.internal:host-gateway
