@@ -96,6 +96,9 @@ psalm: ## A static analysis tool for finding errors in PHP applications
 psalm-security: ## Psalm security analysis
 	$(EXEC_ENV) $(PSALM) --taint-analysis
 
+psalm-security-sarif: ## Psalm security analysis with SARIF output
+	$(EXEC_ENV) $(PSALM) --taint-analysis --report=results.sarif
+
 phpmd: ## Instant PHP MD quality checks for source and test code
 	$(EXEC_ENV) $(PHPMD) src ansi codesize,design,cleancode --exclude vendor
 	$(EXEC_ENV) $(PHPMD) tests ansi phpmd.tests.xml --exclude vendor,tests/CLI/bats/php
@@ -200,7 +203,7 @@ purge: ## Purge cache and logs
 	@rm -rf var/cache/* var/logs/*
 
 up: ## Start the local FrankenPHP stack
-	$(DOCKER_COMPOSE) up --detach
+	$(DOCKER_COMPOSE) up --detach --wait
 
 build: ## Build the local FrankenPHP images
 	$(DOCKER_COMPOSE) build --pull --no-cache
