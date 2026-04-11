@@ -59,6 +59,16 @@ Execute `make` or `make help` to see the full list of project commands.
 
 Recent CI-oriented targets include `make ci`, `make ci-preflight`, `make ci-sequential`, `make phpmd`, `make validate-configuration`, `make validate-openapi-spec`, and `make openapi-diff`.
 
+## AI Agent Support
+
+This template now ships repository-level guidance for AI coding assistants:
+
+- `AGENTS.md` - the primary contributor workflow for coding agents
+- `CLAUDE.md` - Claude-oriented entrypoint that points back to the repository guide
+- `.claude/skills/` - template-safe skills for CI, testing, Deptrac, API work, documentation sync, load testing, and architecture updates
+
+The skills are plain Markdown so they can be followed by Claude Code, Codex, Copilot, Cursor, and similar tools. When adapting this template into a real service, keep these files aligned with the service's actual commands, architecture, and generated artifacts.
+
 The list of the `make` possibilities:
 
 ```
