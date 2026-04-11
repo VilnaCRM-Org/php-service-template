@@ -57,6 +57,8 @@ You can use `make` command to easily control and work with project locally.
 
 Execute `make` or `make help` to see the full list of project commands.
 
+Recent CI-oriented targets include `make ci`, `make ci-preflight`, `make ci-sequential`, `make phpmd`, `make validate-configuration`, `make validate-openapi-spec`, and `make openapi-diff`.
+
 The list of the `make` possibilities:
 
 ```

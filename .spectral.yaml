@@ -1,0 +1,101 @@
+extends:
+  - spectral:oas
+
+rules:
+  api-info-requires-contact:
+    description: The info object must define a contact.
+    severity: error
+    given: $.info
+    then:
+      field: contact
+      function: truthy
+
+  api-info-requires-license:
+    description: The info object must declare a license.
+    severity: error
+    given: $.info
+    then:
+      field: license
+      function: truthy
+
+  api-info-requires-description:
+    description: The info object must include a description.
+    severity: error
+    given: $.info
+    then:
+      field: description
+      function: truthy
+
+  api-tags-require-description:
+    description: Each tag should describe its purpose.
+    severity: error
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  operation-must-have-summary:
+    description: Operations must provide a summary.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace]
+    then:
+      field: summary
+      function: truthy
+
+  operation-must-have-description:
+    description: Operations must provide a description.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace]
+    then:
+      field: description
+      function: truthy
+
+  operation-must-have-tags:
+    description: Operations must provide tags.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace]
+    then:
+      field: tags
+      function: truthy
+
+  operation-requires-2xx-response:
+    description: Operations must define at least one 2xx response.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace]
+    then:
+      field: responses
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          additionalProperties: true
+          patternProperties:
+            '^2\\d{2}$':
+              type: object
+          minProperties: 1
+
+  operation-requires-problem-response:
+    description: Operations must define at least one 4xx response.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace]
+    then:
+      field: responses
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          additionalProperties: true
+          patternProperties:
+            '^4\\d{2}$':
+              type: object
+          minProperties: 1
+
+  parameter-description-required:
+    description: Parameters must include a description.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace].parameters[*]
+    then:
+      field: description
+      function: truthy
+
+  oas3-unused-component: false

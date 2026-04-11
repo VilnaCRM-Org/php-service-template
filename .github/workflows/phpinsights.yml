@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     name: PHP Insights checks
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ vars.PHP_VERSION }}
-      - run: composer install --prefer-dist --no-progress --no-suggest --no-scripts
-      - run: vendor/bin/phpinsights -n --ansi --format=github-action --disable-security-check
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run PHPInsights
+        run: CI=1 make phpinsights

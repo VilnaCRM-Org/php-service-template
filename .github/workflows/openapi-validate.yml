@@ -1,0 +1,27 @@
+name: Validate OpenAPI Spec
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  validate-openapi:
+    name: Spectral Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ vars.PHP_VERSION }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Start Application
+        run: make start
+
+      - name: Validate OpenAPI spec
+        run: make validate-openapi-spec
