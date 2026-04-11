@@ -73,16 +73,7 @@ RUN apk add --no-cache \
     bats \
     make
 
-RUN set -eux; \
-    alpine_arch="$(apk --print-arch)"; \
-    case "$alpine_arch" in \
-        x86_64) symfony_arch='amd64' ;; \
-        aarch64) symfony_arch='arm64' ;; \
-        *) echo "Unsupported architecture: $alpine_arch" >&2; exit 1 ;; \
-    esac; \
-    curl -fsSL --retry 5 --retry-all-errors --retry-delay 2 \
-        "https://github.com/symfony-cli/symfony-cli/releases/latest/download/symfony-cli_linux_${symfony_arch}.tar.gz" \
-        | tar -xz -C /usr/local/bin symfony
+COPY --link --from=ghcr.io/symfony-cli/symfony-cli:latest@sha256:e4cf5473fb10649a3774a8c5035109e451016de4910ea0fff38bb8d525c5a322 /usr/local/bin/symfony /usr/local/bin/symfony
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
