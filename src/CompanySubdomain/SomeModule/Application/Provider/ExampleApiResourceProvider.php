@@ -8,7 +8,11 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\CompanySubdomain\SomeModule\Domain\ExampleApiResource;
 
-/** @implements ProviderInterface<ExampleApiResource> */
+/**
+ * Returns the placeholder API Platform payload used by the template endpoint.
+ *
+ * @implements ProviderInterface<ExampleApiResource>
+ */
 final class ExampleApiResourceProvider implements ProviderInterface
 {
     private const DESCRIPTION = <<<'TEXT'
@@ -18,6 +22,8 @@ TEXT;
     /**
      * @param array<string, array|object|scalar|null> $uriVariables
      * @param array<string, array|object|scalar|null> $context
+     *
+     * @return ExampleApiResource
      */
     public function provide(
         Operation $operation,

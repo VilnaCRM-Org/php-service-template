@@ -1,5 +1,8 @@
 import { check } from 'k6';
 
+/**
+ * Shared helpers for the k6 load-test scenarios.
+ */
 export default class Utils {
   /**
    * Builds the base API URLs from environment overrides or load-test config.

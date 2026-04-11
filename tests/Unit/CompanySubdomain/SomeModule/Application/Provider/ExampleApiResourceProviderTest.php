@@ -9,8 +9,14 @@ use App\CompanySubdomain\SomeModule\Application\Provider as SomeModuleProvider;
 use App\CompanySubdomain\SomeModule\Domain as SomeModuleDomain;
 use App\Tests\Unit\UnitTestCase;
 
+/**
+ * Covers the template resource provider wiring used by the sample endpoint.
+ */
 final class ExampleApiResourceProviderTest extends UnitTestCase
 {
+    /**
+     * Ensures the provider returns the documented placeholder payload.
+     */
     public function testProvideReturnsTemplatePlaceholderPayload(): void
     {
         $provider = new SomeModuleProvider\ExampleApiResourceProvider();
