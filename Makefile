@@ -129,13 +129,13 @@ tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
 
 setup-test-db: ## Create database for testing purposes
-	$(SYMFONY_TEST_ENV) c:c
+	$(SYMFONY_TEST_ENV) cache:clear --no-warmup
 	$(SYMFONY_TEST_ENV) doctrine:database:drop --force --if-exists
 	$(SYMFONY_TEST_ENV) doctrine:database:create
 	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
 
 setup-load-test-db: ## Create database for test-only load-test endpoints
-	$(SYMFONY_LOAD_TEST_ENV) c:c
+	$(SYMFONY_LOAD_TEST_ENV) cache:clear --no-warmup
 	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:drop --force --if-exists
 	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:create
 	$(SYMFONY_LOAD_TEST_ENV) doctrine:migrations:migrate --no-interaction

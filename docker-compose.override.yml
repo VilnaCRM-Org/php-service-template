@@ -4,7 +4,11 @@ services:
     build:
       target: frankenphp_dev
     command:
-      ['frankenphp', 'run', '--config', '/etc/caddy/Caddyfile', '--watch']
+      [
+        'sh',
+        '-c',
+        'if [ -n "$CI" ]; then exec frankenphp run --config /etc/caddy/Caddyfile; else exec frankenphp run --config /etc/caddy/Caddyfile --watch; fi',
+      ]
     volumes:
       - ./:/srv/app
       - ./infrastructure/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
@@ -14,6 +18,7 @@ services:
       #- /srv/app/vendor
     environment:
       APP_ENV: dev
+      CI: '${CI:-}'
       XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
       - host.docker.internal:host-gateway
