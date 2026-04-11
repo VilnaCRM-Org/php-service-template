@@ -10,22 +10,18 @@ use ApiPlatform\OpenApi\OpenApi;
 
 final class OpenApiFactory implements OpenApiFactoryInterface
 {
-    /**
-     * @var array<string, string>
-     */
     private const TAG_DESCRIPTIONS = [
-        'ExampleApiResource' => 'Example API Platform resource endpoints used as the template baseline.',
-        'HealthCheck' => 'Service readiness endpoints for runtime health verification.',
+        'ExampleApiResource' => 'Example API Platform resource endpoints'
+            . ' used as the template baseline.',
+        'HealthCheck' => 'Service readiness endpoints'
+            . ' for runtime health verification.',
     ];
 
-    public function __construct(private OpenApiFactoryInterface $decorated)
-    {
+    public function __construct(
+        private OpenApiFactoryInterface $decorated
+    ) {
     }
 
-    /**
-     * @param array<string, mixed> $context
-     */
-    #[\Override]
     public function __invoke(array $context = []): OpenApi
     {
         $openApi = $this->decorated->__invoke($context);
@@ -43,8 +39,12 @@ final class OpenApiFactory implements OpenApiFactoryInterface
         $describedTags = [];
 
         foreach ($tags as $tag) {
-            $description = self::TAG_DESCRIPTIONS[$tag->getName()] ?? $tag->getDescription();
-            $describedTags[] = null === $description ? $tag : $tag->withDescription($description);
+            $description = self::TAG_DESCRIPTIONS[$tag->getName()]
+                ?? $tag->getDescription();
+
+            $describedTags[] = $description === null
+                ? $tag
+                : $tag->withDescription($description);
         }
 
         return $describedTags;
