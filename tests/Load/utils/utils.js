@@ -3,8 +3,8 @@ import { check } from 'k6';
 export default class Utils {
   constructor() {
     const config = this.getConfig();
-    const host = config.apiHost;
-    const port = config.apiPort;
+    const host = this.getEnv('API_HOST') ?? config.apiHost;
+    const port = this.getEnv('API_PORT') ?? config.apiPort;
 
     this.baseUrl = `http://${host}:${port}/api`;
     this.baseHttpUrl = this.baseUrl;
@@ -26,6 +26,16 @@ export default class Utils {
 
   getBaseHttpUrl() {
     return this.baseHttpUrl;
+  }
+
+  getEnv(variable) {
+    const value = typeof __ENV !== 'undefined' ? __ENV[variable] : undefined;
+
+    if (value === undefined || value === null || value === '' || value === 'undefined') {
+      return undefined;
+    }
+
+    return value;
   }
 
   getCLIVariable(variable) {

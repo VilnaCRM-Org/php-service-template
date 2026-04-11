@@ -1,6 +1,6 @@
 {
     "apiHost": "localhost",
-    "apiPort": "80",
+    "apiPort": "8081",
     "delayBetweenScenarios": 60,
     "endpoints": {
         "health": {

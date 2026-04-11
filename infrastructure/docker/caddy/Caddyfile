@@ -1,32 +1,52 @@
 {
-    # Debug
+    {$CADDY_GLOBAL_OPTIONS}
+
+    frankenphp {
+        {$FRANKENPHP_CONFIG}
+    }
+
     {$CADDY_DEBUG}
+    auto_https disable_redirects
 }
 
-{$SERVER_NAME}
+{$SERVER_NAME} {
+    log
+    {$CADDY_EXTRA_CONFIG}
 
-{$CADDY_EXTRA_CONFIG}
+    handle /ping {
+        respond "pong" 200
+    }
 
-log
-
-route {
     root * /srv/app/public
+    encode zstd gzip
+
     mercure {
-        # Transport to use (default to Bolt)
         transport_url {$MERCURE_TRANSPORT_URL:bolt:///data/mercure.db}
-        # Publisher JWT key
         publisher_jwt {env.MERCURE_PUBLISHER_JWT_KEY} {env.MERCURE_PUBLISHER_JWT_ALG}
-        # Subscriber JWT key
         subscriber_jwt {env.MERCURE_SUBSCRIBER_JWT_KEY} {env.MERCURE_SUBSCRIBER_JWT_ALG}
-        # Allow anonymous subscribers (double-check that it's what you want)
         anonymous
-        # Enable the subscription API (double-check that it's what you want)
         subscriptions
-        # Extra directives
         {$MERCURE_EXTRA_DIRECTIVES}
     }
+
     vulcain
-    php_fastcgi unix//var/run/php/php-fpm.sock
+    php_server
+    file_server
+}
+
+:8081 {
+    log
+
+    handle /ping {
+        respond "pong" 200
+    }
+
+    root * /srv/app/public
     encode zstd gzip
+
+    vulcain
+    php_server {
+        env APP_ENV test
+    }
     file_server
 }

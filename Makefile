@@ -10,6 +10,8 @@ SYMFONY_BIN   = symfony
 DOCKER        = docker
 DOCKER_COMPOSE = docker compose
 DOCKER_COMPOSE_LOAD_TEST = $(DOCKER_COMPOSE) -f docker-compose.prod.yml -f docker-compose.load_test.override.yml
+SCHEMATHESIS_IMAGE = schemathesis/schemathesis:latest
+SCHEMATHESIS_URL ?= http://localhost:8081
 
 # Executables
 EXEC_PHP      = $(DOCKER_COMPOSE) exec php
@@ -134,7 +136,7 @@ all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e t
 
 define RUN_LOAD_TEST
 	@set -e; \
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack; \
+	$(DOCKER_COMPOSE_LOAD_TEST) up --build --detach --wait php database localstack; \
 	trap '$(DOCKER_COMPOSE_LOAD_TEST) down --remove-orphans' EXIT; \
 	$(1)
 endef
@@ -187,16 +189,16 @@ cache-warmup: ## Warmup the Symfony cache
 purge: ## Purge cache and logs
 	@rm -rf var/cache/* var/logs/*
 
-up: ## Start the docker hub (PHP, caddy)
+up: ## Start the local FrankenPHP stack
 	$(DOCKER_COMPOSE) up --detach
 
-build: ## Builds the images (PHP, caddy)
+build: ## Build the local FrankenPHP images
 	$(DOCKER_COMPOSE) build --pull --no-cache
 
 down: ## Stop the docker hub
 	$(DOCKER_COMPOSE) down --remove-orphans
 
-sh: ## Log to the docker container
+sh: ## Log into the FrankenPHP container
 	@$(EXEC_PHP) sh
 
 logs: ## Show all logs
@@ -238,6 +240,9 @@ validate-configuration: ## Validate directory structure and locked configuration
 
 openapi-diff: generate-openapi-spec ## Compare the generated OpenAPI spec against a base reference
 	./scripts/openapi-diff.sh $(or $(base_ref),origin/main)
+
+schemathesis-validate: generate-openapi-spec ## Validate the running API against the OpenAPI spec with Schemathesis
+	$(DOCKER) run --rm --network=host -v $(CURDIR)/.github/openapi-spec:/data $(SCHEMATHESIS_IMAGE) run --checks all /data/spec.yaml --url $(SCHEMATHESIS_URL) --phases=examples,coverage
 
 generate-graphql-spec:
 	$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec
