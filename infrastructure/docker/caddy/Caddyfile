@@ -46,7 +46,7 @@
 
     vulcain
     php_server {
-        env APP_ENV test
+        env APP_ENV {$APP_RUNTIME_HTTP_ENV:test}
     }
     file_server
 }
