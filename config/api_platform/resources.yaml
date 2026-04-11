@@ -2,7 +2,16 @@ resources:
   App\CompanySubdomain\SomeModule\Domain\ExampleApiResource:
     operations:
       ApiPlatform\Metadata\Get:
-        openapi: true
+        openapi:
+          responses:
+            '200':
+              description: 'ExampleApiResource resource'
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ExampleApiResource'
+            default:
+              description: 'Problem response.'
 
   App\Internal\HealthCheck\Domain\ValueObject\HealthCheck:
     operations:
@@ -15,3 +24,5 @@ resources:
               description: 'Health check passed with no content to return.'
             '500':
               description: 'Health check failed.'
+            default:
+              description: 'Problem response.'
