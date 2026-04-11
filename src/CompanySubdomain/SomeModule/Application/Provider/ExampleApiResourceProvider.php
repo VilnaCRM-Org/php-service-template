@@ -22,8 +22,6 @@ TEXT;
     /**
      * @param array<string, array|object|scalar|null> $uriVariables
      * @param array<string, array|object|scalar|null> $context
-     *
-     * @return ExampleApiResource
      */
     public function provide(
         Operation $operation,
