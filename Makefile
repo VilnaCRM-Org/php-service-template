@@ -18,10 +18,12 @@ EXEC_PHP      = $(DOCKER_COMPOSE) exec php
 COMPOSER      = $(EXEC_PHP) composer
 GIT           = git
 EXEC_PHP_TEST_ENV = $(DOCKER_COMPOSE) exec -e APP_ENV=test php
+EXEC_PHP_LOAD_TEST_ENV = $(DOCKER_COMPOSE_LOAD_TEST) exec -e APP_ENV=test php
 
 # Alias
 SYMFONY       = $(EXEC_PHP) bin/console
 SYMFONY_TEST_ENV = $(EXEC_PHP_TEST_ENV) bin/console
+SYMFONY_LOAD_TEST_ENV = $(EXEC_PHP_LOAD_TEST_ENV) bin/console
 
 # Executables: vendors
 BEHAT         = ./vendor/bin/behat
@@ -132,12 +134,19 @@ setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) doctrine:database:create
 	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
 
+setup-load-test-db: ## Create database for test-only load-test endpoints
+	$(SYMFONY_LOAD_TEST_ENV) c:c
+	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:drop --force --if-exists
+	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:create
+	$(SYMFONY_LOAD_TEST_ENV) doctrine:migrations:migrate --no-interaction
+
 all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e tests
 
 define RUN_LOAD_TEST
 	@set -e; \
 	$(DOCKER_COMPOSE_LOAD_TEST) up --build --detach --wait php database localstack; \
 	trap '$(DOCKER_COMPOSE_LOAD_TEST) down --remove-orphans' EXIT; \
+	$(MAKE) setup-load-test-db; \
 	$(1)
 endef
 
@@ -242,6 +251,7 @@ openapi-diff: generate-openapi-spec ## Compare the generated OpenAPI spec agains
 	./scripts/openapi-diff.sh $(or $(base_ref),origin/main)
 
 schemathesis-validate: generate-openapi-spec ## Validate the running API against the OpenAPI spec with Schemathesis
+	$(MAKE) setup-test-db
 	$(DOCKER) run --rm --network=host -v $(CURDIR)/.github/openapi-spec:/data $(SCHEMATHESIS_IMAGE) run --checks all /data/spec.yaml --url $(SCHEMATHESIS_URL) --phases=examples,coverage
 
 generate-graphql-spec:

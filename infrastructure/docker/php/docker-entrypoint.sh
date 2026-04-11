@@ -6,9 +6,15 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
-    if [ "$APP_ENV" != 'prod' ]; then
+    install_dependencies=true
+
+    if [ "$APP_ENV" != 'prod' ] && [ -f vendor/autoload.php ] && [ ! composer.lock -nt vendor/autoload.php ]; then
+        install_dependencies=false
+    fi
+
+    if [ "$install_dependencies" = 'true' ] && [ "$APP_ENV" != 'prod' ]; then
         composer install --prefer-dist --no-progress --no-interaction
-    else
+    elif [ "$install_dependencies" = 'true' ]; then
         composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
     fi
 
