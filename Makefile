@@ -18,7 +18,7 @@ EXEC_PHP      = $(DOCKER_COMPOSE) exec php
 COMPOSER      = $(EXEC_PHP) composer
 GIT           = git
 EXEC_PHP_TEST_ENV = $(DOCKER_COMPOSE) exec -e APP_ENV=test php
-EXEC_PHP_LOAD_TEST_ENV = $(DOCKER_COMPOSE_LOAD_TEST) exec -e APP_ENV=test php
+EXEC_PHP_LOAD_TEST_ENV = $(DOCKER_COMPOSE_LOAD_TEST) exec -e APP_ENV=prod php
 
 # Alias
 SYMFONY       = $(EXEC_PHP) bin/console
@@ -134,7 +134,7 @@ setup-test-db: ## Create database for testing purposes
 	$(SYMFONY_TEST_ENV) doctrine:database:create
 	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
 
-setup-load-test-db: ## Create database for test-only load-test endpoints
+setup-load-test-db: ## Create database for the isolated load-test stack
 	$(SYMFONY_LOAD_TEST_ENV) cache:clear --no-warmup
 	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:drop --force --if-exists
 	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:create
