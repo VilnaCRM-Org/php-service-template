@@ -26,5 +26,18 @@ jobs:
       - name: Start Application
         run: make start
 
+      - name: Wait for Application Readiness
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl -fsS -o /dev/null http://localhost:8081/api/health; then
+              exit 0
+            fi
+
+            sleep 2
+          done
+
+          docker compose logs php database localstack
+          exit 1
+
       - name: Run Schemathesis Validation
         run: make schemathesis-validate

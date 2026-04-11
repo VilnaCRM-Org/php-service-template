@@ -5,6 +5,13 @@ if [ "${1#-}" != "$1" ]; then
     set -- frankenphp run --config /etc/caddy/Caddyfile "$@"
 fi
 
+if [ "$1" = 'frankenphp' ] && [ "${2:-}" = 'run' ] && [ "$APP_ENV" != 'prod' ] && [ -z "${CI:-}" ]; then
+    case " $* " in
+        *" --watch "*) ;;
+        *) set -- "$@" --watch ;;
+    esac
+fi
+
 if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
     install_dependencies=true
 

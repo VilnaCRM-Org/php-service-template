@@ -10,7 +10,7 @@ SYMFONY_BIN   = symfony
 DOCKER        = docker
 DOCKER_COMPOSE = docker compose
 DOCKER_COMPOSE_LOAD_TEST = $(DOCKER_COMPOSE) -f docker-compose.prod.yml -f docker-compose.load_test.override.yml
-SCHEMATHESIS_IMAGE = schemathesis/schemathesis:latest
+SCHEMATHESIS_IMAGE = schemathesis/schemathesis@sha256:85b0aa2937cae6de1c12d4c5d05cba59827d64d864e31afc9d645b140c64a55f
 SCHEMATHESIS_URL ?= http://localhost:8081
 
 # Executables

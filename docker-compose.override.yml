@@ -3,12 +3,6 @@ services:
   php:
     build:
       target: frankenphp_dev
-    command:
-      [
-        'sh',
-        '-c',
-        'if [ -n "$CI" ]; then exec frankenphp run --config /etc/caddy/Caddyfile; else exec frankenphp run --config /etc/caddy/Caddyfile --watch; fi',
-      ]
     volumes:
       - ./:/srv/app
       - ./infrastructure/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
