@@ -11,9 +11,14 @@ use App\CompanySubdomain\SomeModule\Domain\ExampleApiResource;
 /** @implements ProviderInterface<ExampleApiResource> */
 final class ExampleApiResourceProvider implements ProviderInterface
 {
-    private const DESCRIPTION = 'Replace this placeholder endpoint with a real bounded-context API '
-        . 'resource.';
+    private const DESCRIPTION = <<<'TEXT'
+Replace this placeholder endpoint with a real bounded-context API resource.
+TEXT;
 
+    /**
+     * @param array<string, array|object|scalar|null> $uriVariables
+     * @param array<string, array|object|scalar|null> $context
+     */
     public function provide(
         Operation $operation,
         array $uriVariables = [],
