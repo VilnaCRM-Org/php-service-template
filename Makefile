@@ -128,17 +128,18 @@ integration-tests: ## Run integration tests
 tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
 
+define SETUP_DB
+	$(1) cache:clear --no-warmup
+	$(1) doctrine:database:drop --force --if-exists
+	$(1) doctrine:database:create
+	$(1) doctrine:migrations:migrate --no-interaction
+endef
+
 setup-test-db: ## Create database for testing purposes
-	$(SYMFONY_TEST_ENV) cache:clear --no-warmup
-	$(SYMFONY_TEST_ENV) doctrine:database:drop --force --if-exists
-	$(SYMFONY_TEST_ENV) doctrine:database:create
-	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
+	$(call SETUP_DB,$(SYMFONY_TEST_ENV))
 
 setup-load-test-db: ## Create database for the isolated load-test stack
-	$(SYMFONY_LOAD_TEST_ENV) cache:clear --no-warmup
-	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:drop --force --if-exists
-	$(SYMFONY_LOAD_TEST_ENV) doctrine:database:create
-	$(SYMFONY_LOAD_TEST_ENV) doctrine:migrations:migrate --no-interaction
+	$(call SETUP_DB,$(SYMFONY_LOAD_TEST_ENV))
 
 all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e tests
 
