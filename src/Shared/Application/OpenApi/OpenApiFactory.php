@@ -11,10 +11,8 @@ use ApiPlatform\OpenApi\OpenApi;
 final class OpenApiFactory implements OpenApiFactoryInterface
 {
     private const TAG_DESCRIPTIONS = [
-        'ExampleApiResource' => 'Example API Platform resource endpoints'
-            . ' used as the template baseline.',
-        'HealthCheck' => 'Service readiness endpoints'
-            . ' for runtime health verification.',
+        'ExampleApiResource' => 'Template example resource endpoints.',
+        'HealthCheck' => 'Runtime health-check endpoints.',
     ];
 
     public function __construct(
@@ -22,6 +20,9 @@ final class OpenApiFactory implements OpenApiFactoryInterface
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function __invoke(array $context = []): OpenApi
     {
         $openApi = $this->decorated->__invoke($context);
