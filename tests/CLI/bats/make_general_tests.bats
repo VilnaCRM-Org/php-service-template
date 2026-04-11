@@ -95,13 +95,13 @@ load 'bats-assert/load'
 @test "make logs shows docker logs" {
   run bash -c "timeout 5 make logs"
   assert_failure 124
-  assert_output --partial '"GET /ping" 200'
+  assert_output --partial "FrankenPHP started"
 }
 
 @test "make new-logs command executes" {
   run bash -c "timeout 5 make logs"
   assert_failure 124
-  assert_output --partial ""GET /ping" 200"
+  assert_output --partial "FrankenPHP started"
 }
 
 @test "make commands lists all available Symfony commands" {
