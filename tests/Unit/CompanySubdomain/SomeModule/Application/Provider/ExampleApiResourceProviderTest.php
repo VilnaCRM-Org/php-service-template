@@ -20,7 +20,10 @@ final class ExampleApiResourceProviderTest extends UnitTestCase
 Replace this placeholder endpoint with a real bounded-context API resource.
 TEXT;
 
-        $this->assertInstanceOf(SomeModuleDomain\ExampleApiResource::class, $resource);
+        $this->assertInstanceOf(
+            SomeModuleDomain\ExampleApiResource::class,
+            $resource,
+        );
         $this->assertSame('php-service-template', $resource->name);
         $this->assertSame($expectedDescription, $resource->description);
     }
