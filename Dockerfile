@@ -94,6 +94,7 @@ RUN set -eux; \
     make -j"$(nproc)"; \
     make install; \
     docker-php-ext-enable xdebug; \
+    gpgconf --kill all; \
     apk del .xdebug-build-deps; \
     rm -rf "$GNUPGHOME" /tmp/xdebug-src
 
