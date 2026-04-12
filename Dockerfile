@@ -40,7 +40,7 @@ COPY --link --chmod=755 infrastructure/docker/php/docker-entrypoint.sh /usr/loca
 COPY --link infrastructure/docker/caddy/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
-HEALTHCHECK --start-period=600s CMD curl -fsS http://localhost/ping || exit 1
+HEALTHCHECK --start-period=180s CMD curl -fsS http://localhost/ping || exit 1
 
 COPY --from=composer --link /composer /usr/bin/composer
 
@@ -84,6 +84,11 @@ COPY --link infrastructure/docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
 RUN git config --global --add safe.directory /srv/app
 RUN rm -f .env.local.php
+RUN set -eux; \
+    if [ -f composer.json ]; then \
+        composer install --prefer-dist --no-interaction --no-progress --no-scripts; \
+        composer clear-cache; \
+    fi
 
 FROM frankenphp_base AS frankenphp_prod
 

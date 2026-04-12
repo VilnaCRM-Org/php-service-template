@@ -14,7 +14,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-      start_period: 600s
+      start_period: 180s
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}

@@ -5,11 +5,11 @@ services:
       target: frankenphp_dev
     volumes:
       - ./:/srv/app
+      - /srv/app/vendor
       - ./infrastructure/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
       - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      # If you develop on Mac or Windows you can remove the vendor/ directory
-      # from the bind-mount for better performance by enabling the next line:
-      #- /srv/app/vendor
+      # Keep dependencies in a container-managed volume so make start can
+      # refresh them without relying on host-side installs.
     environment:
       APP_ENV: dev
       CI: '${CI:-}'
