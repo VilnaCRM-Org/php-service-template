@@ -15,7 +15,9 @@ fi
 if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
     install_dependencies=true
 
-    if [ -f vendor/autoload.php ] && [ ! composer.lock -nt vendor/autoload.php ]; then
+    if [ -f vendor/autoload.php ] \
+        && [ ! composer.lock -nt vendor/autoload.php ] \
+        && [ ! composer.json -nt vendor/autoload.php ]; then
         install_dependencies=false
     fi
 

@@ -99,9 +99,10 @@ load 'bats-assert/load'
 }
 
 @test "make new-logs command executes" {
-  run bash -c "timeout 5 make logs"
+  run bash -c "(sleep 1; curl -fsS http://localhost:${APP_HTTP_TEST_PORT:-8081}/ping >/dev/null) & timeout 5 make new-logs"
   assert_failure 124
-  assert_output --partial "FrankenPHP started"
+  assert_output --partial '"msg":"handled request"'
+  assert_output --partial '"uri":"/ping"'
 }
 
 @test "make commands lists all available Symfony commands" {

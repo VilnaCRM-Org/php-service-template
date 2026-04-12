@@ -12,6 +12,7 @@ services:
       # refresh them without relying on host-side installs.
     environment:
       APP_ENV: dev
+      APP_RUNTIME_HTTP_ENV: '${APP_RUNTIME_HTTP_ENV:-dev}'
       CI: '${CI:-}'
       XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
