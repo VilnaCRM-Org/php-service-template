@@ -86,7 +86,7 @@ RUN git config --global --add safe.directory /srv/app
 RUN rm -f .env.local.php
 RUN set -eux; \
     if [ -f composer.json ]; then \
-        composer install --prefer-dist --no-interaction --no-progress --no-scripts; \
+        CAPTAINHOOK_DISABLE=true composer install --prefer-dist --no-interaction --no-progress --no-scripts; \
         composer clear-cache; \
     fi
 
