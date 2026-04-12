@@ -10,6 +10,6 @@ load 'bats-assert/load'
 }
 
 @test "make rector-apply execute" {
-  RECTOR_MODE=ci run ./vendor/bin/rector process --dry-run
+  run docker compose exec -e RECTOR_MODE=ci php ./vendor/bin/rector process --dry-run
   assert_output --partial 'files would have been changed (dry-run) by Rector'
 }
