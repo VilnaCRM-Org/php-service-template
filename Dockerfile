@@ -82,10 +82,12 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN set -eux; \
     apk add --no-cache --virtual .xdebug-build-deps \
         $PHPIZE_DEPS \
+        gnupg \
         linux-headers; \
-    curl -fsSL "https://xdebug.org/files/xdebug-${XDEBUG_VERSION}.tgz" -o /tmp/xdebug.tgz; \
-    mkdir -p /tmp/xdebug-src; \
-    tar -xzf /tmp/xdebug.tgz -C /tmp/xdebug-src --strip-components=1; \
+    export GNUPGHOME="$(mktemp -d)"; \
+    git clone --depth 1 --branch "${XDEBUG_VERSION}" https://github.com/xdebug/xdebug.git /tmp/xdebug-src; \
+    gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys 910DEB46F53EA312; \
+    git -C /tmp/xdebug-src tag -v "${XDEBUG_VERSION}"; \
     cd /tmp/xdebug-src; \
     phpize; \
     ./configure --enable-xdebug; \
@@ -93,7 +95,7 @@ RUN set -eux; \
     make install; \
     docker-php-ext-enable xdebug; \
     apk del .xdebug-build-deps; \
-    rm -rf /tmp/xdebug.tgz /tmp/xdebug-src
+    rm -rf "$GNUPGHOME" /tmp/xdebug-src
 
 COPY --link infrastructure/docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
