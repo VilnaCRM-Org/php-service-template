@@ -40,7 +40,7 @@ COPY --link --chmod=755 infrastructure/docker/php/docker-entrypoint.sh /usr/loca
 COPY --link infrastructure/docker/caddy/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
-HEALTHCHECK --start-period=180s CMD curl -fsS http://localhost/ping || exit 1
+HEALTHCHECK --start-period=180s CMD curl -fsS http://localhost:8081/ping || exit 1
 
 COPY --from=composer --link /composer /usr/bin/composer
 

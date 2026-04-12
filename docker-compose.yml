@@ -12,6 +12,7 @@ services:
     restart: unless-stopped
     healthcheck:
       interval: 10s
+      test: ['CMD-SHELL', 'curl -fsS http://localhost:8081/ping || exit 1']
       timeout: 3s
       retries: 3
       start_period: 180s
@@ -22,7 +23,7 @@ services:
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
       MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:${DB_PORT}/${DB_NAME}?serverVersion=${DB_VERSION}
+      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_NAME}?serverVersion=${DB_VERSION}
     volumes:
       - caddy_data:/data
       - caddy_config:/config
