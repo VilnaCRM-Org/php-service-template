@@ -66,6 +66,8 @@ CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
 
 FROM frankenphp_base AS frankenphp_dev
 
+ARG XDEBUG_VERSION=3.4.2
+
 ENV XDEBUG_MODE=off
 
 RUN apk add --no-cache \
@@ -78,7 +80,20 @@ COPY --link --from=ghcr.io/symfony-cli/symfony-cli:latest@sha256:e4cf5473fb10649
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN set -eux; \
-    install-php-extensions xdebug
+    apk add --no-cache --virtual .xdebug-build-deps \
+        $PHPIZE_DEPS \
+        linux-headers; \
+    curl -fsSL "https://xdebug.org/files/xdebug-${XDEBUG_VERSION}.tgz" -o /tmp/xdebug.tgz; \
+    mkdir -p /tmp/xdebug-src; \
+    tar -xzf /tmp/xdebug.tgz -C /tmp/xdebug-src --strip-components=1; \
+    cd /tmp/xdebug-src; \
+    phpize; \
+    ./configure --enable-xdebug; \
+    make -j"$(nproc)"; \
+    make install; \
+    docker-php-ext-enable xdebug; \
+    apk del .xdebug-build-deps; \
+    rm -rf /tmp/xdebug.tgz /tmp/xdebug-src
 
 COPY --link infrastructure/docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
