@@ -7,16 +7,25 @@ if [[ -z "${1:-}" ]]; then
 fi
 
 scenario=$1
-runSmoke=$2
-runAverage=$3
-runStress=$4
-runSpike=$5
+runSmoke=${2:-true}
+runAverage=${3:-true}
+runStress=${4:-true}
+runSpike=${5:-true}
 htmlPrefix=$6
 
 echo "Executing load test for scenario: $scenario"
 echo "Options - Smoke: $runSmoke, Average: $runAverage, Stress: $runStress, Spike: $runSpike"
-K6="docker run -v ./tests/Load:/loadTests --net=host --rm \
-    --user $(id -u) \
+ENV_VARS=""
+if [[ -n "${API_HOST:-}" ]]; then
+  ENV_VARS="${ENV_VARS} -e API_HOST=${API_HOST}"
+fi
+
+if [[ -n "${API_PORT:-}" ]]; then
+  ENV_VARS="${ENV_VARS} -e API_PORT=${API_PORT}"
+fi
+
+K6="docker run -v ./tests/Load:/loadTests --net=host --rm ${ENV_VARS} \
+    --user $(id -u):$(id -g) \
     k6 run --summary-trend-stats='avg,min,med,max,p(95),p(99)' \
     --out 'dashboard=port=-1&period=1s&export=/loadTests/results/${htmlPrefix}${scenario}.html'"
 

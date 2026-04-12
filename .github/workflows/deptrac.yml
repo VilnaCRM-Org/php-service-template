@@ -12,12 +12,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19 # v2
-        with:
-          php-version: ${{ vars.PHP_VERSION }}
-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Start application
+        run: make start
 
       - name: Run Deptrac
-        run: CI=1 make deptrac
+        run: make deptrac

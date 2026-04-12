@@ -1,6 +1,6 @@
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://supportukrainenow.org/)
 
-# Microservice template for modern PHP applications
+# PHP Service Template
 
 [![CodeScene Code Health](https://img.shields.io/badge/CodeScene%20%7C%20Hotspot%20Code%20Health-9.7-brightgreen)](https://codescene.io/projects/39797)
 [![CodeScene System Mastery](https://img.shields.io/badge/CodeScene%20%7C%20Average%20Code%20Health-9.8-brightgreen)](https://codescene.io/projects/39797)
@@ -11,204 +11,161 @@
 ![PHPInsights architecture](https://img.shields.io/badge/PHPInsights%20%7C%20Architecture%20-100.0%25-success.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fc1ca51fd0faca36ab82/maintainability)](https://codeclimate.com/github/VilnaCRM-Org/php-service-template/maintainability)
 
-## Possibilities
+`php-service-template` is the VilnaCRM baseline for enterprise-grade PHP services. It combines Symfony 7, API Platform 4, FrankenPHP, PostgreSQL, contract generation, architecture guards, and AI-assistant guidance into one template that downstream services can inherit without rebuilding the same platform concerns.
 
-- Modern PHP stack for services: [API Platform 3](https://api-platform.com/), PHP 8, [Symfony 7](https://symfony.com/)
+## Why this template exists
 
-- [Hexagonal Architecture, DDD & CQRS in PHP](https://github.com/CodelyTV/php-ddd-example)
+New services usually waste time on the same setup work: runtime packaging, CI hardening, contract tooling, architecture boundaries, and internal contributor guidance. This template packages those decisions once and keeps them synchronized across VilnaCRM services.
 
-- Built-in docker environment and convenient `make` cli command
+It is built to give new repositories:
 
-- A lot of CI checks to ensure the highest code quality that can be ([Psalm](https://psalm.dev/), [PHPInsights](https://phpinsights.com/), Security checks, Code style fixer)
+- A modern runtime based on PHP 8.3, Symfony 7, API Platform 4, FrankenPHP, PostgreSQL, Mercure, and Vulcain
+- A DDD, CQRS, and hexagonal structure with `src/Shared`, subdomain isolation, and Deptrac-enforced boundaries
+- Generated OpenAPI and GraphQL artifacts under `.github/` so compatibility checks become part of delivery
+- A CI stack covering static analysis, mutation testing, load testing, API contract validation, and GitHub-native security checks
+- A template-safe workflow for AI coding assistants that points tools at the real commands and quality gates of the repository
 
-- Configured testing tools: [PHPUnit](https://phpunit.de/), [Behat](https://docs.behat.org/)
+## Enterprise-grade baseline
 
-- Much more!
+This repository is intended for services that need operational discipline, not just scaffolding:
 
-## Why you might need it
+- `FrankenPHP` serves the application directly, reducing local and CI drift versus split reverse-proxy and PHP-FPM setups
+- `Psalm`, `Psalm security`, `PHPMD`, `PHPInsights`, `Deptrac`, `Infection`, `PHPUnit`, `Behat`, `Bats`, K6, Spectral, OpenAPI Diff, and Schemathesis are part of the repository workflow
+- `workspace.dsl` and Structurizr keep architecture visible and reviewable
+- Contract artifacts are generated, versioned, and checked for backward compatibility
+- The repo is designed to be synchronized into downstream services so improvements land across the platform consistently
 
-Many PHP developers need to create new projects from scratch and spend a lot of time.
+## Quick start
 
-We decided to simplify this exhausting process and create a public template for modern PHP applications. This template is used for all our microservices in VilnaCRM.
+Install the latest [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/), then boot the local stack:
 
-## License
-
-This software is distributed under the [Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed) license. Please read [LICENSE](https://github.com/VilnaCRM-Org/php-service-template/blob/main/LICENSE) for information on the software availability and distribution.
-
-### Minimal installation
-
-You can clone this repository locally or use Github functionality "Use this template"
-
-Install the latest [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/)
-
-Use `make` command to set up project and automatically install all needed dependencies
-
-> make start
-
-Go to browser and open the link below
-
-> https://localhost/api/docs
-
-That's it. You should now be ready to use PHP service template!
-
-## Using
-
-You can use `make` command to easily control and work with project locally.
-
-Execute `make` or `make help` to see the full list of project commands.
-
-Recent CI-oriented targets include `make ci`, `make ci-preflight`, `make ci-sequential`, `make phpmd`, `make validate-configuration`, `make validate-openapi-spec`, and `make openapi-diff`.
-
-## AI Agent Support
-
-This template now ships repository-level guidance for AI coding assistants:
-
-- `AGENTS.md` - the primary contributor workflow for coding agents
-- `CLAUDE.md` - Claude-oriented entrypoint that points back to the repository guide
-- `.claude/skills/` - template-safe skills for CI, testing, Deptrac, API work, documentation sync, load testing, and architecture updates
-
-The skills are plain Markdown so they can be followed by Claude Code, Codex, Copilot, Cursor, and similar tools. When adapting this template into a real service, keep these files aligned with the service's actual commands, architecture, and generated artifacts.
-
-The list of the `make` possibilities:
-
+```bash
+make start
 ```
-aws-load-tests               Execute load tests on AWS
-aws-load-tests-cleanup       Clean up AWS resources
-bats                         Bats is a TAP-compliant testing framework for Bash
-behat                        A php framework for autotesting business expectations
-build                        Builds the images (PHP, caddy)
-cache-clear                  Clears and warms up the application cache for a given environment and debug mode
-cache-warmup                 Warmup the Symfony cache
-changelog-generate           Generate changelog from a project's commit messages
-check-requirements           Checks requirements for running Symfony and gives useful recommendations to optimize PHP for Symfony.
-check-security               Checks security issues in project dependencies. Without arguments, it looks for a "composer.lock" file in the current directory. Pass it explicitly to check a specific "composer.lock" file.
-commands                     List all Symfony commands
-composer-validate            The validate command validates a given composer.json and composer.lock
-coverage                     Create the code coverage report with PHPUnit
-doctrine-migrations-generate Generates a blank migration class
-doctrine-migrations-migrate  Executes a migration to a specified version or the latest available version
-down                         Stop the docker hub
-install                      Install vendors according to the current composer.lock file
-update                       update vendors according to the current composer.json file
-load-fixtures                Build the DB, control the schema validity, load fixtures and check the migration status
-logs                         Show all logs
-new-logs                     Show live logs
-phpcsfixer                   A tool to automatically fix PHP Coding Standards issues
-phpinsights                  Instant PHP quality checks and static analysis tool
-phpunit                      The PHP unit testing framework
-psalm                        A static analysis tool for finding errors in PHP applications
-psalm-security               Psalm security analysis
-purge                        Purge cache and logs
-rector-apply                 Apply Rector transformations to the codebase
-rector-ci                    Run Rector in CI mode to detect refactoring issues
-sh                           Log to the docker container
-start                        Start docker
-stop                         Stop docker and the Symfony binary server
-up                           Start the docker hub (PHP, caddy)
+
+The development override starts FrankenPHP, PostgreSQL, LocalStack, and Structurizr. Useful entry points:
+
+- REST API docs: <https://localhost/api/docs>
+- GraphQL endpoint: <https://localhost/api/graphql>
+- HTTP test and load-test entrypoint: <http://localhost:8081>
+- Structurizr Lite: <http://localhost:8080/workspace/diagrams>
+
+Run `make help` to inspect the current command surface.
+
+## AI skills workflow
+
+This template ships repository-level instructions for AI assistants such as Codex, Claude Code, Copilot, Cursor, and similar tools.
+
+### Read in this order
+
+1. [`AGENTS.md`](AGENTS.md)
+2. [`.claude/skills/AI-AGENT-GUIDE.md`](.claude/skills/AI-AGENT-GUIDE.md)
+3. [`.claude/skills/SKILL-DECISION-GUIDE.md`](.claude/skills/SKILL-DECISION-GUIDE.md)
+4. The matching `SKILL.md` under [`.claude/skills/`](.claude/skills/)
+
+### Available repository skills
+
+- `api-platform-crud`
+- `ci-workflow`
+- `complexity-management`
+- `deptrac-fixer`
+- `documentation-sync`
+- `load-testing`
+- `openapi-development`
+- `quality-standards`
+- `structurizr-architecture-sync`
+- `testing-workflow`
+
+### How to use them well
+
+The best prompt pattern is explicit and repository-aware:
+
+```text
+Read AGENTS.md and the matching file from .claude/skills before changing code.
+Use make targets first, keep Domain code framework-free, and regenerate OpenAPI or GraphQL specs when the API changes.
 ```
+
+These files are plain Markdown by design. They are meant to be portable across AI tools while still describing this repository's actual verification flow.
+
+## Local development
+
+Prefer the repository wrappers over raw host commands. Common entry points:
+
+```bash
+make start
+make install
+make setup-test-db
+make composer-validate
+make psalm
+make psalm-security
+make phpinsights
+make deptrac
+make validate-openapi-spec
+make openapi-diff
+make schemathesis-validate
+make load-tests
+```
+
+If you need a shell in the running application container:
+
+```bash
+make sh
+```
+
+## CI and verification model
+
+The repository is supposed to fail fast when code, contracts, or architecture drift. The baseline includes:
+
+- Composer validation and Symfony requirement checks
+- Dependency security scanning, CodeQL, and GitHub Advanced Security analysis
+- PHP CS Fixer, Rector, PHPMD, Psalm, Psalm taint analysis, PHPInsights, and Deptrac
+- PHPUnit, Behat, Bats, Infection, and K6 load tests
+- OpenAPI generation, Spectral validation, OpenAPI diff, GraphQL diff, and Schemathesis validation
+
+For a local high-signal pass:
+
+```bash
+make ci
+```
+
+For contract-focused verification:
+
+```bash
+make generate-openapi-spec
+make validate-openapi-spec
+make openapi-diff
+make schemathesis-validate
+```
+
+## Repository synchronization
+
+This template is synchronized into downstream repositories across the VilnaCRM ecosystem. Runtime, CI, documentation, and AI-assistant improvements can therefore be propagated instead of reimplemented service by service.
+
+Two sync approaches are documented here:
+
+- [`.github/TEMPLATE_SYNC_PAT.md`](.github/TEMPLATE_SYNC_PAT.md)
+- [`.github/TEMPLATE_SYNC_APP.md`](.github/TEMPLATE_SYNC_APP.md)
+
+The `user-service` repository is one of the consumers kept aligned with this template.
+
+## Load testing in AWS
+
+The repository includes an AWS-oriented K6 workflow for cloud-based performance runs. Use:
+
+```bash
+make aws-load-tests
+make aws-load-tests-cleanup
+```
+
+These scripts provision temporary infrastructure, execute the configured scenarios, and upload results to S3. Clean up after every run to avoid unnecessary charges.
 
 ## Documentation
 
-Start reading at the [GitHub wiki](https://github.com/VilnaCRM-Org/php-service-template/wiki). If you're having trouble, head for [the troubleshooting guide](https://github.com/VilnaCRM-Org/php-service-template/wiki/Troubleshooting) as it's frequently updated.
+- Wiki: <https://github.com/VilnaCRM-Org/php-service-template/wiki>
+- Troubleshooting: <https://github.com/VilnaCRM-Org/php-service-template/wiki/Troubleshooting>
+- Security policy: [SECURITY.md](SECURITY.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
 
-You can generate complete API-level documentation by running `phpdoc` in the top-level folder, and documentation will appear in the `docs` folder, though you'll need to have [PHPDocumentor](http://www.phpdoc.org) installed.
+## License
 
-If the documentation doesn't cover what you need, search the [many questions on Stack Overflow](http://stackoverflow.com/questions/tagged/vilnacrm), and before you ask a question, [read the troubleshooting guide](https://github.com/VilnaCRM-Org/php-service-template/wiki/Troubleshooting).
-
-## Tests
-
-[Tests](https://github.com/VilnaCRM-Org/php-service-template/tree/main/tests/) use PHPUnit 9 and [Behat](https://github.com/Behat/Behat).
-
-[Test status](https://github.com/VilnaCRM-Org/php-service-template/actions)
-
-If this isn't passing, is there something you can do to help?
-
-## Running Load Tests in AWS
-
-This template supports running load tests on AWS using k6, a modern load testing tool, to evaluate the performance of your application under various conditions. You can automate this process using a custom bash script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the k6 load tests.
-
-### Steps for Running AWS Load Tests
-
-#### 1. **Configure AWS CLI**:
-
-Before you can interact with AWS, you'll need to [configure the AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with your credentials.
-Run the following command and provide your AWS Access Key and Secret Access Key. Ensure that your AWS credentials and region are properly set to avoid any permission or region-based issues.
-
-#### 2. **Run Load Tests**:
-
-The `make aws-load-tests` runs the script that provisions an EC2 instance, attaches an IAM role, creates an S3 bucket for storing the results, and executes the load tests.
-
-#### 3. **Configure CLI Options**:
-
-To configure the AWS load testing, pass options through the CLI command to define the AWS environment settings, as needed for your project:
-
-- `-r REGION`: Specifies the AWS region where the EC2 instance will be launched (e.g., `us-east-1`)
-- `-a AMI_ID`: Defines the Amazon Machine Image (AMI) ID to use for the EC2 instance (e.g., `ami-0e86e20dae9224db8`)
-- `-t INSTANCE_TYPE`: Sets the EC2 instance type (e.g., `t2.micro`)
-- `-i INSTANCE_TAG`: Provides a tag to identify the EC2 instance (e.g., `LoadTestInstance`)
-- `-o ROLE_NAME`: Specifies the IAM role name for the EC2 instance with write access to S3 (e.g., `EC2S3WriteAccessRole`)
-- `-b BRANCH_NAME`: Sets the branch name for the project (e.g., `main`)
-- `-s SECURITY_GROUP_NAME`: Defines the name of the security group to be used for the EC2 instance (e.g., `LoadTestSecurityGroup`)
-
-#### 4. **Executing Load Tests**:
-
-Once the EC2 instance is up, the predefined load tests are executed, simulating real-world conditions and workloads on your application.
-
-#### 5. **Saving Results to S3**:
-
-The results of the load tests are automatically uploaded to an S3 bucket for review and analysis.
-
-#### 6. **Scaling and Flexibility**:
-
-This approach allows you to scale the infrastructure to suit different performance testing needs, providing insights into how your service performs in a cloud-based, production-like environment.
-
-### Cleanup AWS Infrastructure
-
-After the load tests have been completed, it's important to clean up the AWS resources.
-The `make aws-load-tests-cleanup` command automates the process of tearing down the EC2 instance, security groups, and other related AWS resources.
-
-**Note:** This project utilizes AWS free tier services (EC2 micro instances, free security groups, free images, and volumes up to 30 GB), which minimizes cost concerns during AWS operations. However, it's still important to clean up resources to avoid any potential charges beyond the free tier limits.
-
-## Repository Synchronization
-
-This template is automatically synchronized with other repositories in our ecosystem. Whenever changes are made to the template, those changes are propagated to dependent projects, ensuring they stay up to date with the latest improvements and best practices.
-
-We use this synchronization feature, for example, in the [user-service](https://github.com/VilnaCRM-Org/user-service) repository.
-
-The synchronization is powered by the [actions-template-sync](https://github.com/AndreasAugustin/actions-template-sync) GitHub Action, which automates the process of propagating updates from this template to other projects.
-
-### Handling Workflow Permissions Error
-
-When setting up the repository synchronization, you may encounter permission-related issues. Below are two methods to resolve common workflow permissions errors: using a Personal Access Token (PAT) or using a GitHub App.
-
-#### Option 1: Using a Personal Access Token (PAT)
-
-Details on how to configure and use a PAT for repository synchronization can be found in the [TEMPLATE_SYNC_PAT.md](.github/TEMPLATE_SYNC_PAT.md) file inside the `.github` directory.
-
-#### Option 2: Using a GitHub App
-
-For projects that prefer GitHub App authentication, please refer to the [TEMPLATE_SYNC_APP.md](.github/TEMPLATE_SYNC_APP.md) file in the `.github` directory for setup instructions and examples.
-
-## Security
-
-Please disclose any vulnerabilities found responsibly – report security issues to the maintainers privately.
-
-See [SECURITY](https://github.com/VilnaCRM-Org/php-service-template/tree/main/SECURITY.md) and [Security advisories on GitHub](https://github.com/VilnaCRM-Org/php-service-template/security).
-
-## Contributing
-
-Please submit bug reports, suggestions, and pull requests to the [GitHub issue tracker](https://github.com/VilnaCRM-Org/php-service-template/issues).
-
-We're particularly interested in fixing edge cases, expanding test coverage, and updating translations.
-
-If you found a mistake in the docs, or want to add something, go ahead and amend the wiki – anyone can edit it.
-
-## Sponsorship
-
-Development time and resources for this repository are provided by [VilnaCRM](https://vilnacrm.com/), the free and opensource CRM system.
-
-Donations are very welcome, whether in beer 🍺, T-shirts 👕, or cold, hard cash 💰. Sponsorship through GitHub is a simple and convenient way to say "thank you" to maintainers and contributors – just click the "Sponsor" button [on the project page](https://github.com/VilnaCRM-Org/php-service-template). If your company uses this template, consider taking part in the VilnaCRM's enterprise support program.
-
-## Changelog
-
-See [changelog](CHANGELOG.md).
+This software is distributed under the [Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed) license. See [LICENSE](LICENSE).

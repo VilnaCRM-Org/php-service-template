@@ -2,7 +2,7 @@ services:
   php:
     build:
       context: .
-      target: app_php
+      target: frankenphp_prod
       args:
         SYMFONY_VERSION: ${SYMFONY_VERSION:-}
         STABILITY: ${STABILITY:-stable}
@@ -10,47 +10,30 @@ services:
       database:
         condition: service_healthy
     restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
     healthcheck:
       interval: 10s
+      test: ['CMD-SHELL', 'curl -fsS http://localhost:8081/ping || exit 1']
       timeout: 3s
       retries: 3
-      start_period: 30s
-    environment:
-      # Run "composer require symfony/orm-pack" to install and configure Doctrine ORM
-      # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
-      MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
-      MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
-      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:${DB_PORT}/${DB_NAME}?serverVersion=${DB_VERSION}
-
-  caddy:
-    build:
-      context: .
-      target: app_caddy
-    depends_on:
-      php:
-        condition: service_healthy
+      start_period: 180s
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
+      MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
+      MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
+      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
       MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-    restart: unless-stopped
+      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_NAME}?serverVersion=${DB_VERSION}
     volumes:
-      - php_socket:/var/run/php
       - caddy_data:/data
       - caddy_config:/config
     ports:
-      # HTTP
       - target: 80
         published: ${HTTP_PORT:-80}
         protocol: tcp
-      # HTTPS
       - target: 443
         published: ${HTTPS_PORT:-443}
         protocol: tcp
-      # HTTP/3
       - target: 443
         published: ${HTTP3_PORT:-443}
         protocol: udp
@@ -59,7 +42,6 @@ services:
     image: postgres:${DB_VERSION}-alpine
     environment:
       - POSTGRES_DB=${DB_NAME}
-      # You should definitely change the password in production
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USER}
     ports:
@@ -70,14 +52,8 @@ services:
       interval: 10s
       retries: 10
       test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}']
-# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
 
 volumes:
-  php_socket:
   caddy_data:
   caddy_config:
   db_data:
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###

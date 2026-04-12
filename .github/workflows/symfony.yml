@@ -8,27 +8,14 @@ jobs:
   symfony-checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19 # v2
-        with:
-          php-version: ${{ vars.PHP_VERSION }}
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Copy .env.test.local
-        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Install Symfony CLI
-        run: wget https://get.symfony.com/cli/installer -O - | bash
+        run: test -f .env.test.local || cp .env.test .env.test.local
+      - name: Start application
+        run: make start
       - name: Composer validate
-        run: composer validate
+        run: make composer-validate
       - name: Check symfony requirements
-        run: /home/runner/.symfony5/bin/symfony check:requirements
+        run: make check-requirements
       - name: Symfony security check
-        run: /home/runner/.symfony5/bin/symfony security:check
+        run: make check-security

@@ -38,6 +38,8 @@ interface Node {
 
 type ExampleApiResource implements Node {
   id: ID!
+  name: String!
+  description: String!
 }
 
 "Cursor connection for ExampleApiResource."

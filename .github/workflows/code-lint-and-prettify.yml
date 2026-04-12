@@ -42,30 +42,14 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
-          coverage: none
-
-      - name: Cache Composer packages
-        uses: actions/cache@v4
-        with:
-          path: |
-              ~/.composer/cache/files
-              vendor
-          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: composer-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
+      - name: Start application
+        run: make start
 
       - name: Run PHP CS Fixer
-        run: CI=1 make phpcsfixer
+        run: make phpcsfixer
 
       - name: Run Rector
-        run: CI=1 make rector-apply
+        run: make rector-apply
 
       - name: Commit changes
         if: ${{ github.event_name == 'push' && github.actor != 'github-actions[bot]' }}

@@ -12,19 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
 
+      - name: Start application
+        run: make start
+
       - name: Psalm
-        uses: docker://ghcr.io/psalm/psalm-github-actions:5.26.1
-        with:
-          composer_require_dev: true
-          composer_ignore_platform_reqs: true
+        run: make psalm
 
       - name: Psalm Security
-        uses: docker://ghcr.io/psalm/psalm-github-actions:5.26.1
-        with:
-          composer_require_dev: true
-          composer_ignore_platform_reqs: true
-          security_analysis: true
-          report_file: results.sarif
+        run: |
+          rm -f results.sarif
+          make psalm-security-sarif
 
       - name: Upload Security Analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v3.25.4

@@ -10,16 +10,20 @@ SYMFONY_BIN   = symfony
 DOCKER        = docker
 DOCKER_COMPOSE = docker compose
 DOCKER_COMPOSE_LOAD_TEST = $(DOCKER_COMPOSE) -f docker-compose.prod.yml -f docker-compose.load_test.override.yml
+SCHEMATHESIS_IMAGE = schemathesis/schemathesis@sha256:85b0aa2937cae6de1c12d4c5d05cba59827d64d864e31afc9d645b140c64a55f
+SCHEMATHESIS_URL ?= http://localhost:8081
 
 # Executables
 EXEC_PHP      = $(DOCKER_COMPOSE) exec php
 COMPOSER      = $(EXEC_PHP) composer
 GIT           = git
 EXEC_PHP_TEST_ENV = $(DOCKER_COMPOSE) exec -e APP_ENV=test php
+EXEC_PHP_LOAD_TEST_ENV = $(DOCKER_COMPOSE_LOAD_TEST) exec -e APP_ENV=prod php
 
 # Alias
 SYMFONY       = $(EXEC_PHP) bin/console
 SYMFONY_TEST_ENV = $(EXEC_PHP_TEST_ENV) bin/console
+SYMFONY_LOAD_TEST_ENV = $(EXEC_PHP_LOAD_TEST_ENV) bin/console
 
 # Executables: vendors
 BEHAT         = ./vendor/bin/behat
@@ -92,6 +96,9 @@ psalm: ## A static analysis tool for finding errors in PHP applications
 psalm-security: ## Psalm security analysis
 	$(EXEC_ENV) $(PSALM) --taint-analysis
 
+psalm-security-sarif: ## Psalm security analysis with SARIF output
+	$(EXEC_ENV) $(PSALM) --taint-analysis --report=results.sarif
+
 phpmd: ## Instant PHP MD quality checks for source and test code
 	$(EXEC_ENV) $(PHPMD) src ansi codesize,design,cleancode --exclude vendor
 	$(EXEC_ENV) $(PHPMD) tests ansi phpmd.tests.xml --exclude vendor,tests/CLI/bats/php
@@ -124,18 +131,26 @@ integration-tests: ## Run integration tests
 tests-with-coverage: ## Run tests with coverage
 	$(RUN_TESTS_COVERAGE)
 
+define SETUP_DB
+	$(1) cache:clear --no-warmup
+	$(1) doctrine:database:drop --force --if-exists
+	$(1) doctrine:database:create
+	$(1) doctrine:migrations:migrate --no-interaction
+endef
+
 setup-test-db: ## Create database for testing purposes
-	$(SYMFONY_TEST_ENV) c:c
-	$(SYMFONY_TEST_ENV) doctrine:database:drop --force --if-exists
-	$(SYMFONY_TEST_ENV) doctrine:database:create
-	$(SYMFONY_TEST_ENV) doctrine:migrations:migrate --no-interaction
+	$(call SETUP_DB,$(SYMFONY_TEST_ENV))
+
+setup-load-test-db: ## Create database for the isolated load-test stack
+	$(call SETUP_DB,$(SYMFONY_LOAD_TEST_ENV))
 
 all-tests: unit-tests integration-tests behat ## Run unit, integration and e2e tests
 
 define RUN_LOAD_TEST
 	@set -e; \
-	$(DOCKER_COMPOSE_LOAD_TEST) up --detach --wait php database caddy localstack; \
+	$(DOCKER_COMPOSE_LOAD_TEST) up --build --detach --wait php database localstack; \
 	trap '$(DOCKER_COMPOSE_LOAD_TEST) down --remove-orphans' EXIT; \
+	$(MAKE) setup-load-test-db; \
 	$(1)
 endef
 
@@ -187,16 +202,16 @@ cache-warmup: ## Warmup the Symfony cache
 purge: ## Purge cache and logs
 	@rm -rf var/cache/* var/logs/*
 
-up: ## Start the docker hub (PHP, caddy)
-	$(DOCKER_COMPOSE) up --detach
+up: ## Start the local FrankenPHP stack
+	$(DOCKER_COMPOSE) up --detach --wait
 
-build: ## Builds the images (PHP, caddy)
+build: ## Build the local FrankenPHP images
 	$(DOCKER_COMPOSE) build --pull --no-cache
 
 down: ## Stop the docker hub
 	$(DOCKER_COMPOSE) down --remove-orphans
 
-sh: ## Log to the docker container
+sh: ## Log into the FrankenPHP container
 	@$(EXEC_PHP) sh
 
 logs: ## Show all logs
@@ -238,6 +253,12 @@ validate-configuration: ## Validate directory structure and locked configuration
 
 openapi-diff: generate-openapi-spec ## Compare the generated OpenAPI spec against a base reference
 	./scripts/openapi-diff.sh $(or $(base_ref),origin/main)
+
+schemathesis-validate: generate-openapi-spec ## Validate the running API against the OpenAPI spec with Schemathesis
+	@if echo "$(SCHEMATHESIS_URL)" | grep -Eq '^http://(localhost|127\\.0\\.0\\.1)(:[0-9]+)?(/.*)?$$'; then \
+		$(MAKE) setup-test-db; \
+	fi
+	$(DOCKER) run --rm --network=host -v $(CURDIR)/.github/openapi-spec:/data $(SCHEMATHESIS_IMAGE) run --checks all /data/spec.yaml --url $(SCHEMATHESIS_URL) --phases=examples,coverage
 
 generate-graphql-spec:
 	$(EXEC_PHP) php bin/console api:graphql:export --output=.github/graphql-spec/spec

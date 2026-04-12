@@ -17,12 +17,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ vars.PHP_VERSION }}
-
-      - name: Install Dependencies
-        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Start Application
+        run: make start
 
       - name: Run Rector (Dry Run with Exit on Diff)
-        run: CI=1 make rector-ci
+        run: make rector-ci

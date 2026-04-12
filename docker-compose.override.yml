@@ -2,26 +2,25 @@
 services:
   php:
     build:
-      target: app_php_dev
+      target: frankenphp_dev
     volumes:
       - ./:/srv/app
+      - /srv/app/vendor
       - ./infrastructure/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
-      # If you develop on Mac or Windows you can remove the vendor/ directory
-      #  from the bind-mount for better performance by enabling the next line:
-      #- /srv/app/vendor
+      - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      # Keep dependencies in a container-managed volume so make start can
+      # refresh them without relying on host-side installs.
     environment:
-      # See https://xdebug.org/docs/all_settings#mode
+      APP_ENV: dev
+      APP_RUNTIME_HTTP_ENV: '${APP_RUNTIME_HTTP_ENV:-dev}'
+      CI: '${CI:-}'
       XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
-      # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
-
-  caddy:
-    command:
-      ['caddy', 'run', '--config', '/etc/caddy/Caddyfile', '--adapter', 'caddyfile', '--watch']
-    volumes:
-      - ./public:/srv/app/public:ro
-      - ./infrastructure/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+    ports:
+      - target: 8081
+        published: ${APP_HTTP_TEST_PORT:-8081}
+        protocol: tcp
 
   structurizr:
     image: structurizr/lite:2024.07.02
@@ -32,7 +31,6 @@ services:
 
   localstack:
     image: localstack/localstack:3.4.0
-    container_name: localstack
     ports:
       - '${LOCALSTACK_PORT}:4566'
     environment:
@@ -41,5 +39,6 @@ services:
     volumes:
       - localstack_data:/var/lib/localstack
       - ./infrastructure/docker/php/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
+
 volumes:
   localstack_data:

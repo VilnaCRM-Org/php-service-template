@@ -24,7 +24,7 @@ load 'bats-assert/load'
 @test "make infection should fail due to partly covered class" {
   mv tests/CLI/bats/php/PartlyCoveredEventBus.php src/Shared/Infrastructure/Bus/Event/
 
-  composer dump-autoload
+  docker compose exec php composer dump-autoload
 
   run make unit-tests
   run make infection

@@ -2,6 +2,7 @@ resources:
   App\CompanySubdomain\SomeModule\Domain\ExampleApiResource:
     operations:
       ApiPlatform\Metadata\Get:
+        provider: 'App\CompanySubdomain\SomeModule\Application\Provider\ExampleApiResourceProvider'
         openapi:
           responses:
             '200':

@@ -3,7 +3,7 @@ services:
   php:
     build:
       context: .
-      target: app_php
+      target: frankenphp_prod
       args:
         SYMFONY_VERSION: ${SYMFONY_VERSION:-}
         STABILITY: ${STABILITY:-stable}
@@ -11,47 +11,35 @@ services:
       database:
         condition: service_healthy
     restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
-      - ./infrastructure/docker/php/conf.d/app.prod.ini:/usr/local/etc/php/conf.d/app.prod.ini:ro
     healthcheck:
-      test: ['CMD-SHELL', 'php-fpm -t || exit 1']
       interval: 10s
       timeout: 3s
       retries: 3
-      start_period: 30s
+      start_period: 180s
+      test: ['CMD-SHELL', 'curl -fsS http://localhost:8081/ping || exit 1']
     environment:
-      MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
+      SERVER_NAME: ${SERVER_NAME:-localhost}
+      MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
       MERCURE_PUBLIC_URL: https://${SERVER_NAME}/.well-known/mercure
-      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:${DB_PORT}/${DB_NAME}?serverVersion=${DB_VERSION}
-
-  caddy:
-    build:
-      context: .
-      target: app_caddy
-    depends_on:
-      php:
-        condition: service_healthy
-    environment:
-      SERVER_NAME: ${SERVER_NAME}
-    restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
-      - caddy_data:/data
-      - caddy_config:/config
+      MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_NAME}?serverVersion=${DB_VERSION}
     ports:
-      # HTTP
       - target: 80
         published: ${HTTP_PORT:-80}
         protocol: tcp
-      # HTTPS
       - target: 443
         published: ${HTTPS_PORT:-443}
         protocol: tcp
-      # HTTP/3
       - target: 443
         published: ${HTTP3_PORT:-443}
         protocol: udp
+      - target: 8081
+        published: ${APP_HTTP_TEST_PORT:-8081}
+        protocol: tcp
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
 
   database:
     image: postgres:${DB_VERSION}-alpine
@@ -70,7 +58,6 @@ services:
 
   localstack:
     image: localstack/localstack:3.4.0
-    container_name: localstack
     ports:
       - '${LOCALSTACK_PORT}:4566'
     environment:
@@ -81,7 +68,6 @@ services:
       - ./infrastructure/docker/php/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
 
 volumes:
-  php_socket:
   caddy_data:
   caddy_config:
   db_data:
