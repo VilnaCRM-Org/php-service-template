@@ -5,7 +5,7 @@ Date: 2026-07-02. Scope: every system quality attribute from the
 plus AI-native autonomous-development readiness, scored 1–5 against an enterprise bar
 (5 = fully enterprise-grade, automated/enforced in CI, documented — nothing meaningful left to add).
 
-**Result: 94 attributes scored — average 3.48/5. No attribute reached 5/5** (56×4, 28×3, 9×2, 1×1). The gaps cluster into 28 root-cause problems, each tracked by a dedicated GitHub issue (see the "Remediation plan" section).
+**Result: 94 attributes scored — average 3.48/5. No attribute reached 5/5** (56×4, 28×3, 9×2, 1×1). The gaps cluster into 28 root-cause problems, each tracked by a dedicated GitHub issue (#176–#203, see the "Remediation plan" section).
 
 ## Scorecard summary
 
@@ -13,146 +13,146 @@ plus AI-native autonomous-development readiness, scored 1–5 against an enterpr
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| accountability | 3/5 | P1, P3, P12 |
-| auditability | 3/5 | P1 |
-| confidentiality | 2/5 | P3, P4 |
-| credibility | 4/5 | P6, P7, P13, P26 |
-| integrity | 4/5 | P7, P26, P28 |
-| safety | 3/5 | P2, P5, P15 |
-| securability | 3/5 | P3, P5, P6 |
-| vulnerability | 3/5 | P4, P6, P13 |
+| accountability | 3/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)), P3 ([#179](https://github.com/VilnaCRM-Org/php-service-template/issues/179)), P12 ([#186](https://github.com/VilnaCRM-Org/php-service-template/issues/186)) |
+| auditability | 3/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)) |
+| confidentiality | 2/5 | P3 ([#179](https://github.com/VilnaCRM-Org/php-service-template/issues/179)), P4 ([#178](https://github.com/VilnaCRM-Org/php-service-template/issues/178)) |
+| credibility | 4/5 | P6 ([#180](https://github.com/VilnaCRM-Org/php-service-template/issues/180)), P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)), P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)) |
+| integrity | 4/5 | P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)), P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| safety | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P5 ([#181](https://github.com/VilnaCRM-Org/php-service-template/issues/181)), P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| securability | 3/5 | P3 ([#179](https://github.com/VilnaCRM-Org/php-service-template/issues/179)), P5 ([#181](https://github.com/VilnaCRM-Org/php-service-template/issues/181)), P6 ([#180](https://github.com/VilnaCRM-Org/php-service-template/issues/180)) |
+| vulnerability | 3/5 | P4 ([#178](https://github.com/VilnaCRM-Org/php-service-template/issues/178)), P6 ([#180](https://github.com/VilnaCRM-Org/php-service-template/issues/180)), P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)) |
 
 ### Reliability & Resilience — avg 2.69
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| availability | 3/5 | P2, P15 |
-| dependability | 4/5 | P1, P8 |
-| degradability | 2/5 | P5, P16 |
-| durability | 2/5 | P14, P15 |
-| failure transparency | 3/5 | P1, P2 |
-| fault-tolerance | 3/5 | P16 |
-| recoverability | 2/5 | P13, P14 |
-| redundancy | 1/5 | P15 |
-| reliability | 3/5 | P2, P8, P14 |
-| resilience | 2/5 | P16 |
-| robustness | 4/5 | P11, P16, P28 |
-| stability | 4/5 | P16 |
-| survivability | 2/5 | P13, P14, P16 |
+| availability | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| dependability | 4/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)), P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)) |
+| degradability | 2/5 | P5 ([#181](https://github.com/VilnaCRM-Org/php-service-template/issues/181)), P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)) |
+| durability | 2/5 | P14 ([#188](https://github.com/VilnaCRM-Org/php-service-template/issues/188)), P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| failure transparency | 3/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)), P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)) |
+| fault-tolerance | 3/5 | P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)) |
+| recoverability | 2/5 | P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)), P14 ([#188](https://github.com/VilnaCRM-Org/php-service-template/issues/188)) |
+| redundancy | 1/5 | P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| reliability | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P14 ([#188](https://github.com/VilnaCRM-Org/php-service-template/issues/188)) |
+| resilience | 2/5 | P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)) |
+| robustness | 4/5 | P11 ([#187](https://github.com/VilnaCRM-Org/php-service-template/issues/187)), P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)), P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| stability | 4/5 | P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)) |
+| survivability | 2/5 | P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)), P14 ([#188](https://github.com/VilnaCRM-Org/php-service-template/issues/188)), P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)) |
 
 ### Performance & Scalability — avg 3.29
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| efficiency | 4/5 | P17, P19 |
-| elasticity | 2/5 | P15 |
-| responsiveness | 4/5 | P2, P9, P19 |
-| scalability | 3/5 | P15, P19 |
-| timeliness | 3/5 | P2, P17, P18, P19 |
-| distributability | 3/5 | P15 |
-| precision | 4/5 | P19 |
+| efficiency | 4/5 | P17 ([#192](https://github.com/VilnaCRM-Org/php-service-template/issues/192)), P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)) |
+| elasticity | 2/5 | P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| responsiveness | 4/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)), P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)) |
+| scalability | 3/5 | P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)), P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)) |
+| timeliness | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P17 ([#192](https://github.com/VilnaCRM-Org/php-service-template/issues/192)), P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)), P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)) |
+| distributability | 3/5 | P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| precision | 4/5 | P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)) |
 
 ### Maintainability & Architecture — avg 3.89
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| adaptability | 4/5 | P23, P27 |
-| agility | 4/5 | P8, P17 |
-| analyzability | 4/5 | P8, P11 |
-| composability | 4/5 | P28 |
-| configurability | 4/5 | P22 |
-| customizability | 3/5 | P23 |
-| evolvability | 4/5 | P20, P23, P24 |
-| extensibility | 4/5 | P23 |
-| flexibility | 4/5 | P28 |
-| interchangeability | 4/5 | P28 |
-| maintainability | 4/5 | P8 |
-| modifiability | 4/5 | P9 |
-| modularity | 4/5 | P28 |
-| orthogonality | 4/5 | P28 |
-| reusability | 4/5 | P28 |
-| simplicity | 4/5 | P26 |
-| tailorability | 3/5 | P23, P27 |
-| understandability | 4/5 | P22 |
+| adaptability | 4/5 | P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)), P27 ([#203](https://github.com/VilnaCRM-Org/php-service-template/issues/203)) |
+| agility | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P17 ([#192](https://github.com/VilnaCRM-Org/php-service-template/issues/192)) |
+| analyzability | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P11 ([#187](https://github.com/VilnaCRM-Org/php-service-template/issues/187)) |
+| composability | 4/5 | P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| configurability | 4/5 | P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| customizability | 3/5 | P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)) |
+| evolvability | 4/5 | P20 ([#194](https://github.com/VilnaCRM-Org/php-service-template/issues/194)), P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)), P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)) |
+| extensibility | 4/5 | P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)) |
+| flexibility | 4/5 | P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| interchangeability | 4/5 | P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| maintainability | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)) |
+| modifiability | 4/5 | P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)) |
+| modularity | 4/5 | P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| orthogonality | 4/5 | P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| reusability | 4/5 | P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)) |
+| simplicity | 4/5 | P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)) |
+| tailorability | 3/5 | P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)), P27 ([#203](https://github.com/VilnaCRM-Org/php-service-template/issues/203)) |
+| understandability | 4/5 | P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
 
 ### Testability & Correctness — avg 4.00
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| accuracy | 4/5 | P8, P9, P10 |
-| correctness | 4/5 | P8, P9 |
-| demonstrability | 4/5 | P8, P9 |
-| determinability | 4/5 | P10 |
-| effectiveness | 4/5 | P8, P9 |
-| fidelity | 4/5 | P19 |
-| predictability | 4/5 | P10 |
-| provability | 4/5 | P8, P9 |
-| relevance | 4/5 | P10, P18 |
-| repeatability | 4/5 | P10 |
-| reproducibility | 4/5 | P10 |
-| testability | 4/5 | P10 |
+| accuracy | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)), P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)) |
+| correctness | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)) |
+| demonstrability | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)) |
+| determinability | 4/5 | P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)) |
+| effectiveness | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)) |
+| fidelity | 4/5 | P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)) |
+| predictability | 4/5 | P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)) |
+| provability | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)) |
+| relevance | 4/5 | P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)), P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)) |
+| repeatability | 4/5 | P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)) |
+| reproducibility | 4/5 | P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)) |
+| testability | 4/5 | P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)) |
 
 ### Observability & Operability — avg 3.10
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| administrability | 3/5 | P4, P16 |
-| debuggability | 3/5 | P1, P25 |
-| inspectability | 3/5 | P2, P25 |
-| manageability | 3/5 | P2, P7, P15 |
-| observability | 2/5 | P1, P2 |
-| operability | 3/5 | P2, P22 |
-| repairability | 3/5 | P14 |
-| serviceability | 4/5 | P22, P24 |
-| traceability | 3/5 | P1 |
-| transparency | 4/5 | P1, P7 |
+| administrability | 3/5 | P4 ([#178](https://github.com/VilnaCRM-Org/php-service-template/issues/178)), P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)) |
+| debuggability | 3/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)), P25 ([#200](https://github.com/VilnaCRM-Org/php-service-template/issues/200)) |
+| inspectability | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P25 ([#200](https://github.com/VilnaCRM-Org/php-service-template/issues/200)) |
+| manageability | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)) |
+| observability | 2/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)), P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)) |
+| operability | 3/5 | P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)), P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| repairability | 3/5 | P14 ([#188](https://github.com/VilnaCRM-Org/php-service-template/issues/188)) |
+| serviceability | 4/5 | P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)), P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)) |
+| traceability | 3/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)) |
+| transparency | 4/5 | P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)), P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)) |
 
 ### Deployability & Portability — avg 3.70
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| compatibility | 4/5 | P20, P24 |
-| deployability | 3/5 | P4, P7 |
-| installability | 4/5 | P21 |
-| interoperability | 4/5 | P7, P24 |
-| mobility | 4/5 | P15, P21 |
-| portability | 3/5 | P7, P21 |
-| seamlessness | 4/5 | P12 |
-| standards compliance | 4/5 | P24, P26 |
-| ubiquity | 3/5 | P7, P21 |
-| upgradability | 4/5 | P18, P24 |
+| compatibility | 4/5 | P20 ([#194](https://github.com/VilnaCRM-Org/php-service-template/issues/194)), P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)) |
+| deployability | 3/5 | P4 ([#178](https://github.com/VilnaCRM-Org/php-service-template/issues/178)), P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)) |
+| installability | 4/5 | P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)) |
+| interoperability | 4/5 | P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)) |
+| mobility | 4/5 | P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)), P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)) |
+| portability | 3/5 | P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)) |
+| seamlessness | 4/5 | P12 ([#186](https://github.com/VilnaCRM-Org/php-service-template/issues/186)) |
+| standards compliance | 4/5 | P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)), P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)) |
+| ubiquity | 3/5 | P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)) |
+| upgradability | 4/5 | P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)), P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)) |
 
 ### Usability & Developer Experience — avg 3.56
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| accessibility | 3/5 | P21, P22 |
-| convenience | 4/5 | P8, P21, P22 |
-| discoverability | 4/5 | P13, P22 |
-| familiarity | 4/5 | P22 |
-| interactivity | 3/5 | P25 |
-| intuitiveness | 4/5 | P22, P23 |
-| learnability | 4/5 | P22 |
-| localizability | 2/5 | P20 |
-| usability | 4/5 | P13, P22, P25 |
+| accessibility | 3/5 | P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)), P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| convenience | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)), P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| discoverability | 4/5 | P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)), P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| familiarity | 4/5 | P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| interactivity | 3/5 | P25 ([#200](https://github.com/VilnaCRM-Org/php-service-template/issues/200)) |
+| intuitiveness | 4/5 | P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)), P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)) |
+| learnability | 4/5 | P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)) |
+| localizability | 2/5 | P20 ([#194](https://github.com/VilnaCRM-Org/php-service-template/issues/194)) |
+| usability | 4/5 | P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)), P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)), P25 ([#200](https://github.com/VilnaCRM-Org/php-service-template/issues/200)) |
 
 ### Process, Sustainability & AI-Native — avg 3.71
 
 | Attribute | Score | Remediation issue(s) |
 |---|---|---|
-| affordability | 3/5 | P9, P17 |
-| autonomy | 4/5 | P18 |
-| process capabilities | 4/5 | P12, P13 |
-| producibility | 3/5 | P7, P26 |
-| self-sustainability | 4/5 | P18 |
-| sustainability | 4/5 | P8, P9, P18, P26, P27 |
-| ai-native-readiness | 4/5 | P27 |
+| affordability | 3/5 | P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)), P17 ([#192](https://github.com/VilnaCRM-Org/php-service-template/issues/192)) |
+| autonomy | 4/5 | P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)) |
+| process capabilities | 4/5 | P12 ([#186](https://github.com/VilnaCRM-Org/php-service-template/issues/186)), P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)) |
+| producibility | 3/5 | P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)), P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)) |
+| self-sustainability | 4/5 | P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)) |
+| sustainability | 4/5 | P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)), P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)), P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)), P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)), P27 ([#203](https://github.com/VilnaCRM-Org/php-service-template/issues/203)) |
+| ai-native-readiness | 4/5 | P27 ([#203](https://github.com/VilnaCRM-Org/php-service-template/issues/203)) |
 
 ## Remediation plan (root-cause problems)
 
 Each problem below is filed as a GitHub issue. Closing all 28 brings every attribute above to 5/5.
 
-### P1: Add structured application logging and audit trail (monolog, correlation IDs)
+### P1 ([#176](https://github.com/VilnaCRM-Org/php-service-template/issues/176)): Add structured application logging and audit trail (monolog, correlation IDs)
 
 *Unblocks:* accountability, auditability, debuggability, dependability, failure transparency, observability, traceability, transparency
 
@@ -163,7 +163,7 @@ The template ships no application logging at all: symfony/monolog-bundle is abse
 - Audit-log channel example and optional domain-event audit table + Doctrine migration
 - Log retention/shipping guidance (CloudWatch via existing LocalStack) in docs
 
-### P2: Add observability baseline: OpenTelemetry tracing, metrics, error tracking, SLOs and per-dependency health payload
+### P2 ([#177](https://github.com/VilnaCRM-Org/php-service-template/issues/177)): Add observability baseline: OpenTelemetry tracing, metrics, error tracking, SLOs and per-dependency health payload
 
 *Unblocks:* availability, failure transparency, inspectability, manageability, observability, operability, reliability, responsiveness, safety, timeliness
 
@@ -175,7 +175,7 @@ No OpenTelemetry, no metrics endpoint (Prometheus/OTLP), no error-tracking integ
 - Optional commented Sentry (or similar) integration
 - Document SLOs and alerting baseline in docs
 
-### P3: Add authentication/authorization baseline with symfony/security-bundle
+### P3 ([#179](https://github.com/VilnaCRM-Org/php-service-template/issues/179)): Add authentication/authorization baseline with symfony/security-bundle
 
 *Unblocks:* accountability, confidentiality, securability
 
@@ -186,7 +186,7 @@ There is no authn/authz at all: symfony/security-bundle is not installed, config
 - Keep Domain layer framework-free per the agent contract
 - Behat scenario proving a protected endpoint returns 401 without credentials
 
-### P4: Secrets management: remove committed secrets, add generation script, vault/Secrets Manager wiring and secrets scanning in CI
+### P4 ([#178](https://github.com/VilnaCRM-Org/php-service-template/issues/178)): Secrets management: remove committed secrets, add generation script, vault/Secrets Manager wiring and secrets scanning in CI
 
 *Unblocks:* administrability, confidentiality, deployability, vulnerability
 
@@ -197,7 +197,7 @@ The committed .env contains a real-looking APP_SECRET=2e222659c5b006df8d0e68cc33
 - Add gitleaks (or equivalent) secrets-scanning workflow
 - Document each .env variable's purpose inline
 
-### P5: API hardening: rate limiting, security headers and safe Mercure defaults
+### P5 ([#181](https://github.com/VilnaCRM-Org/php-service-template/issues/181)): API hardening: rate limiting, security headers and safe Mercure defaults
 
 *Unblocks:* degradability, safety, securability
 
@@ -208,7 +208,7 @@ symfony/rate-limiter is not installed and no limiter config exists; the Caddyfil
 - Remove/guard the anonymous Mercure directive default
 - Behat/integration coverage for 429 responses and headers
 
-### P6: Supply-chain and container security scanning: Trivy image scan, extended SAST, OSSF Scorecard, container runtime hardening
+### P6 ([#180](https://github.com/VilnaCRM-Org/php-service-template/issues/180)): Supply-chain and container security scanning: Trivy image scan, extended SAST, OSSF Scorecard, container runtime hardening
 
 *Unblocks:* credibility, securability, vulnerability
 
@@ -219,7 +219,7 @@ No container image scanning (Trivy/Grype) for the FrankenPHP image, SAST is limi
 - read_only rootfs, cap_drop: [ALL], no-new-privileges and tmpfs in docker-compose.prod.yml
 - Keep existing Psalm taint SARIF; add composer audit gate if missing
 
-### P7: Release engineering: publish versioned container image to GHCR with SBOM, cosign signing and SLSA provenance
+### P7 ([#182](https://github.com/VilnaCRM-Org/php-service-template/issues/182)): Release engineering: publish versioned container image to GHCR with SBOM, cosign signing and SLSA provenance
 
 *Unblocks:* credibility, deployability, integrity, interoperability, manageability, portability, producibility, transparency, ubiquity
 
@@ -230,7 +230,7 @@ autorelease.yml only tags and writes release notes: no workflow builds/publishes
 - cosign signing + actions/attest-build-provenance SLSA provenance
 - Document image consumption/rollback by tag in docs
 
-### P8: Enforce mutation testing quality gate: add --min-msi/--min-covered-msi thresholds to Infection
+### P8 ([#183](https://github.com/VilnaCRM-Org/php-service-template/issues/183)): Enforce mutation testing quality gate: add --min-msi/--min-covered-msi thresholds to Infection
 
 *Unblocks:* accuracy, agility, analyzability, convenience, correctness, demonstrability, dependability, effectiveness, maintainability, provability, reliability, sustainability
 
@@ -240,7 +240,7 @@ Infection runs in CI (infection.yml) and locally (make infection) but neither in
 - Fail CI below threshold; document ratchet-up policy
 - Align with the 'do not lower quality gates' contract in CLAUDE.md
 
-### P9: Enforce code coverage targets and deduplicate coverage CI jobs
+### P9 ([#185](https://github.com/VilnaCRM-Org/php-service-template/issues/185)): Enforce code coverage targets and deduplicate coverage CI jobs
 
 *Unblocks:* accuracy, affordability, correctness, demonstrability, effectiveness, modifiability, provability, responsiveness, sustainability
 
@@ -250,7 +250,7 @@ phpunit.xml.dist has an empty <coverage> block with no thresholds, there is no c
 - Optional phpunit --coverage + threshold check in CI
 - Merge tests.yml and codecov.yml into a single coverage job
 
-### P10: Deterministic and strict test suite: seeded Faker, random execution order, PHPUnit strictness flags, replace placeholder demo.feature
+### P10 ([#184](https://github.com/VilnaCRM-Org/php-service-template/issues/184)): Deterministic and strict test suite: seeded Faker, random execution order, PHPUnit strictness flags, replace placeholder demo.feature
 
 *Unblocks:* accuracy, determinability, predictability, relevance, repeatability, reproducibility, testability
 
@@ -261,7 +261,7 @@ tests/Unit/UnitTestCase.php creates Faker via Factory::create() without a seed s
 - Replace features/demo.feature with a real behavioral scenario
 - Document flaky-test policy in CONTRIBUTING.md
 
-### P11: Raise Psalm errorLevel from 8 toward strict static analysis
+### P11 ([#187](https://github.com/VilnaCRM-Org/php-service-template/issues/187)): Raise Psalm errorLevel from 8 toward strict static analysis
 
 *Unblocks:* analyzability, robustness
 
@@ -271,7 +271,7 @@ psalm.xml sets errorLevel=8 - the most permissive level - so most type-level def
 - Enable stricter flags (e.g. findUnusedCode) where feasible
 - Update the locked-config policy notes so the ratchet is one-way
 
-### P12: Engineering governance as code: CODEOWNERS, branch-protection rulesets, pre-push hook, fix bot-push conflict
+### P12 ([#186](https://github.com/VilnaCRM-Org/php-service-template/issues/186)): Engineering governance as code: CODEOWNERS, branch-protection rulesets, pre-push hook, fix bot-push conflict
 
 *Unblocks:* accountability, process capabilities, seamlessness
 
@@ -282,7 +282,7 @@ No CODEOWNERS file exists; branch protection/required status checks are not capt
 - Enable pre-push hook; remove or populate .github/linters/
 - Rework auto-fix bot to open PRs instead of pushing to main
 
-### P13: Complete SECURITY.md: supported versions, disclosure SLA, scope, remove TBD
+### P13 ([#189](https://github.com/VilnaCRM-Org/php-service-template/issues/189)): Complete SECURITY.md: supported versions, disclosure SLA, scope, remove TBD
 
 *Unblocks:* credibility, discoverability, process capabilities, recoverability, survivability, usability, vulnerability
 
@@ -292,7 +292,7 @@ SECURITY.md is a 6-line stub whose Known vulnerabilities section literally says 
 - Scope (template vs downstream services) and hardening pointers
 - Replace TBD with a real known-vulnerabilities process (GH advisories)
 
-### P14: Backup, disaster-recovery and rollback runbooks (RPO/RTO, migration rollback, image rollback)
+### P14 ([#188](https://github.com/VilnaCRM-Org/php-service-template/issues/188)): Backup, disaster-recovery and rollback runbooks (RPO/RTO, migration rollback, image rollback)
 
 *Unblocks:* durability, recoverability, reliability, repairability, survivability
 
@@ -303,7 +303,7 @@ There is no backup/restore guidance for Postgres volumes, no DR plan or RPO/RTO 
 - Image rollback guidance tied to versioned GHCR tags
 - Restore-verification step (scheduled or documented drill)
 
-### P15: High-availability and scaling reference: multi-instance topology, resource limits, restart policies, Mercure SPOF, autoscaling guidance
+### P15 ([#191](https://github.com/VilnaCRM-Org/php-service-template/issues/191)): High-availability and scaling reference: multi-instance topology, resource limits, restart policies, Mercure SPOF, autoscaling guidance
 
 *Unblocks:* availability, distributability, durability, elasticity, manageability, mobility, redundancy, safety, scalability
 
@@ -314,7 +314,7 @@ docker-compose.prod.yml runs a single PHP node and single Postgres with no resou
 - Reference manifests or guidance for K8s/ECS in infrastructure/
 - Single-points-of-failure documentation for adopters
 
-### P16: Resilience patterns: retries/timeouts/circuit breakers, transactional outbox and idempotency examples, chaos/recovery tests, soak+stress in CI, kill switches
+### P16 ([#190](https://github.com/VilnaCRM-Org/php-service-template/issues/190)): Resilience patterns: retries/timeouts/circuit breakers, transactional outbox and idempotency examples, chaos/recovery tests, soak+stress in CI, kill switches
 
 *Unblocks:* administrability, degradability, fault-tolerance, resilience, robustness, stability, survivability
 
@@ -326,7 +326,7 @@ Messenger retry/backoff and HTTP client timeout patterns are not demonstrated, t
 - Scheduled CI job running stress/spike + a soak profile
 - Feature-flag/kill-switch baseline (env-driven)
 
-### P17: CI cost and speed: shared image build with layer caching, concurrency cancellation, paths filters, remove duplicate jobs
+### P17 ([#192](https://github.com/VilnaCRM-Org/php-service-template/issues/192)): CI cost and speed: shared image build with layer caching, concurrency cancellation, paths filters, remove duplicate jobs
 
 *Unblocks:* affordability, agility, efficiency, timeliness
 
@@ -337,7 +337,7 @@ Messenger retry/backoff and HTTP client timeout patterns are not demonstrated, t
 - paths filters or changed-files gate for heavy jobs (infection, load-tests, schemathesis)
 - Merge duplicate coverage jobs
 
-### P18: Autonomous repo maintenance: scheduled CI on main, Dependabot for github-actions and docker, auto-merge for green dependency PRs, stale bot, workflow tests
+### P18 ([#193](https://github.com/VilnaCRM-Org/php-service-template/issues/193)): Autonomous repo maintenance: scheduled CI on main, Dependabot for github-actions and docker, auto-merge for green dependency PRs, stale bot, workflow tests
 
 *Unblocks:* autonomy, relevance, self-sustainability, sustainability, timeliness, upgradability
 
@@ -348,7 +348,7 @@ All quality workflows are pull_request-only so main cannot detect bit-rot or new
 - Auto-merge workflow for green grouped Dependabot PRs
 - actions/stale; add bats tests for sync/release scripts
 
-### P19: Performance budgets and regression tracking: tighten k6 thresholds, store baselines, publish trend artifacts
+### P19 ([#195](https://github.com/VilnaCRM-Org/php-service-template/issues/195)): Performance budgets and regression tracking: tighten k6 thresholds, store baselines, publish trend artifacts
 
 *Unblocks:* efficiency, fidelity, precision, responsiveness, scalability, timeliness
 
@@ -360,7 +360,7 @@ The only CI-enforced budget is the smoke profile p(99)<9000ms - far too lax to c
 - Document DB indexing and pooling conventions
 - Address measurement fidelity: repeated runs/warm-up discard on shared runners so numbers are trustworthy
 
-### P20: Ship a working i18n example: translation catalogs, Accept-Language negotiation, localized RFC 7807 errors
+### P20 ([#194](https://github.com/VilnaCRM-Org/php-service-template/issues/194)): Ship a working i18n example: translation catalogs, Accept-Language negotiation, localized RFC 7807 errors
 
 *Unblocks:* compatibility, evolvability, localizability
 
@@ -371,7 +371,7 @@ translations/ is completely empty, no code uses TranslatorInterface, no Accept-L
 - Behat scenario asserting localized RFC 7807 detail
 - Document translation-provider workflow
 
-### P21: Development environment ubiquity: devcontainer/Codespaces, .editorconfig, Windows/WSL guidance, arm64 multi-platform builds
+### P21 ([#196](https://github.com/VilnaCRM-Org/php-service-template/issues/196)): Development environment ubiquity: devcontainer/Codespaces, .editorconfig, Windows/WSL guidance, arm64 multi-platform builds
 
 *Unblocks:* accessibility, convenience, installability, mobility, portability, ubiquity
 
@@ -382,7 +382,7 @@ No .devcontainer/ or Codespaces config, no .editorconfig, heavy bash/GNU-make de
 - Fold submodule init + prerequisites preflight into make start/bootstrap
 - buildx multi-platform build (amd64+arm64) in CI/release
 
-### P22: In-repo architecture and onboarding docs: ARCHITECTURE.md, ADRs, troubleshooting, one-shot bootstrap, .env and make-target reference, CODE_OF_CONDUCT, backend issue templates
+### P22 ([#197](https://github.com/VilnaCRM-Org/php-service-template/issues/197)): In-repo architecture and onboarding docs: ARCHITECTURE.md, ADRs, troubleshooting, one-shot bootstrap, .env and make-target reference, CODE_OF_CONDUCT, backend issue templates
 
 *Unblocks:* accessibility, configurability, convenience, discoverability, familiarity, intuitiveness, learnability, operability, serviceability, understandability, usability
 
@@ -393,7 +393,7 @@ The hexagonal/DDD layout is only implied by workspace.dsl and deptrac.yaml with 
 - make bootstrap one-shot target + copy-pasteable first-run README block
 - Document all make targets and .env vars; add CODE_OF_CONDUCT.md; backend-appropriate issue templates
 
-### P23: Template customization and scaffolding: bootstrap-a-new-service guide, module generator, fix hardcoded deptrac placeholders and composer package name typo
+### P23 ([#198](https://github.com/VilnaCRM-Org/php-service-template/issues/198)): Template customization and scaffolding: bootstrap-a-new-service guide, module generator, fix hardcoded deptrac placeholders and composer package name typo
 
 *Unblocks:* adaptability, customizability, evolvability, extensibility, intuitiveness, tailorability
 
@@ -404,7 +404,7 @@ There is no guide for renaming the CompanySubdomain/SomeModule placeholder when 
 - Parameterize deptrac namespace patterns or document the sanctioned edit path
 - Fix composer name typo; optional Makefile.local include
 
-### P24: Contract and compatibility enforcement: fail openapi-diff on breaking changes, PHP version matrix, wire or remove phpcs, API versioning/deprecation policy, UPGRADE.md
+### P24 ([#199](https://github.com/VilnaCRM-Org/php-service-template/issues/199)): Contract and compatibility enforcement: fail openapi-diff on breaking changes, PHP version matrix, wire or remove phpcs, API versioning/deprecation policy, UPGRADE.md
 
 *Unblocks:* compatibility, evolvability, interoperability, serviceability, standards compliance, upgradability
 
@@ -415,7 +415,7 @@ scripts/openapi-diff.sh invokes openapi-diff without --fail-on-incompatible so a
 - Wire phpcs into CI or delete phpcs.xml.dist
 - API versioning/deprecation policy + UPGRADE.md
 
-### P25: Developer debugging tooling: web-profiler in dev, GraphiQL enabled for dev, ready-made .http/Postman collection
+### P25 ([#200](https://github.com/VilnaCRM-Org/php-service-template/issues/200)): Developer debugging tooling: web-profiler in dev, GraphiQL enabled for dev, ready-made .http/Postman collection
 
 *Unblocks:* debuggability, inspectability, interactivity, usability
 
@@ -425,7 +425,7 @@ GraphiQL is explicitly disabled even for dev (config/packages/api_platform.yaml 
 - Add symfony/web-profiler-bundle (require-dev) with when@dev config
 - Ship .http (or Postman) collection covering health-check + example resource
 
-### P26: Repository hygiene: fix license mismatch, rename tempate-sync-pat.yml typo, SHA-pin remaining actions, digest-pin base images
+### P26 ([#201](https://github.com/VilnaCRM-Org/php-service-template/issues/201)): Repository hygiene: fix license mismatch, rename tempate-sync-pat.yml typo, SHA-pin remaining actions, digest-pin base images
 
 *Unblocks:* credibility, integrity, producibility, simplicity, standards compliance, sustainability
 
@@ -437,7 +437,7 @@ composer.json declares license 'proprietary' while LICENSE and README say CC0-1.
 - Digest-pin frankenphp and postgres base images
 - Fix rector.php dev-mode hard failure (ContainerNotFoundException without warmed dev container XML)
 
-### P27: AI-native hardening: run validate-configuration.sh in CI, docs-drift check for agent guides, .claude/settings.json allowlist and guardrail hooks
+### P27 ([#203](https://github.com/VilnaCRM-Org/php-service-template/issues/203)): AI-native hardening: run validate-configuration.sh in CI, docs-drift check for agent guides, .claude/settings.json allowlist and guardrail hooks
 
 *Unblocks:* adaptability, ai-native-readiness, sustainability, tailorability
 
@@ -448,7 +448,7 @@ scripts/validate-configuration.sh (the lock on quality-gate configs) is only inv
 - .claude/settings.json with pre-approved safe commands + PreToolUse hook protecting locked quality configs
 - Consider executable skill assets where docs-only skills fall short
 
-### P28: Complete the CQRS/hexagonal exemplars: query bus, validated command DTO, repository port/adapter pair
+### P28 ([#202](https://github.com/VilnaCRM-Org/php-service-template/issues/202)): Complete the CQRS/hexagonal exemplars: query bus, validated command DTO, repository port/adapter pair
 
 *Unblocks:* composability, flexibility, integrity, interchangeability, modularity, orthogonality, reusability, robustness
 
